@@ -91,7 +91,6 @@ export default {
     '@nuxtjs/device',
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
-    '@nuxtjs/pwa',
     'nuxt-sweetalert2',
     '@nuxtjs/svg',
     '@nuxtjs/dotenv',
