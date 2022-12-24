@@ -1,0 +1,14 @@
+{
+  "css.validate": false,
+  "less.validate": false,
+  "scss.validate": false,
+  "vetur.validation.template": true,
+  "eslint.codeAction.showDocumentation": {
+    "source.fixAll.eslint": true,
+    "enable": true
+  },
+  "scss.completion.triggerPropertyValueCompletion": false,
+  "less.completion.triggerPropertyValueCompletion": false,
+  "vetur.validation.style": false,
+  "editor.formatOnSave": true
+}

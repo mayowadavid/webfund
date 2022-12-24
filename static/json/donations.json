@@ -1,0 +1,100 @@
+{
+  "data": [
+    {
+      "status": "success",
+      "date": "Sunday Nov 29, 2020",
+      "name": "James adeleke",
+      "type": "Profit",
+      "channel": "Bank",
+      "amount": "₦431,450"
+    },
+    {
+      "status": "success",
+      "date": "Sunday Nov 29, 2020",
+      "name": "James adeleke",
+      "type": "Profit",
+      "channel": "Bank",
+      "amount": "₦431,450"
+    },
+    {
+      "status": "canceled",
+      "date": "Sunday Nov 29, 2020",
+      "name": "James adeleke",
+      "type": "Non Profit",
+      "channel": "Bank",
+      "amount": "₦431,450"
+    },
+    {
+      "status": "success",
+      "date": "Sunday Nov 29, 2020",
+      "name": "James adeleke",
+      "type": "Profit",
+      "channel": "USSD",
+      "amount": "₦431,450"
+    },
+    {
+      "status": "success",
+      "date": "Sunday Nov 29, 2020",
+      "name": "James adeleke",
+      "type": "Non Profit",
+      "channel": "Bank",
+      "amount": "₦431,450"
+    },
+    {
+      "status": "success",
+      "date": "Sunday Nov 29, 2020",
+      "name": "James adeleke",
+      "type": "Non Profit",
+      "channel": "Bank",
+      "amount": "₦431,450"
+    },
+    {
+      "status": "canceled",
+      "date": "Sunday Nov 29, 2020",
+      "name": "James adeleke",
+      "type": "Profit",
+      "channel": "Bank",
+      "amount": "₦431,450"
+    },
+    {
+      "status": "canceled",
+      "date": "Sunday Nov 29, 2020",
+      "name": "James adeleke",
+      "type": "Profit",
+      "channel": "Bank",
+      "amount": "₦431,450"
+    },
+    {
+      "status": "success",
+      "date": "Sunday Nov 29, 2020",
+      "name": "James adeleke",
+      "type": "Non Profit",
+      "channel": "Bank",
+      "amount": "₦431,450"
+    },
+    {
+      "status": "success",
+      "date": "Sunday Nov 29, 2020",
+      "name": "James adeleke",
+      "type": "Profit",
+      "channel": "Card",
+      "amount": "₦431,450"
+    },
+    {
+      "status": "success",
+      "date": "Sunday Nov 29, 2020",
+      "name": "James adeleke",
+      "type": "Profit",
+      "channel": "Bank",
+      "amount": "₦431,450"
+    },
+    {
+      "status": "success",
+      "date": "Sunday Nov 29, 2020",
+      "name": "James adeleke",
+      "type": "Profit",
+      "channel": "Bank",
+      "amount": "₦431,450"
+    }
+  ]
+}

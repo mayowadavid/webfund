@@ -1,0 +1,6 @@
+[
+  { "title": "Profile", "link": "/settings/profile" },
+  { "title": "Organization", "link": "/settings/organization" },
+  { "title": "API Keys & Webhooks ", "link": "/settings/api-keys-webhooks" },
+  { "title": "Teams", "link": "/settings/teams" }
+]

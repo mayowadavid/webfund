@@ -1,0 +1,36 @@
+{
+  "env": {
+    "test": {
+      "presets": [
+        [
+          "@babel/preset-env",
+          {
+            "targets": {
+              "node": "current"
+            }
+          }
+        ]
+      ]
+    }
+  }
+}
+// {
+//   "env": {
+//     "development": {
+//       "presets": [
+//         [
+//           "@babel/preset-env",
+//           { "loose": true },
+//           {
+//             "targets": {
+//               "node": "current"
+//             }
+//           }
+//         ]
+//       ],
+//       "plugins": [
+//         ["@babel/plugin-proposal-private-methods", { "loose": true }]
+//       ]
+//     }
+//   }
+// }
