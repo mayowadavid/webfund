@@ -73,11 +73,12 @@ export default {
   },
   watch: {
     orgData(newValue, oldValue){
-      console.log(newValue);
-        if(newValue.tin.length > 0){
-          this.step = 2;
-        }else if(newValue.website.length > 0){
-            this.step = 3;
+        if(newValue.business_phone.length > 0){
+         return this.step = 3;
+        }else if(newValue.tin.length > 0){
+          return this.step = 2;
+        }else if(newValue.name.length > 0){
+            return this.step = 1;
         }
     }
   },

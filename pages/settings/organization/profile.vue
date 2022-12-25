@@ -96,31 +96,6 @@
                 </validation-provider>
               </div>
               <div class="form-group mb-5">
-                <validation-provider
-                  v-slot="{ errors, classes }"
-                  name="transaction volume"
-                  rules="required"
-                >
-                  <div class="cs-select" :class="classes">
-                    <select v-model="form.transaction_volume" class="input">
-                      <option defaultValue hidden value="">
-                        Transaction volume in the last month
-                      </option>
-                      <option
-                        v-for="vol in transaction_volumes"
-                        :key="vol"
-                        :value="vol"
-                      >
-                        {{ vol }}
-                      </option>
-                    </select>
-                  </div>
-                  <span v-show="errors.length" class="is-invalid">
-                    {{ errors[0] }}
-                  </span>
-                </validation-provider>
-              </div>
-              <div class="form-group mb-5">
                 <div>
                   <validation-provider
                     v-slot="{ errors, classes }"
@@ -216,12 +191,10 @@ export default {
     all_states: [],
     states: [],
     cities: [],
-    transaction_volumes: ['1000', '5000', '20,000', '90,000'],
     form: {
       name: '',
       organisation_type: '',
       category: '',
-      transaction_volume: '',
       website: '',
       description: '',
       business_phone: '',
@@ -253,22 +226,6 @@ export default {
     this.$store.dispatch('auth/fetchOrganization');
   },
   methods: {
-    // changeStates() {
-    //   this.form.state = ''
-    //   this.$axios.get(`/countries/${this.form.country}/states`).then((res) => {
-    //     // console.log(res)
-    //     const { data } = res.data
-    //     this.states = data
-    //   })
-    // },
-    // changeCities() {
-    //   this.form.city = ''
-    //   this.$axios.get(`/states/${this.form.state}/cities`).then((resp) => {
-    //     const data = _.get(resp, 'data.data', [])
-    //     // console.log(data)
-    //     this.cities = data
-    //   })
-    // },
     async updateProfile() {
       // navigate steps
       if (this.activeTab < 2) return await this.gotoNext()

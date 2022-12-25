@@ -110,31 +110,6 @@
                 </validation-provider>
               </div>
               <div class="form-group mb-5">
-                <validation-provider
-                  v-slot="{ errors, classes }"
-                  name="transaction volume"
-                  rules="required"
-                >
-                  <div class="cs-select" :class="classes">
-                    <select v-model="form.transaction_volume" class="input">
-                      <option defaultValue hidden value="">
-                        Volume
-                      </option>
-                      <option
-                        v-for="vol in transaction_volumes"
-                        :key="vol"
-                        :value="vol"
-                      >
-                        {{ vol }}
-                      </option>
-                    </select>
-                  </div>
-                  <span v-show="errors.length" class="is-invalid">
-                    {{ errors[0] }}
-                  </span>
-                </validation-provider>
-              </div>
-              <div class="form-group mb-5">
                 <div>
                   <validation-provider
                     v-slot="{ errors, classes }"

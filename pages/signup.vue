@@ -80,7 +80,7 @@ export default {
           phone_number: '',
       },
     done: [],
-    activeTab: 1,
+    activeTab: 0,
     countries: [],
     organization_categories: [],
     organization_types: [],
