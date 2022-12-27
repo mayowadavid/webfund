@@ -1,5 +1,13 @@
 <template>
-<div>
+<v-form
+        id="signup-form"
+        ref="form"
+        class="py-8"
+        :loading.sync="loading"
+        :on-submit="onSubmit"
+        :on-success="onSuccess"
+        :on-error="onError"
+      >
 <fieldset >
           <div class="form-group mb-5">
             <div>
@@ -124,13 +132,13 @@
           </div>
            <div class="grid grid-cols-2 gap-6 mt-8">
             <div class="col-span-1">
-              <button
+              <v-button
                 type="button"
                 class="btn btn-primary-outline w-full"
                 @click.prevent="backTab"
               >
                 Back
-              </button>
+              </v-button>
             </div>
             <div class="col-span-1">
               <v-button class="w-full" :loading="loading">
@@ -139,7 +147,7 @@
             </div>
           </div>
         </fieldset>
-      </div>
+      </v-form>
 </template>
 
 <script>
@@ -160,35 +168,16 @@
       countries: require('@/static/json/country.json')
     }),
     methods: {
-    goBack() {
-    },
-    gotoNext() {
-
-    },
-    changeStates() {
-      this.state = ''
-      this.$axios.get(`/countries/${this.country}/states`).then((res) => {
-        // console.log(res)
-        const { data } = res.data
-        this.states = data
-      })
-    },
-    changeCities() {
-      this.city = ''
-      this.$axios.get(`/states/${this.state}/cities`).then((resp) => {
-        const data = _.get(resp, 'data.data', [])
-        // console.log(data)
-        this.cities = data
-      })
-    },
     backTab() {
       this.$emit('backTab');
+    },
+    onSubmit() {
+
     },
     onSuccess() {
       // data cleanup
       localStorage.removeItem('ajoo_signup')
       this.$refs.form.reset()
-      this.fillData({})
     },
     onError() {
       this.updateStorage()

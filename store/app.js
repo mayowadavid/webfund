@@ -6,7 +6,6 @@ export const state = () => ({
   noticeModal: null,
   redirectUrl: null,
   pageTitle: 'Dashboard',
-  activeTab: 0,
   pageType: null,
   pageData: null,
   viewData: {},
@@ -48,7 +47,6 @@ export const getters = {
   categories: (state) => state.categories,
   banks: (state) => state.banks,
   accounts: (state) => state.accounts,
-  activeTab: (state) => state.activeTab,
   classes: (state) => state.classes,
 }
 
@@ -95,9 +93,6 @@ export const mutations = {
   },
   SET_BANKS(state, data) {
     state.banks = data
-  },
-  SET_ACTIVE_TAB(state, data) {
-    state.activeTab = data
   },
   SET_ACCOUNTS(state, data) {
     state.accounts = data

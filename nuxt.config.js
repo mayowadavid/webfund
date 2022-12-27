@@ -11,9 +11,9 @@ export default {
    ** See https://nuxtjs.org/api/configuration-head
    */
   head: {
-    title: 'Ajoo NG',
+    title: 'Webfundx',
     titleTemplate: (title) => {
-      return title ? `${title} - Ajoo NG` : 'Ajoo NG'
+      return title ? `${title} - Webfundx` : 'Webfundx'
     },
     meta: [
       { charset: 'utf-8' },
@@ -24,13 +24,13 @@ export default {
         content: process.env.npm_package_description || '',
       },
     ],
-    link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
+    link: [{ rel: 'icon', type: 'image/x-icon', href: '/WFXSingleSingle.png' }],
   },
   publicRuntimeConfig: {
     isLive: ['live', 'prod', 'production'].includes(process.env.ENV),
     apiUrl: process.env.API_URL || process.env.APP_URL + '/api',
     appUrl: process.env.APP_URL,
-    appName: process.env.APP_NAME || 'AjooNG',
+    appName: process.env.APP_NAME || 'Webfundx',
     appLocale: process.env.APP_LOCALE || 'en',
     githubAuth: !!process.env.GITHUB_CLIENT_ID,
     paystackLive: process.env.PAYSTACK_LIVE === 'true',

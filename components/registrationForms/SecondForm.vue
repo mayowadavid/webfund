@@ -1,5 +1,13 @@
 <template>
-  <div>
+  <v-form
+        id="signup-form"
+        ref="form"
+        class="py-8"
+        :loading.sync="loading"
+        :on-submit="createOrganization"
+        :on-success="onSuccess"
+        :on-error="onError"
+      >
    <fieldset >
           <div class="form-group mb-5">
             <div>
@@ -130,22 +138,21 @@
           </div>
           <div class="grid grid-cols-2 gap-6 mt-8">
             <div class="col-span-1">
-              <button
+              <v-button
                 type="button"
                 class="btn btn-primary-outline w-full"
                 @click.prevent="backTab"
               >
                 Back
-              </button>
+              </v-button>
             </div>
             <div class="col-span-1">
-              <button type="submit"
-              @click.prevent="createOrganization"
-               class="btn btn-primary w-full">Next</button>
+              <v-button type="submit"
+               class="btn btn-primary w-full">Next</v-button>
             </div>
           </div>
     </fieldset>
-  </div>
+  </v-form>
 </template>
 
 <script>
@@ -186,16 +193,14 @@
         website,
         phone,
         }
-          this.$emit('nextTab');
-          return data;
-      //return this.$store.dispatch('auth/createOrganisation', data);
+      return this.$store.dispatch('auth/createOrganisation', data);
 
     },
     backTab() {
       this.$emit('backTab');
     },
     onSuccess(resp) {
-      console.log(resp)
+      this.$emit('nextTab');
     },
     onError() { },
     }

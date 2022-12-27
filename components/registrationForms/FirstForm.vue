@@ -143,9 +143,9 @@
             </p>
           </div>
           <div class="mb-4">
-                <button :loading="loading" @click.prevent="createAccount" class="btn btn-primary w-full">
+                <v-button :loading="loading" class="btn btn-primary w-full">
                   Continue
-                </button>
+                </v-button>
                 <nuxt-link
                   to="/login"
                   class="btn btn-primary-outline w-full mt-6 block text-center"
@@ -153,7 +153,7 @@
                   Already have an account, Log in
                 </nuxt-link>
           </div>
-    </v-form>
+</v-form>
 </template>
 
 <script>
@@ -178,8 +178,6 @@
       const { first_name, last_name, email, phone, password } = this.form;
       const fullname = first_name + " " + last_name;
 
-      this.$store.commit('app/SET_ACTIVE_TAB', 1);
-      this.$emit('nextTab');
       // Submit the form.
       const data = {
         fullname,
@@ -188,13 +186,10 @@
         role: "user",
         password
       };
-      this.$emit('nextTab');
-      return data;
-      //return this.$store.dispatch('auth/createUser', data);
-
+      return this.$store.dispatch('auth/createUser', data);
       },
        onSuccess(resp) {
-        console.log(resp)
+        this.$emit('nextTab');
        },
         onError() { },
     }

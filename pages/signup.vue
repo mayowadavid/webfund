@@ -105,11 +105,6 @@ export default {
       always change this later.`,
     ],
   }),
-  updated() {
-      const activeTab = this.$store.getters['app/activeTab'];
-      this.activeTab = activeTab;
-      console.log(activeTab, '109');
-  },
   methods: {
     nextTab(){
       this.activeTab += 1;

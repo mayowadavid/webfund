@@ -556,6 +556,7 @@ export default {
      const newEndDate = end_date.split("-");
      const created_day = parseInt(newStartDate[2]) == today ? "Today": parseInt(newStartDate[2]) + ' days ago';
      const lapsed = parseInt(newEndDate[2]) - parseInt(today) + ' days left';
+     lapsed = (parseInt(lapsed) < 0) ? 'expired': lapsed;
      this.campaign = {...newValue, created_day, lapsed};
 
      //donations comments

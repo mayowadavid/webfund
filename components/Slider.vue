@@ -171,6 +171,7 @@ export default {
   },
    watch: {
     campData(newValue, oldValue){
+      console.log(newValue);
       const d = new Date();
       const today = d.getDate();
       const reformat = newValue.map((n)=>{

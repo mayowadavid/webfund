@@ -54,7 +54,7 @@
 export default {
   data() {
     return {
-      logo: require('@/static/WFXsingle.png'),
+      logo: require('@/static/WFXSingleSingle.png'),
     }
   },
 }

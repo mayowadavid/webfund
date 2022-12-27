@@ -137,9 +137,7 @@ export default {
     submitInvite() {
       // Submit the form.
       const {first_name, last_name, email, role} = this.form;
-
       const name = first_name + ' ' + last_name;
-
       this.$axios.post(`/organisations/${this.org_id}/teams`, {
         name,
         email,
