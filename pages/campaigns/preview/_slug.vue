@@ -649,10 +649,10 @@ export default {
           return this.$store.dispatch('auth/verifyDonation', ref)
       }
       // paystack connection
-      const makePayment = (ref) =>{
+      const makePayment = (ref, key) =>{
           // paystack
               let handler = PaystackPop.setup({
-                key: process.env.KEY, // Replace with your public key
+                key, // Replace with your public key
                 email,
                 amount: donation + fee,
                 ref,
@@ -676,7 +676,8 @@ export default {
       //create donation and attached reference to it
       createDonations().then(({data})=>{
         const { donation } = data.data;
-             makePayment(donation.reference);
+        let key = this.$config.testkey;
+             makePayment(donation.reference, key);
           });
 
       }else {

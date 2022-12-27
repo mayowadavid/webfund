@@ -33,6 +33,7 @@ export default {
     appName: process.env.APP_NAME || 'Webfundx',
     appLocale: process.env.APP_LOCALE || 'en',
     githubAuth: !!process.env.GITHUB_CLIENT_ID,
+    testkey: process.env.KEY,
     paystackLive: process.env.PAYSTACK_LIVE === 'true',
     paystackTestKey: process.env.PAYSTACK_TEST_KEY,
     paystackLiveKey: process.env.PAYSTACK_LIVE_KEY,
