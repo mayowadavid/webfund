@@ -20,22 +20,81 @@
                   nonprofit's fundraising, we've got it covered.
                 </p>
               </div>
-
+             <div class="form-group mb-5">
+                <div>
+                  <validation-provider
+                    v-slot="{ errors, classes }"
+                    name="fullname"
+                    rules="required"
+                  >
+                    <input
+                      id="input-website"
+                      v-model="form.fullname"
+                      class="form-input"
+                      :class="classes"
+                      placeholder="full name"
+                    />
+                    <span v-show="errors.length" class="is-invalid">
+                      {{ errors[0] }}
+                    </span>
+                  </validation-provider>
+                </div>
+              </div>
+               <div class="form-group mb-5">
+                <div>
+                  <validation-provider
+                    v-slot="{ errors, classes }"
+                    name="email"
+                    rules="required"
+                  >
+                    <input
+                      id="input-website"
+                      v-model="form.email"
+                      class="form-input"
+                      :class="classes"
+                      placeholder="email"
+                    />
+                    <span v-show="errors.length" class="is-invalid">
+                      {{ errors[0] }}
+                    </span>
+                  </validation-provider>
+                </div>
+              </div>
               <div class="form-group mb-5">
+                <div>
+                  <validation-provider
+                    v-slot="{ errors, classes }"
+                    name="phone"
+                    rules="required"
+                  >
+                    <input
+                      id="input-website"
+                      v-model="form.phone"
+                      class="form-input"
+                      :class="classes"
+                      placeholder="phone"
+                    />
+                    <span v-show="errors.length" class="is-invalid">
+                      {{ errors[0] }}
+                    </span>
+                  </validation-provider>
+                </div>
+              </div>
+               <div class="form-group mb-5">
                 <validation-provider
                   v-slot="{ errors, classes }"
-                  name="bank name"
+                  name="organization category"
                   rules="required"
                 >
                   <div class="cs-select" :class="classes">
-                    <select v-model="form.bank_name" class="input">
-                      <option value="">Bank Name</option>
+                    <select v-model="form.means_of_identification" class="input">
+                      <option defaultValue hidden value="">Select Means of identification</option>
                       <option
-                        v-for="org_type in organization_types"
-                        :key="org_type.id"
-                        :value="org_type.id"
+                        v-for="mid in identifications"
+                        :key="mid"
+                        :value="mid"
                       >
-                        {{ org_type.name }}
+                        {{ mid }}
                       </option>
                     </select>
                   </div>
@@ -45,40 +104,33 @@
                 </validation-provider>
               </div>
               <div class="form-group mb-5">
-                <div>
-                  <validation-provider
-                    v-slot="{ errors, classes }"
-                    name="account number"
-                    rules="required|phone"
-                  >
-                    <input
-                      id="input-account_number"
-                      v-model="form.account_number"
-                      class="form-input"
-                      :class="classes"
-                      placeholder="Account Number"
-                      type="tel"
-                    />
-                    <span v-show="errors.length" class="is-invalid">
-                      {{ errors[0] }}
-                    </span>
-                  </validation-provider>
-                </div>
-              </div>
+                    <validation-provider
+                      v-slot="{ errors, classes }"
+                      name="means_of_identification"
+                    >
+                      <div class="cs-select" :class="classes">
+                        <input class="form-input" @input="handleChange" name="means_of_identification" type="file"/>
+                      </div>
+                      <span v-show="errors.length" class="is-invalid">
+                        {{ errors[0] }}
+                      </span>
+                    </validation-provider>
+                  </div>
               <div class="form-group mb-5">
                 <div>
                   <validation-provider
                     v-slot="{ errors, classes }"
-                    name="org name"
+                    name="address"
                     rules="required"
                   >
-                    <input
-                      id="input-org_name"
-                      v-model="form.org_name"
-                      class="form-input"
-                      :class="classes"
-                      placeholder="Organization’s Name (Autofilled)"
-                    />
+                     <textarea
+                        id="input-description"
+                        v-model="form.address"
+                        class="form-input"
+                        :class="classes"
+                        placeholder="address"
+                      >
+                      </textarea>
                     <span v-show="errors.length" class="is-invalid">
                       {{ errors[0] }}
                     </span>
@@ -87,15 +139,6 @@
               </div>
               <template v-slot:footer>
                 <div class="flex flex-auto gap-6 mt-8">
-                  <!-- <div class="col-span-1">
-                  <button
-                    type="button"
-                    class="btn btn-primary-outline w-full"
-                    @click.prevent="goBack"
-                  >
-                    Back
-                  </button>
-                </div> -->
                   <div class="w-full md:w-1/2 lg:w-1/3">
                     <v-button :loading="loading" class="w-full">
                       Save &amp; Continue
@@ -120,15 +163,29 @@ export default {
   data: () => ({
     loading: false,
     success: false,
+    identifications: ['Passport', 'Drivers license', 'Voters card', 'NIN'],
     form: {
-      bank_name: '',
-      account_number: '',
-      org_name: '',
+      fullname: '',
+      email: '',
+      phone: '',
+      address: '',
+      means_of_identification: '',
+      identification_file: ''
     },
   }),
   methods: {
-    onSubmit() {},
-    onSuccess() {},
+    handleChange(event){
+      event.preventDefault();
+      let {identification_file} = this.form;
+      identification_file = event.target.files[0];
+      this.form = {...this.form, identification_file};
+    },
+    onSubmit() {
+      return this.$store.dispatch('auth/addDirector', this.form);
+    },
+    onSuccess(resp) {
+      console.log(resp);
+    },
   },
 }
 </script>

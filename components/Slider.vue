@@ -21,8 +21,11 @@
       <swiper :options="swiperOption" ref="swiper">
         <swiper-slide v-for="(item, i) in campaigns" :key="i">
           <div class="bg-white h-[596px] w-full 2xl:max-w-[400px] xl:max-w-[385px] ">
+            <a :href="'/campaigns/preview/'+ item.id">
             <img class="w-full h-[265px]" :src="item.image.location" alt="" />
+            </a>
             <div class="w-full p-5 py-3">
+              <a :href="'/campaigns/preview/'+ item.id">
               <h5 class="text-base font-bold mb-2">
                 {{item.title}}
               </h5>
@@ -41,6 +44,7 @@
               <p class="text-xs font-normal text-[#575B68] mb-2">
                 {{item.created_day}}
               </p>
+              </a>
               <div class="flex items-center mb-2">
                 <img class="w-5 mr-3" src="/icon/tag.svg" alt="" />
                 <p class="text-[14px] font-light text-[#575B68]">

@@ -1,8 +1,8 @@
 <template>
-  <div class="flex bg-gray-100">
+  <div class="flex bg-gray-100 px-4">
     <div class="container mx-auto">
-      <div class="grid grid-cols-12 gap-10 mt-10">
-        <div class="col-span-12 md:col-span-8">
+      <div class="grid grid-cols-12 gap-10 m-gap-1 mt-10">
+        <div class="col-span-12 md:col-span-12">
           <h1 class="font-bold">{{campaign.title}}</h1>
           <div class="flex flex-row divide-x divide-gray-300 my-5">
             <p class="text-gray-500 pr-4">{{campaign.created_day}}</p>
@@ -99,7 +99,7 @@
             </div>
           </div>
         </div>
-        <div class="col-span-12 md:col-span-4">
+        <div class="col-span-12 md:col-span-12">
           <v-card shadow>
             <!-- Donation start screen -->
             <div v-if="stage === 'start'" class="flex flex-col">

@@ -62,29 +62,46 @@
                 </div>
               </div>
               <div class="form-group mb-5">
-                <validation-provider
-                  v-slot="{ errors, classes }"
-                  name="organisation type"
-                  rules="required"
-                >
-                  <div class="cs-select" :class="classes">
-                    <select v-model="form.organisation_type" class="input">
-                      <option defaultValue hidden
-                      value=""
-                      >Organization Type</option>
-                      <option
-                        v-for="org_type in organization_types"
-                        :key="org_type"
-                        :value="org_type"
-                      >
-                        {{ org_type }}
-                      </option>
-                    </select>
-                  </div>
-                  <span v-show="errors.length" class="is-invalid">
-                    {{ errors[0] }}
-                  </span>
-                </validation-provider>
+                    <validation-provider
+                      v-slot="{ errors, classes }"
+                      name="means_of_identification"
+                    >
+                      <label for="input-role">Upload a copy of your certification of Incorporation</label>
+                      <div class="cs-select" :class="classes">
+                        <input class="form-input" @input="handleChange" name="means_of_identification" type="file"/>
+                      </div>
+                      <span v-show="errors.length" class="is-invalid">
+                        {{ errors[0] }}
+                      </span>
+                    </validation-provider>
+              </div>
+              <div class="form-group mb-5">
+                    <validation-provider
+                      v-slot="{ errors, classes }"
+                      name="means_of_identification"
+                    >
+                      <label for="input-role">Upload a copy of your memorandum and Articles of Association</label>
+                      <div class="cs-select" :class="classes">
+                        <input class="form-input" @input="handleChange" name="means_of_identification" type="file"/>
+                      </div>
+                      <span v-show="errors.length" class="is-invalid">
+                        {{ errors[0] }}
+                      </span>
+                    </validation-provider>
+              </div>
+              <div class="form-group mb-5">
+                    <validation-provider
+                      v-slot="{ errors, classes }"
+                      name="means_of_identification"
+                    >
+                      <label for="input-role">Upload a copy of your form CAC 1.1</label>
+                      <div class="cs-select" :class="classes">
+                        <input class="form-input" @input="handleChange" name="means_of_identification" type="file"/>
+                      </div>
+                      <span v-show="errors.length" class="is-invalid">
+                        {{ errors[0] }}
+                      </span>
+                    </validation-provider>
               </div>
               <div class="form-group mb-5">
                 <validation-provider
@@ -93,14 +110,14 @@
                   rules="required"
                 >
                   <div class="cs-select" :class="classes">
-                    <select v-model="form.category" class="input">
-                      <option defaultValue hidden value="">Organization category</option>
+                    <select v-model="form.means_of_identification" class="input">
+                      <option defaultValue hidden value="">Select Means of identification</option>
                       <option
-                        v-for="org_cat in organization_categories"
-                        :key="org_cat"
-                        :value="org_cat"
+                        v-for="mid in identifications"
+                        :key="mid"
+                        :value="mid"
                       >
-                        {{ org_cat }}
+                        {{ mid }}
                       </option>
                     </select>
                   </div>
@@ -110,65 +127,18 @@
                 </validation-provider>
               </div>
               <div class="form-group mb-5">
-                <div>
-                  <validation-provider
-                    v-slot="{ errors, classes }"
-                    name="website"
-                    rules="required"
-                  >
-                    <input
-                      id="input-website"
-                      v-model="form.website"
-                      class="form-input"
-                      :class="classes"
-                      placeholder="Website (Optional)"
-                    />
-                    <span v-show="errors.length" class="is-invalid">
-                      {{ errors[0] }}
-                    </span>
-                  </validation-provider>
-                </div>
-              </div>
-              <div class="form-group mb-4">
-                <div>
-                  <validation-provider
-                    v-slot="{ errors, classes }"
-                    name="website"
-                    rules="required"
-                  >
-                    <textarea
-                      id="input-description"
-                      v-model="form.description"
-                      class="form-input"
-                      :class="classes"
-                      placeholder="Description about your organization"
-                    ></textarea>
-                    <span v-show="errors.length" class="is-invalid">
-                      {{ errors[0] }}
-                    </span>
-                  </validation-provider>
-                </div>
-              </div>
-              <div class="form-group mb-5">
-                <div>
-                  <validation-provider
-                    v-slot="{ errors, classes }"
-                    name="organization phone number"
-                    rules="required|phone"
-                  >
-                    <input
-                      id="input-organization_phone_number"
-                      v-model="form.business_phone"
-                      class="form-input"
-                      :class="classes"
-                      placeholder="Organization phone number"
-                      type="tel"
-                    />
-                    <span v-show="errors.length" class="is-invalid">
-                      {{ errors[0] }}
-                    </span>
-                  </validation-provider>
-                </div>
+                    <validation-provider
+                      v-slot="{ errors, classes }"
+                      name="means_of_identification"
+                    >
+                       <label for="input-mid">Means of identification</label>
+                      <div class="cs-select" :class="classes">
+                        <input class="form-input" @input="handleChange" name="means_of_identification" type="file"/>
+                      </div>
+                      <span v-show="errors.length" class="is-invalid">
+                        {{ errors[0] }}
+                      </span>
+                    </validation-provider>
               </div>
               <template v-slot:footer>
                 <div class="flex flex-auto gap-6 mt-8">
@@ -231,12 +201,11 @@ export default {
     countries: [],
     organization_categories: ['church', 'tech'],
     organization_types: ['non-profit', 'tech'],
-    transaction_volumes: ['1000', '5000', '20,000', '90,000'],
+    identifications: ['Passport', 'Drivers license', 'Voters card', 'NIN'],
     form: {
       rc_number: '',
       tin: '',
       category: '',
-      transaction_volume: '',
       organisation_type: '',
       website: '',
       description: '',

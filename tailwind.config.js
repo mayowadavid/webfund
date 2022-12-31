@@ -9,6 +9,10 @@ module.exports = {
   mode: 'jit',
   theme: {
     extend: {
+      fontSize: {
+        '4xl': '2.441rem',
+        '5xl': '3.052rem',
+      },
       colors: {
         orange: {
           ...colors.orange,

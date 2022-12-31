@@ -164,16 +164,62 @@ export const actions = {
     } catch (e) {}
   },
 
-  async createUser({ commit }, form) {
+  async createOrganisation({ commit }, form) {
+    const {
+      phone_number,
+      organization_name,
+      organization_type,
+      organization_category,
+      website,
+      description,
+      organization_phone_number,
+      address,
+      city,
+      state,
+      country,
+    } = form
     try {
-      const { data } = await this.$axios.post(`/users`, form)
+      const { data } = await this.$axios.post(`/organisations`, {
+        name: organization_name,
+        type: organization_type,
+        category: organization_category,
+        description,
+        website,
+        city,
+        state,
+        country,
+        address,
+        phone: organization_phone_number,
+      })
+      console.log(data, '194')
     } catch (e) {}
   },
 
-  async createOrganisation({ commit }, form) {
+  async addDirector({ commit, state }, form) {
+    const {
+      fullname,
+      email,
+      phone,
+      address,
+      means_of_identification,
+      identification_file,
+    } = form
+    var formdata = new FormData()
+    formdata.append('fullname', fullname)
+    formdata.append('email', email)
+    formdata.append('phone', phone)
+    formdata.append('address', address)
+    formdata.append('means_of_identification', means_of_identification)
+    formdata.append('identification_file', identification_file, 'customs.PNG')
     try {
-      const { data } = await this.$axios.post(`/organisations`, form)
-    } catch (e) {}
+      const { data } = await this.$axios.post(
+        `/organisations/${state.org.id}/directors`,
+        formdata
+      )
+      console.log(data)
+    } catch (e) {
+      console.log(e)
+    }
   },
 
   async fetchRoles({ commit }) {
@@ -200,6 +246,24 @@ export const actions = {
     } catch (e) {
       console.log(e)
     }
+  },
+
+  async createUser({ commit }, userData) {
+    const { first_name, last_name, email, password } = userData
+    try {
+      this.$axios
+        .post(`/users`, {
+          fullname: first_name + ' ' + last_name,
+          email,
+          role: 'user',
+          password,
+        })
+        .then((data) => {
+          console.log(data, '242')
+          dispatch('fetchUser')
+          dispatch('createOrganisation', userData)
+        })
+    } catch (e) {}
   },
 
   async updateUser({ commit }, userData) {

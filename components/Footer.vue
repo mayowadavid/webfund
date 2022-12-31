@@ -62,13 +62,13 @@
     <div class="w-full bg-white">
       <div class="container px-4 sm:px-5 lg:px-10 mx-auto">
         <div class="flex flex-wrap items-center justify-between h-[100px] py-5">
-          <p class="font-bold text-lg text-[#2B384C]">Wefundx. © 2020</p>
+          <p class="font-bold text-lg text-[#2B384C]">Wefundx. © {{year}}</p>
 
           <div class="flex md:space-x-6 space-x-3">
-            <a href="#" class="md:text-base text-sm text-[#767E85]">twitter</a>
-            <a href="#" class="md:text-base text-sm text-[#767E85]">Instagam</a>
-            <a href="#" class="md:text-base text-sm text-[#767E85]">Facebook</a>
-            <a href="#" class="md:text-base text-sm text-[#767E85]">Linkedin</a>
+            <a href="Twitter.com/Wefundx" class="md:text-base text-sm text-[#767E85]">twitter</a>
+            <a href="Instagram.com/Wefundx" class="md:text-base text-sm text-[#767E85]">Instagam</a>
+            <a href="https://www.facebook.com/profile.php?id=100088568846090&mibextid=LQQJ4d" class="md:text-base text-sm text-[#767E85]">Facebook</a>
+            <a href="https://www.linkedin.com/company/wefundxng" class="md:text-base text-sm text-[#767E85]">Linkedin</a>
             <a href="#" class="md:text-base text-sm text-[#767E85]">Youtube</a>
           </div>
         </div>
@@ -83,6 +83,7 @@ export default {
     return {
       logo: require('@/static/logo.svg'),
       show: false,
+      year: "",
       menu_items_1: [
         {
           title: 'Our Solution',
@@ -150,10 +151,14 @@ export default {
         title: 'Contact',
         items: [
           { menu: 'admin@wefundx.com', link: '#' },
-          { menu: '31 Bishop Street, Ojuelegba, Surulere, Lagos', link: '#' },
+          { menu: '170, Oyadiran Estate, Sabo, yaba Lagos', link: '#' },
         ],
       },
     }
   },
+  mounted(){
+    const date = new Date();
+    this.year = date.getFullYear();
+  }
 }
 </script>

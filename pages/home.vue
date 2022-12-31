@@ -61,7 +61,7 @@
         <slider title="Closing Campaign"> </slider>
       </div>
     </div>
-    
+
     <div class="w-full bg-[#006696] py-20 px-5 md:px-16">
       <div class="bg-white xl:max-w-[1200px] lg:max-w-[900px] p-10 text-center mx-auto">
         <h3 class="text-3xl font-bold text-[#2B384C] mb-8">
@@ -71,6 +71,7 @@
           Convert online donors with smart donation forms augmented with the latest digital techniques. Full flexibility so you look like a pro
         </p>
         <div class="flex items-center justify-center mx-auto">
+          <a href="/signup">
           <button
               class="
                 h-10 w-32
@@ -84,6 +85,7 @@
             >
               Get Started
             </button>
+            </a>
             <button
               class="
                 h-10 w-32 ml-2

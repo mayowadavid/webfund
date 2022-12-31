@@ -35,8 +35,8 @@
 import Loader from '~/components/global/Loader'
 
 export default {
-  layout: 'auth',
-  middleware: 'guest',
+  // layout: 'auth',
+  // middleware: 'guest',
   components: {
     Loader,
   },
@@ -55,7 +55,7 @@ export default {
     const token = _.get(this.$route, 'params.token', null)
 
     if (token) this.resolveToken(token)
-    else this.$router.push('/login')
+   // else this.$router.push('/login')
   },
 
   methods: {
