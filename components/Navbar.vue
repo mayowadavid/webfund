@@ -168,7 +168,7 @@ export default {
   },
   data() {
     return {
-      logo: require('@/static/WFXSingle.png'),
+      logo: require('@/static/logo.svg'),
       show: false,
       menu_items: [
         { title: 'Our Solution', link: '/solution' },
