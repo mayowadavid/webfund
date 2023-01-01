@@ -66,7 +66,7 @@
             </p>
         </div>
         <div class="middle_button space mb10 flex_row px-4 sm:px-5 lg:px-10">
-            <div class="middle_but active">
+            <div class="middle_but active_wrap">
                 <p>Crowdfunding</p>
             </div>
             <div class="middle_but">

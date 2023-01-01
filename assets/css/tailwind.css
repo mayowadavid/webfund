@@ -674,7 +674,7 @@ label.checkbox span.checkmark:after {
     justify-content: center;
 }
 
-.active {
+.active_wrap {
     background-color: rgb(15, 148, 209);
     border-radius: 25px;
     padding: 8px 20px;
@@ -687,7 +687,7 @@ label.checkbox span.checkmark:after {
     color: #000;
 }
 
-.active > p {
+.active_wrap > p {
     color: #fff;
 }
 

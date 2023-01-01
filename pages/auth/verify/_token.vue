@@ -1,19 +1,29 @@
 <template>
-  <div class="grid grid-cols-2 gap-6 lg:gap-32 h-full">
-    <div class="col-span-2 md:col-span-1 my-auto">
-      <h1 class="text-center md:text-left text-gray-800 font-bold mb-2">
+  <div class="grid grid-cols-2 flex flex-wrap gap-6 lg:gap-32 h-full">
+    <div class="col-span-2 space md:col-span-1 verify flex_col my-auto">
+      <h1 class="text-gray-800 font-bold mb-2">
         Email Verification
       </h1>
-      <p class="text-center md:text-left text-gray-600 mb-6 md:pr-20">
+      <p class="text-gray-600 mb-space mb-6">
         Please wait while we verification your email.
       </p>
-      <div v-if="!loading">
+      <button
+              class="
+                 h-10 w-64
+                broder-0 bg-[#006696]
+                text-white text-sm
+                font-semibold
+                flex
+                items-center
+                justify-center
+              "
+              @click.prevent="resolveToken"
+            >
+              Click To Activate Your Email
+            </button>
+      <div v-if="message.length > 0">
         <v-alert
-          :message="
-            $options.filters.capitalize(message, {
-              onlyFirstLetter: true,
-            })
-          "
+          :message="message"
           :color="success ? 'green' : 'red'"
           class="mb-8"
         />
@@ -24,7 +34,7 @@
           Go to login
         </button>
       </div>
-      <div v-else class="flex flex-col">
+      <div v-if="loading == true" class="flex flex-col">
         <loader class="mx-auto md:mx-0" />
       </div>
     </div>
@@ -44,28 +54,38 @@ export default {
   data: () => ({
     user: null,
     redirectTo: '/',
-    loading: true,
-    message: false,
+    loading: false,
+    message: '',
     success: false,
+    email_hash: '',
+    hash_string: ''
   }),
+  mounted(){
+    let { token } = this.$route.params;
+    const result = token.split('-');
+    this.email_hash = result[0],
+    this.hash_string = result[1];
 
-  created() {
-    this.$store.commit('app/SET_PAGE_TITLE', 'Verify Email')
-
-    const token = _.get(this.$route, 'params.token', null)
-
-    if (token) this.resolveToken(token)
-   // else this.$router.push('/login')
   },
 
   methods: {
-    resolveToken(token) {
+    resolveToken() {
+      this.loading = true;
+      console.log({
+          email_hash: this.email_hash,
+          hash_string: this.hash_string
+        })
       this.$axios
-        .get(`/auth/verify/${token}`)
+        .put(`/users/activate`, {
+          email_hash: this.email_hash,
+          hash_string: this.hash_string
+        })
         .then((response) => {
+          console.log(response);
           this.success = true
           this.loading = false
-          this.message = response.data.message
+          this.message = "Activation Successful"
+          this.$router.push('/login')
         })
         .catch((error) => {
           const message = _.get(
@@ -74,7 +94,7 @@ export default {
             'Invalid activication token'
           )
           // console.log(error.response)
-          this.message = message
+          this.message = "Email verification failed"
           this.loading = false
         })
     },
@@ -87,3 +107,8 @@ export default {
   },
 }
 </script>
+<style>
+.verify {
+  text-align: center;
+}
+</style>

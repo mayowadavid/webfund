@@ -25,9 +25,10 @@
         ref="form"
         class="py-8"
         :loading.sync="loading"
-        :on-submit="createAccount"
+        :on-submit="onSubmit"
         :on-success="onSuccess"
         :on-error="onError"
+        success-message="Sign up successful check your mail to activate your account!"
       >
         <!-- Form Header -->
 
@@ -518,26 +519,26 @@ export default {
       always change this later.`,
     ],
     form: {
-      first_name: '',
-      last_name: '',
-      email: '',
-      password: '',
-      re_password: '',
-      phone_number: '',
-      organization_name: '',
-      organization_type: '',
-      organization_category: '',
-      website: '',
-      description: '',
-      organization_phone_number: '',
-      address: '',
-      city: '',
-      state: '',
-      country: '',
+      first_name: 'mayowa',
+      last_name: 'david',
+      email: 'mayowada0v0id0100@gmail.com',
+      password: '123456',
+      re_password: '123456',
+      phone_number: '08130614615',
+      organization_name: 'meger',
+      organization_type: 'tech',
+      organization_category: 'service',
+      website: 'managerbran.com',
+      description: 'test desscriptions',
+      organization_phone_number: '09130614615',
+      address: 'ibeju lekki',
+      city: 'ibeju',
+      state: 'lagos',
+      country: 'Nigeria',
     },
   }),
   methods: {
-    async createAccount() {
+    async onSubmit() {
       // navigate steps
       if (this.activeTab < 2) return await this.gotoNext()
 
@@ -556,11 +557,12 @@ export default {
     },
     proceed() {
       this.nextTab();
-      console.log(this.form);
     },
     onSuccess(resp) {
       // data cleanup
+      console.log(resp);
        this.$store.dispatch('auth/onSuccess', resp.data)
+       this.$store.dispatch('auth/createOrganisation', this.form)
       this.$refs.form.reset()
     },
     onError() {

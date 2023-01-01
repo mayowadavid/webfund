@@ -69,7 +69,7 @@ export const mutations = {
 // actions
 export const actions = {
   async onSuccess({ dispatch }, data) {
-    if (data) {
+    if (data.data?.user !== undefined) {
       // Save the token.
 
       const { user } = data.data
@@ -79,6 +79,11 @@ export const actions = {
       })
       // Redirect home.
       this.$router.push('/')
+    } else {
+      let user = data.data
+      await dispatch('saveToken', {
+        user,
+      })
     }
   },
 
@@ -179,7 +184,7 @@ export const actions = {
       country,
     } = form
     try {
-      const { data } = await this.$axios.post(`/organisations`, {
+      this.$axios.post(`/organisations`, {
         name: organization_name,
         type: organization_type,
         category: organization_category,
@@ -191,7 +196,6 @@ export const actions = {
         address,
         phone: organization_phone_number,
       })
-      console.log(data, '194')
     } catch (e) {}
   },
 
@@ -240,7 +244,6 @@ export const actions = {
 
   async createDonation({ commit }, form) {
     try {
-      console.log('hey', '243')
       return this.$axios.post(`/donations`, form)
       // create donations
     } catch (e) {
@@ -251,18 +254,12 @@ export const actions = {
   async createUser({ commit }, userData) {
     const { first_name, last_name, email, password } = userData
     try {
-      this.$axios
-        .post(`/users`, {
-          fullname: first_name + ' ' + last_name,
-          email,
-          role: 'user',
-          password,
-        })
-        .then((data) => {
-          console.log(data, '242')
-          dispatch('fetchUser')
-          dispatch('createOrganisation', userData)
-        })
+      return this.$axios.post(`/users`, {
+        fullname: first_name + ' ' + last_name,
+        email,
+        role: 'user',
+        password,
+      })
     } catch (e) {}
   },
 
