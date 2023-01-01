@@ -149,7 +149,7 @@
                         block
                         class="mb-6"
                       >
-                        Continue
+                        Pay Now
                       </v-button>
                     </div>
                   </template>
@@ -160,6 +160,7 @@
 export default {
   props: {
     show: { type: Boolean, default: false },
+    campaign_id: String
   },
   data() {
     return {
@@ -173,15 +174,99 @@ export default {
             },
     }
   },
+   mounted(){
+    //load
+     let paystack = document.createElement('script')
+      paystack.setAttribute('src', 'https://js.paystack.co/v1/inline.js')
+      document.head.appendChild(paystack)
+  },
   methods: {
-    onSubmit() {
-
-    },
     hideModal() {
       this.$emit('hide')
     },
-    onSuccess(resp) {
+    onSubmit(){
+      this.loading = true
+       let {
+        donation,
+       first_name,
+        last_name,
+        email,
+        comment
+      } = this.form;
 
+      // fee calculation
+      let fees = donation && !isNaN(donation) ? (5 / 100) * Number(donation) * 100 : 0;
+
+      //fetch campaign id
+      const campaign_id = this.campaign_id;
+
+      //donation rounded figure
+      donation *= 100;
+      //check for signed in user
+      const donor_anonymous = this?.user?.first_name !== undefined ? false : true;
+      //donation details
+      const form = {
+                  amount: donation + fees,
+                  donor_name: first_name + ' ' + last_name,
+                  donor_email: email,
+                  donor_anonymous,
+                  campaign_id,
+                  comment
+        }
+      // reset form
+      const resetForm = () => {
+        this.$emit('hide')
+        this.loading = false
+      }
+        // fee calculation
+      let fee = donation && !isNaN(donation) ? (5 / 100) * Number(donation) * 100 : 0;
+
+      //make donations
+      const createDonations = ()=>{
+        console.log(form, '226')
+          return this.$store.dispatch('auth/createDonation', form)
+      }
+
+      //verify donations
+      const verifyDonation = async(ref)=>{
+          return this.$store.dispatch('auth/verifyDonation', ref)
+      }
+      // paystack connection
+      const makePayment = (ref, key) =>{
+          // paystack
+              let handler = PaystackPop.setup({
+                key, // Replace with your public key
+                email,
+                amount: donation + fee,
+                ref,
+                // generates a pseudo-unique reference. Please replace with a reference you generated. Or remove the line entirely so our API will generate one for you
+                // label: "Optional string that replaces customer email"
+                onClose: function(){
+                  alert('Window closed.');
+                },
+                callback: function(response){
+                  resetForm();
+                  //verify dovation
+                  verifyDonation(response.reference);
+                  console.log(response)
+                }
+              });
+
+              // open frame
+              handler.openIframe();
+      }
+
+      //create donation and attached reference to it
+      return createDonations().then(({data})=>{
+        const { donation } = data.data;
+        let key = this.$config.testkey;
+             makePayment(donation.reference, key);
+          });
+
+
+    },
+    onSuccess(resp) {
+      console.log(resp);
      },
   },
 }

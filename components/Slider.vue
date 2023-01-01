@@ -64,7 +64,7 @@
               </div>
 
               <div class="flex flex-col items-center px-5">
-                <a
+                <p
                   class="
                     h-[48px]
                     w-full
@@ -77,10 +77,11 @@
                     bg-[#006696]
                     text-white text-sm
                   "
-                  :href="'/campaigns/preview/'+ item.id"
+                  :id="item.id"
+                  @click="handlePopUp"
                 >
                   Donate Now
-                </a>
+                </p>
                 <div class="flex items-center">
                   <img class="w-7 mr-2" src="/icon/people.svg" alt="" />
                   <p class="text-sm font-normal text-[#0396C2]">
@@ -202,6 +203,10 @@ export default {
     prev() {
 			this.$refs.swiper.$swiper.slidePrev();
 		},
+    handlePopUp(ev){
+        const id = ev.target.id;
+         this.$emit('donation', id);
+    },
 		next() {
 			this.$refs.swiper.$swiper.slideNext();
 		}

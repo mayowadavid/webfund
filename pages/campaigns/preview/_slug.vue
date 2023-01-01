@@ -2,7 +2,7 @@
   <div class="flex bg-gray-100 px-4">
     <div class="container mx-auto">
       <div class="grid grid-cols-12 gap-10 m-gap-1 mt-10">
-        <div class="col-span-12 md:col-span-12">
+        <div class="col-span-12 md:col-span-8 m10 sm10">
           <h1 class="font-bold">{{campaign.title}}</h1>
           <div class="flex flex-row divide-x divide-gray-300 my-5">
             <p class="text-gray-500 pr-4">{{campaign.created_day}}</p>
@@ -99,7 +99,7 @@
             </div>
           </div>
         </div>
-        <div class="col-span-12 md:col-span-12">
+        <div class="col-span-12 md:col-span-4 m10 sm10">
           <v-card shadow>
             <!-- Donation start screen -->
             <div v-if="stage === 'start'" class="flex flex-col">
@@ -624,14 +624,14 @@ export default {
       //check for signed in user
       const donor_anonymous = this?.user?.first_name !== undefined ? false : true;
       //donation details
-        const form = {
+      const form = {
                   amount: donation + fees,
                   donor_name: first_name + ' ' + last_name,
                   donor_email: email,
                   donor_anonymous,
                   campaign_id,
                   comment
-            }
+        }
       // reset form
       const resetForm = () => {
         this.stage = 'start'
@@ -639,6 +639,7 @@ export default {
       }
         // fee calculation
       let fee = donation && !isNaN(donation) ? (5 / 100) * Number(donation) * 100 : 0;
+
       //make donations
       const createDonations = async()=>{
           return this.$store.dispatch('auth/createDonation', form)

@@ -610,6 +610,248 @@ label.checkbox span.checkmark:after {
   color: #000;
 }
 
+.active-btn {
+  background: #0396c2;
+  color: #fff;
+}
+
+.paragraph {
+    width: 50%;
+    gap: 30px;
+}
+
+.paragraph > p:first-child {
+    font-size: clamp(15px, 5vw, 45px);
+    margin: 0;
+    color: rgba(0, 102, 150, var(--tw-border-opacity));
+    font-weight: bold;
+    text-align: center;
+}
+
+.paragraph > p:last-child {
+    font-size: clamp(8px, 5vw, 16px);
+    font-weight: 300;
+    color: rgb(80, 77, 77);
+    text-align: center;
+    width: 67%;
+}
+
+.space {
+  padding: 65px 0;
+}
+
+.mb-space {
+  padding: 4px 0;
+}
+
+.tag_mb {
+  border-bottom: 2px solid rgb(235 230 230);
+}
+
+.headers_content {
+    padding-bottom: 30px;
+}
+
+.headers_content > p {
+    font-size: clamp(15px, 5vw, 45px);
+    margin: 0;
+    color: rgb(15, 148, 209);
+    font-weight: bold;
+}
+
+.body_content {
+    justify-content: space-between;
+}
+
+.body_content > p {
+    font-size: clamp(8px, 5vw, 16px);
+    color: black;
+    font-weight: 300;
+}
+
+.middle_button {
+    gap: 30px;
+    justify-content: center;
+}
+
+.active {
+    background-color: rgb(15, 148, 209);
+    border-radius: 25px;
+    padding: 8px 20px;
+}
+
+.middle_but > p {
+    font-weight: 300;
+    font-size: clamp(8px, 5vw, 16px);
+    text-align: center;
+    color: #000;
+}
+
+.active > p {
+    color: #fff;
+}
+
+.action_button {
+  display: flex;
+  justify-content: flex-start !important;
+  margin-right: auto;
+  margin-top: 30px;
+}
+
+.support_showcase {
+    gap: 25px;
+    margin: 0 auto;
+}
+
+.support_showcase > img {
+    width: 15%;
+    height: 35px;
+    object-fit: contain;
+}
+
+/* marketing */
+.donor_note {
+  margin: 0 auto;
+  margin-bottom: 80px;
+}
+
+.divider {
+  padding: 20px 0;
+}
+
+.donor_con {
+  align-items: flex-start !important;
+}
+
+.donor_con > img {
+  width: clamp(100px, 30vw, 650px);
+  height: clamp(100px, 30vw, 300px);
+  border-radius: 10px;
+  object-fit: cover;
+}
+
+.mb-realtive {
+  z-index: 0;
+}
+
+.image_position:first-child {
+  position: absolute;
+}
+
+.image_position:nth-child(2) > img {
+  height: 450px;
+}
+
+.showcase-img {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+}
+
+.back-showcase {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+}
+
+.image_position > img {
+  object-fit: cover;
+}
+
+.donor_con > p:first-child {
+  font-weight: bold;
+  font-size: clamp(15px, 5vw, 35px);
+  text-align: left;
+  color: rgb(0, 0, 0);
+}
+
+.donor_con > p:nth-child(2)  {
+  font-size: clamp(8px, 5vw, 16px);
+  color: rgb(148, 148, 148);
+  font-weight: 300;
+}
+
+.donor_pay {
+  justify-content: flex-start;
+  align-self: start;
+}
+
+.donor_pay_row {
+  justify-content: flex-start;
+  align-self: start;
+  gap: 20px;
+  margin-top: 10px;
+}
+
+.donor_pay_row > p {
+  font-size: clamp(6px, 5vw, 12px);
+  font-weight: bold;
+  text-align: left;
+  color: rgb(54, 33, 101);
+}
+
+.donor_pay_row > img {
+  width: 24px;
+  height: 24px;
+}
+
+.right_camp {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  align-content: flex-end !important;
+  align-items: flex-end !important;
+}
+
+.donor_con_right > p:first-child {
+  font-weight: bold;
+  font-size: clamp(15px, 5vw, 35px);
+  text-align: left;
+  color: rgb(0, 0, 0);
+}
+
+.donor_con_right > p:nth-child(2)  {
+  font-size: clamp(8px, 5vw, 16px);
+  color: rgb(148, 148, 148);
+  font-weight: 300;
+}
+
+.reposition {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.reposition > img {
+  width: 250px;
+  border-radius: 5px;
+}
+
+.reposition:nth-child(1) > img {
+  height: 430px;
+}
+
+.reposition:nth-child(2) {
+  justify-content: center;
+}
+
+.guard_background {
+  background-color: #F2FCFF;
+  padding: 60px 0;
+}
+
+.guard {
+  background-color: rgba(0, 102, 150, 0.13);
+  padding: 60px;
+  border-radius: 300px;
+}
+
+.guard > img {
+  height: clamp(150px, 30vw, 220px);
+  width: clamp(150px, 30vw, 220px);
+  object-fit: cover;
+}
+
 @media (max-width: 340px) {
   .sm1 {
     width: 10% !important;

@@ -240,9 +240,9 @@ export const actions = {
 
   async createDonation({ commit }, form) {
     try {
+      console.log('hey', '243')
       return this.$axios.post(`/donations`, form)
       // create donations
-      //console.log(data)
     } catch (e) {
       console.log(e)
     }

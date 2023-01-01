@@ -8,7 +8,7 @@
         <div class="flex justify-start lg:mr-8">
           <a href="/home">
             <span class="sr-only">Wefundx.com</span>
-            <img class="inline-block w-8 h-8" :src="logo" />
+            <img class="inline-block w-16 h-8" :src="logo" />
           </a>
         </div>
         <div class="-mr-2 -my-2 lg:hidden">
@@ -168,15 +168,15 @@ export default {
   },
   data() {
     return {
-      logo: require('@/static/WFXSingleSingle.png'),
+      logo: require('@/static/WFXSingle.png'),
       show: false,
       menu_items: [
-        { title: 'Our Solution', link: '#' },
+        { title: 'Our Solution', link: '/solution' },
         { title: 'Support', link: '#' },
         { title: 'Developer', link: '#' },
         { title: 'Company', link: '#' },
         { title: 'Pricing', link: '#' },
-        { title: 'Start a campaign', link: '#' },
+        { title: 'Crowdfunding', link: '/home' },
       ],
     }
   },

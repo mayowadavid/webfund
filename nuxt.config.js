@@ -11,9 +11,9 @@ export default {
    ** See https://nuxtjs.org/api/configuration-head
    */
   head: {
-    title: 'Webfundx',
+    title: 'Wefundx',
     titleTemplate: (title) => {
-      return title ? `${title} - Webfundx` : 'Webfundx'
+      return title ? `${title} - Wefundx` : 'Wefundx'
     },
     meta: [
       { charset: 'utf-8' },
@@ -30,7 +30,7 @@ export default {
     isLive: ['live', 'prod', 'production'].includes(process.env.ENV),
     apiUrl: process.env.API_URL || process.env.APP_URL + '/api',
     appUrl: process.env.APP_URL,
-    appName: process.env.APP_NAME || 'Webfundx',
+    appName: process.env.APP_NAME || 'Wefundx',
     appLocale: process.env.APP_LOCALE || 'en',
     githubAuth: !!process.env.GITHUB_CLIENT_ID,
     testkey: process.env.KEY,
