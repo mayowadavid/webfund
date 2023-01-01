@@ -14,6 +14,7 @@ html {
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
   box-sizing: border-box;
+  overflow-x: hidden;
 }
 
 *,
@@ -711,8 +712,8 @@ label.checkbox span.checkmark:after {
 
 /* marketing */
 .donor_note {
-  margin: 0 auto;
   margin-bottom: 80px;
+  margin-top: 120px;
 }
 
 .divider {
@@ -739,7 +740,7 @@ label.checkbox span.checkmark:after {
 }
 
 .image_position:nth-child(2) > img {
-  height: 450px;
+  height: 480px;
 }
 
 .showcase-img {
@@ -893,6 +894,12 @@ label.checkbox span.checkmark:after {
     width: 100% !important;
 }
 
+.sm-flex-center {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center !important;
+}
+
 .sm-off {
   display: none !important;
 }
@@ -976,6 +983,16 @@ label.checkbox span.checkmark:after {
 
 .m10 {
     width: 100% !important;
+}
+
+.m-tp1 {
+  margin-top: 10%;
+}
+
+.m-flex-center {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center !important;
 }
 
 .m-off {
