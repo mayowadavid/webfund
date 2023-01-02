@@ -126,7 +126,7 @@
             <a
               v-for="(menu, index) in menu_items"
               :key="index"
-              href="#"
+              :href="menu.link"
               class="text-base font-medium text-gray-900 hover:text-gray-700"
             >
               {{ menu.title }}
