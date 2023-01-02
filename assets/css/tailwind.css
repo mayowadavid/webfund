@@ -843,13 +843,13 @@ label.checkbox span.checkmark:after {
 
 .guard {
   background-color: rgba(0, 102, 150, 0.13);
-  padding: 60px;
+  padding: clamp(40px, 5vw, 60px);
   border-radius: 300px;
 }
 
 .guard > img {
-  height: clamp(150px, 30vw, 220px);
-  width: clamp(150px, 30vw, 220px);
+  height: clamp(100px, 30vw, 220px);
+  width: clamp(100px, 30vw, 220px);
   object-fit: cover;
 }
 

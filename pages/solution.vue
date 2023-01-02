@@ -45,16 +45,16 @@
                 <p class="mb6 m10 divider">Give your donors the gift of modern, fictionless, painless fundraising,
                     integrate wefundx once and let your donor donate you how much they want
                 </p>
-                <div class="donor_pay mb5 flex_row">
-                    <div class="donor_pay_row flex_row mb5">
+                <div class="donor_pay sm10 m10 mb5 flex_row">
+                    <div class="donor_pay sm10 m10_row sm10 m10 flex_row mb5">
                         <img src="/check.png" alt="">
                         <p>Card</p>
                     </div>
-                    <div class="donor_pay_row flex_row mb5">
+                    <div class="donor_pay sm10 m10_row sm10 m10 flex_row mb5">
                         <img src="/check.png" alt="">
                         <p>Bitcoin</p>
                     </div>
-                    <div class="donor_pay_row flex_row mb5">
+                    <div class="donor_pay sm10 m10_row sm10 m10 flex_row mb5">
                         <img src="/check.png" alt="">
                         <p>Bank Account</p>
                     </div>
@@ -70,16 +70,16 @@
                 <p class="mb6 m10 divider">Your wefundx dashboard surfaces useful donors insight
                     from your donation data
                 </p>
-                <div class="donor_pay mb5 flex_row">
-                    <div class="donor_pay_row flex_row mb10">
+                <div class="donor_pay sm10 m10 mb5 flex_row">
+                    <div class="donor_pay sm10 m10_row sm10 m10 flex_row mb10">
                         <img src="/check.png" alt="">
                         <p class="mb8">see who your top donors are both in terms of numbers and donation</p>
                     </div>
-                    <div class="donor_pay_row flex_row mb10">
+                    <div class="donor_pay sm10 m10_row sm10 m10 flex_row mb10">
                         <img src="/check.png" alt="">
                         <p class="mb8">see your new and returning donor over any date range</p>
                     </div>
-                    <div class="donor_pay_row flex_row mb10">
+                    <div class="donor_pay sm10 m10_row sm10 m10 flex_row mb10">
                         <img src="/check.png" alt="">
                         <p class="mb8">see your new and returning donor over any date range</p>
                     </div>
@@ -110,16 +110,16 @@
                         on your mobile device. Monitor info such as donations, donors information, success rates and more
                     </p>
                 </div>
-                <div class="donor_pay mb10 px-4 sm:px-5 lg:px-10 flex_row">
-                    <div class="donor_pay_row flex_row mb10">
+                <div class="donor_pay sm10 m10 mb10 px-4 sm:px-5 lg:px-10 flex_row">
+                    <div class="donor_pay sm10 m10_row sm10 m10 flex_row mb10">
                         <img src="/check.png" alt="">
                         <p class="mb8">Sign up to wefundx in minutes</p>
                     </div>
-                    <div class="donor_pay_row flex_row mb10">
+                    <div class="donor_pay sm10 m10_row sm10 m10 flex_row mb10">
                         <img src="/check.png" alt="">
                         <p class="mb8">look up donations</p>
                     </div>
-                    <div class="donor_pay_row flex_row mb10">
+                    <div class="donor_pay sm10 m10_row sm10 m10 flex_row mb10">
                         <img src="/check.png" alt="">
                         <p class="mb8">Get instant support</p>
                     </div>
@@ -135,16 +135,16 @@
                     <p class="mb7 m10 divider">Paystack's combination of automated and manual
                         fraud systems protect you from fradulent transactions and associated chargeback claims.
                     </p>
-                    <div class="donor_pay mb10 flex_row mb5">
-                        <div class="donor_pay_row flex_row mb10">
+                    <div class="donor_pay sm10 m10 mb10 flex_row mb5">
+                        <div class="donor_pay sm10 m10_row sm10 m10 flex_row mb10">
                             <img src="/check.png" alt="">
                             <p class="mb8">Card</p>
                         </div>
-                        <div class="donor_pay_row flex_row mb10">
+                        <div class="donor_pay sm10 m10_row sm10 m10 flex_row mb10">
                             <img src="/check.png" alt="">
                             <p class="mb8">Bitcoin</p>
                         </div>
-                        <div class="donor_pay_row flex_row mb10">
+                        <div class="donor_pay sm10 m10_row sm10 m10 flex_row mb10">
                             <img src="/check.png" alt="">
                             <p class="mb8">Bank Account</p>
                         </div>
