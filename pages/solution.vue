@@ -61,7 +61,7 @@
                 </div>
             </div>
             <div class="donor_con showcase-img m-tp1 sm-tp1 m-flex-center sm-flex-center m10 sm10 px-4 sm:px-5 lg:px-10 mb5">
-                <img src="/lap-img.png" alt="" srcset="">
+                <img class="m10 sm10" src="/lap-img.png" alt="" srcset="">
             </div>
         </div>
         <div class="donor_note flex_row px-4 sm:px-5 lg:px-10">
@@ -96,10 +96,10 @@
         </div>
         <div class="donor_note flex_row px-4 sm:px-5 lg:px-10">
             <div class="donor_con m10 sm10 m-tp1 sm-tp1 m-flex-center sm-flex-center px-4 sm:px-5 lg:px-10 back-showcase mb-relative mb5">
-                <div class="image_position reposition mb10">
+                <div class="image_position m-flex-center sm-flex-center reposition mb10">
                     <img class="shadows" src="/mobile-front2.png" alt="" srcset="">
                 </div>
-                <div class="image_position reposition mb10">
+                <div class="image_position m-flex-center sm-flex-center reposition mb10">
                     <img class="shadows" src="/mobil-back1.png" alt="" srcset="">
                 </div>
             </div>

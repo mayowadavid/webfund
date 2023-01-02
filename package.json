@@ -1,5 +1,6 @@
 {
-  "name": "ajoo.ng",
+  "name": "wefundx",
+  "description": "platform for non profits to accept donations and crowdfund for indigents",
   "version": "1.0.0",
   "author": "Peter Odetayo",
   "license": "MIT",
