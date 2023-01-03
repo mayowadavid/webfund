@@ -88,12 +88,12 @@ export default {
         {
           title: 'Our Solution',
           links: [
-            { menu: 'NGOs', link: '#' },
-            { menu: 'Churches & Mosques', link: '#' },
-            { menu: 'Political Organization', link: '#' },
-            { menu: 'Government Agencies', link: '#' },
-            { menu: 'Student Bodies', link: '#' },
-            { menu: 'Private Organization', link: '#' },
+            { menu: 'NGOs', link: '/solution' },
+            { menu: 'Churches & Mosques', link: '/solution' },
+            { menu: 'Political Organization', link: '/solution' },
+            { menu: 'Government Agencies', link: '/solution' },
+            { menu: 'Student Bodies', link: '/solution' },
+            { menu: 'Private Organization', link: '/solution' },
           ],
         },
         {
@@ -109,9 +109,8 @@ export default {
         {
           title: 'Legal',
           links: [
-            { menu: 'Terms & Condition', link: '#' },
-            { menu: 'Privacy Policy', link: '#' },
-            { menu: 'Cookies Policy', link: '#' },
+            { menu: 'Terms & Condition', link: '/terms' },
+            { menu: 'Privacy Policy', link: '/privacy' },
             { menu: 'Wefundx usage Agreement', link: '#' },
             { menu: 'Donation Protection Guarantee', link: '#' },
           ],
@@ -119,8 +118,8 @@ export default {
         {
           title: 'Pricing',
           links: [
-            { menu: 'Processing fee for donors', link: '#' },
-            { menu: 'Processing fee for organization', link: '#' },
+            { menu: 'Processing fee for donors', link: '/pricing' },
+            { menu: 'Processing fee for organization', link: '/pricing' },
           ],
         },
         {
