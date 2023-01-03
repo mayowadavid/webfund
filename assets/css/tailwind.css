@@ -787,7 +787,7 @@ label.checkbox span.checkmark:after {
 }
 
 .donor_pay_row > p {
-  font-size: clamp(6px, 5vw, 12px);
+  font-size: clamp(6px, 5vw, 14px);
   font-weight: bold;
   text-align: left;
   color: rgb(54, 33, 101);
@@ -853,6 +853,169 @@ label.checkbox span.checkmark:after {
   height: clamp(100px, 30vw, 220px);
   width: clamp(100px, 30vw, 220px);
   object-fit: cover;
+}
+
+
+/* PRICE CARD */
+
+.pricing_wrapper {
+  margin: 0 auto;
+  justify-content: space-between !important;
+}
+
+.price_card {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 5px;
+}
+
+.active_card {
+  background-color: #0396C2;
+  padding: 45px 20px;
+}
+
+.price_title {
+  padding: 30px 0;
+  border-bottom: 1px solid rgb(223, 219, 219);
+}
+
+.price_percent {
+  padding: 40px 0;
+  border-bottom: 1px solid rgb(223, 219, 219);
+}
+
+.price_title > p {
+  font-weight: bold;
+  margin: 0 auto;
+  font-size: clamp(15px, 5vw, 22px);
+  color: #0396C2;
+}
+
+.price_percent > p {
+  font-weight: 600;
+  margin: 0 auto;
+  font-size: clamp(15px, 5vw, 35px);
+  color: rgb(0, 0, 0);
+}
+
+.price_option {
+  gap: 15px;
+  padding: 15px 0;
+  justify-content: flex-start !important;
+}
+
+.price_option > p {
+  font-size: clamp(6px, 5vw, 11px);
+  font-weight: bold;
+  text-align: left;
+  color: #0396C2;
+}
+
+.price_option > img {
+  width: 20px;
+  height: 20px;
+}
+
+.active_p > p {
+  color: #fff !important;
+}
+
+/* CHARGE CARD */
+.pricing_calculator {
+  justify-content: space-between;
+}
+
+.price_calculator {
+  background-color: #fff;
+  width: 20%;
+  padding: 20px;
+}
+
+.price_header > p {
+  font-size: clamp(6px, 5vw, 12px);
+  font-weight: bold;
+  text-align: left;
+  color: rgb(54, 33, 101);
+}
+
+.charge_title {
+  padding: 15px 0;
+}
+
+.charge_title > p {
+  font-weight: bold;
+  font-size: clamp(15px, 5vw, 22px);
+  color: #0396C2;
+}
+
+.charge_res_wrap > p {
+  font-size: clamp(6px, 5vw, 16px);
+  font-weight: bold;
+  text-align: left;
+  color: #575B68;
+}
+
+.charge_result {
+  background-color: #E1F7FE;
+  padding: 10px;
+  border-radius: 5px;
+  justify-content: space-between !important;
+}
+
+.charge_res_wrap:nth-child(2) {
+  align-items: flex-end;
+}
+
+.charge_res_wrap > p:last-child {
+  font-weight: bold;
+  font-size: clamp(15px, 5vw, 22px);
+  color: #0396C2;
+  font-weight: bold;
+}
+
+.set_up_p > p {
+  color: #0396C2;
+}
+
+.reset_border {
+  border: unset;
+}
+
+/* FAQ */
+.pricing_faq {
+  background-color: #0396C2;
+  padding: 150px 0;
+}
+
+.pricing_faq_wrapper {
+  align-content: flex-start;
+}
+
+.faq_title > P {
+  font-weight: bold;
+  font-size: clamp(15px, 15vw, 30px);
+  color: #fff;
+  font-weight: bold;
+}
+
+.faq_questions {
+  align-items: flex-start !important;
+}
+
+.faq_questions > p:first-child {
+  font-size: clamp(12px, 15vw, 24px);
+  font-weight: bold;
+  color: #fff;
+}
+
+.faq_questions > p:nth-child(2) {
+  font-size: clamp(12px, 15vw, 14px);
+  font-weight: 300;
+  color: #fff;
+}
+
+.pricing_faq_wrapper {
+  margin: 0 auto;
 }
 
 @media (max-width: 340px) {

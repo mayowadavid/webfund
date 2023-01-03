@@ -93,6 +93,7 @@ export default {
         name: '',
         amount: '',
         interval: '',
+        status: ''
       },
     }
   },
