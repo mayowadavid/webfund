@@ -1,14 +1,7 @@
 <template>
   <div class="grid grid-cols-12 md:gap-8 lg:gap-16 h-full">
     <div
-      class="
-        col-span-12
-        md:col-span-4
-        lg:col-span-5
-        md:order-last
-        mt-8
-        md:my-auto
-      "
+      class="col-span-12 md:col-span-4 lg:col-span-5 md:order-last mt-8 md:my-auto"
     >
       <div class="flex">
         <progress-circle-step
@@ -34,14 +27,7 @@
 
         <template v-slot:header>
           <h1
-            class="
-              text-center
-              md:text-left
-              text-gray-800
-              font-bold
-              leading-none
-              mb-6
-            "
+            class="text-center md:text-left text-gray-800 font-bold leading-none mb-6"
           >
             {{ titles[activeTab] }}
           </h1>
@@ -194,9 +180,10 @@
         <template v-slot:footer>
           <div v-if="activeTab === 0" class="mb-4">
             <button
-            type="submit"
-            class="btn btn-primary w-full"
-            @click.prevent="proceed">
+              type="submit"
+              class="btn btn-primary w-full"
+              @click.prevent="proceed"
+            >
               Continue
             </button>
             <nuxt-link
@@ -219,10 +206,12 @@
             </div>
             <div class="col-span-1">
               <button
-              type="submit"
-              @click.prevent="proceed"
-              class="btn btn-primary w-full"
-              >Next</button>
+                type="submit"
+                @click.prevent="proceed"
+                class="btn btn-primary w-full"
+              >
+                Next
+              </button>
             </div>
           </div>
 
@@ -275,7 +264,9 @@
             >
               <div class="cs-select" :class="classes">
                 <select v-model="form.organization_type" class="input">
-                  <option defaultValue hidden value="">Organization type</option>
+                  <option defaultValue hidden value="">
+                    Organization type
+                  </option>
                   <option
                     v-for="org_type in organization_types"
                     :key="org_type"
@@ -298,7 +289,9 @@
             >
               <div class="cs-select" :class="classes">
                 <select v-model="form.organization_category" class="input">
-                  <option defaultValue hidden value="">Organization category</option>
+                  <option defaultValue hidden value="">
+                    Organization category
+                  </option>
                   <option
                     v-for="org_cat in organization_categories"
                     :key="org_cat"
@@ -406,10 +399,7 @@
               rules="required"
             >
               <div class="cs-select" :class="classes">
-                <select
-                  v-model="form.country"
-                  class="input"
-                >
+                <select v-model="form.country" class="input">
                   <option defaultValue hidden value="">Country</option>
                   <option
                     v-for="cont in countries"
@@ -465,11 +455,7 @@
                   :disabled="!form.state"
                 >
                   <option value="">City</option>
-                  <option
-                    v-for="city in cities"
-                    :key="city"
-                    :value="city"
-                  >
+                  <option v-for="city in cities" :key="city" :value="city">
                     {{ city }}
                   </option>
                 </select>
@@ -485,9 +471,7 @@
   </div>
 </template>
 
-
 <script>
-
 export default {
   layout: 'auth',
   middleware: 'guest',
@@ -519,22 +503,22 @@ export default {
       always change this later.`,
     ],
     form: {
-      first_name: 'mayowa',
-      last_name: 'david',
-      email: 'mayowada0v0id0100@gmail.com',
-      password: '123456',
-      re_password: '123456',
-      phone_number: '08130614615',
-      organization_name: 'meger',
-      organization_type: 'tech',
-      organization_category: 'service',
-      website: 'managerbran.com',
-      description: 'test desscriptions',
-      organization_phone_number: '09130614615',
-      address: 'ibeju lekki',
-      city: 'ibeju',
-      state: 'lagos',
-      country: 'Nigeria',
+      first_name: '',
+      last_name: '',
+      email: '',
+      password: '',
+      re_password: '',
+      phone_number: '',
+      organization_name: '',
+      organization_type: '',
+      organization_category: '',
+      website: '',
+      description: '',
+      organization_phone_number: '',
+      address: '',
+      city: '',
+      state: '',
+      country: '',
     },
   }),
   methods: {
@@ -544,38 +528,36 @@ export default {
 
       const form = { ...this.form }
       // create new user and organization.
-      return  this.$store.dispatch('auth/createUser', this.form)
+      return this.$store.dispatch('auth/createUser', this.form)
     },
-    changeCities(){
-      const {state} = this.form;
-      this.states.find((s)=>{
-        if(s.name == state){
-            this.cities = s.cities;
-            return s;
+    changeCities() {
+      const { state } = this.form
+      this.states.find((s) => {
+        if (s.name == state) {
+          this.cities = s.cities
+          return s
         }
-        })
+      })
     },
     proceed() {
-      this.nextTab();
+      this.nextTab()
     },
     onSuccess(resp) {
       // data cleanup
-      console.log(resp);
-       this.$store.dispatch('auth/onSuccess', resp.data)
-       this.$store.dispatch('auth/createOrganisation', this.form)
+      console.log(resp)
+      this.$store.dispatch('auth/onSuccess', resp.data)
+      this.$store.dispatch('auth/createOrganisation', this.form)
       this.$refs.form.reset()
     },
-    onError() {
-
-    },
-    nextTab(){
-      this.activeTab += 1;
+    onError() {},
+    nextTab() {
+      this.activeTab += 1
       window.scrollTo(0, 0)
     },
-    backTab(){
-      this.activeTab -= 1;
+    backTab() {
+      this.activeTab -= 1
       window.scrollTo(0, 0)
-    }
+    },
   },
 }
 </script>

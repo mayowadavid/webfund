@@ -775,6 +775,8 @@ label.checkbox span.checkmark:after {
 .donor_pay {
   justify-content: flex-start;
   align-self: start;
+  gap: 15px;
+  margin-top: 18px;
 }
 
 .donor_pay_row {

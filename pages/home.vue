@@ -24,6 +24,7 @@
                 Start campaign
               </button>
               </a>
+              <a href="/solution">
               <button
                 class="
                   h-10 w-32 ml-2
@@ -37,6 +38,7 @@
               >
                 Learn more
               </button>
+               </a>
           </div>
         </div>
       <div class="container mx-auto px-4 sm:px-5 lg:px-10">
@@ -86,7 +88,7 @@
                     </p>
                 </div>
                 <div class="action_button">
-                  <a href="/signup">
+                  <a href="/crowdfunding">
                   <button
                       class="
                         h-10 w-32
@@ -101,6 +103,7 @@
                       Donation form
                     </button>
                   </a>
+                  <a href="/solution">
                   <button
                       class="
                         h-10 w-32 ml-2
@@ -114,6 +117,7 @@
                     >
                       Learn more
                   </button>
+                  </a>
                 </div>
             </div>
             <div class="side_action sm-tp1 m-tp1 flex_col mb5 m10 sm10 px-4 sm:px-5 lg:px-10">
@@ -146,7 +150,7 @@
                                     Donate
                                   </p>
                                 </div>
-                                <div class="org_content mb-space mb10 flex_row">
+                                <div class="org_content mb-space m8 sm8 mb10 flex_row">
                                     <div class="org_avatar flex_row mb15">
                                         <img src="/rccg.png" alt="" srcset="">
                                     </div>
@@ -189,6 +193,7 @@
               Get Started
             </button>
             </a>
+            <a href="/solution">
             <button
               class="
                 h-10 w-32 ml-2
@@ -202,6 +207,7 @@
             >
               Learn more
             </button>
+            </a>
         </div>
       </div>
     </div>

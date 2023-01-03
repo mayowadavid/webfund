@@ -533,11 +533,11 @@ export default {
       comments: [],
       reduceComment: [],
       form: {
-        donation: '5000',
-        first_name: 'mayowa',
-        last_name: 'david',
-        email: 'mayowadavid100@gmail.com',
-        comment: 'Life always finds a way. God is good and will be with you all the days of your lifes. I pray to give you the strength that you need.Im happy I could help a little.'
+        donation: '',
+        first_name: '',
+        last_name: '',
+        email: '',
+        comment: ''
       },
     }
   },

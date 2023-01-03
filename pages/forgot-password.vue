@@ -70,7 +70,7 @@ export default {
   methods: {
     proceed() {
       // Submit the form.
-      return this.$axios.post('/users/send-password-reset-email', {
+      return this.$axios.post('/users/resend-verification-email', {
         email: this.form.email,
       })
     },

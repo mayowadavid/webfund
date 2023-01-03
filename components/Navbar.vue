@@ -176,7 +176,7 @@ export default {
         { title: 'Developer', link: '#' },
         { title: 'Company', link: '#' },
         { title: 'Pricing', link: '#' },
-        { title: 'Crowdfunding', link: '/home' },
+        { title: 'Crowdfunding', link: '/crowdfunding' },
       ],
     }
   },
