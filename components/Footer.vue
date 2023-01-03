@@ -65,8 +65,8 @@
           <p class="font-bold text-lg text-[#2B384C]">Wefundx. © {{year}}</p>
 
           <div class="flex md:space-x-6 space-x-3">
-            <a href="Twitter.com/Wefundx" class="md:text-base text-sm text-[#767E85]">twitter</a>
-            <a href="Instagram.com/Wefundx" class="md:text-base text-sm text-[#767E85]">Instagam</a>
+            <a href="https://www.twitter.com/Wefundx" class="md:text-base text-sm text-[#767E85]">twitter</a>
+            <a href="https://www.Instagram.com/Wefundx" class="md:text-base text-sm text-[#767E85]">Instagam</a>
             <a href="https://www.facebook.com/profile.php?id=100088568846090&mibextid=LQQJ4d" class="md:text-base text-sm text-[#767E85]">Facebook</a>
             <a href="https://www.linkedin.com/company/wefundxng" class="md:text-base text-sm text-[#767E85]">Linkedin</a>
             <a href="#" class="md:text-base text-sm text-[#767E85]">Youtube</a>
