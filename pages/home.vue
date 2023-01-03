@@ -54,29 +54,28 @@
     <div class="middle_content space px-4 sm:px-5 lg:px-10">
         <div class="headers_content px-4 sm:px-5 lg:px-10">
             <p class="mb5 m10 sm10">
-                Delight customers with a seamless donations experience
+                {{creativeContent[contentIndex].title}}
             </p>
         </div>
         <div class="body_content mb8 flex_row px-4 sm:px-5 lg:px-10">
-            <p class="mb45 m10">Converts online donors with smart donation forms
-                augnmented with the latest digital techniques.
-                Full flexibility so you look like a pro
+            <p class="mb45 mb-5 m10">{{creativeContent[contentIndex].body}}
             </p>
-            <p class="mb45 m10">Converts online donors with smart donation forms
-                augnmented with the latest digital techniques.
-                Full flexibility so you look like a pro
+            <p class="mb45 m10">{{creativeContent[contentIndex].body}}
             </p>
         </div>
         <div class="middle_button space mb10 flex_row px-4 sm:px-5 lg:px-10">
-            <div class="middle_but active_wrap">
-                <p>Crowdfunding</p>
+            <div
+             v-for="(tab, key) in creativeContent"
+            :key="key"
+             @click="changeContent(key)" id="0" class="middle_but" :class="contentIndex == key && 'active_wrap'">
+                <p>{{tab.name}}</p>
             </div>
-            <div class="middle_but">
+            <!-- <div @click="changeContent" id="1" class="middle_but">
                 <p>Secure donations</p>
             </div>
-            <div class="middle_but">
+            <div @click="changeContent" id="2" class="middle_but">
                 <p>Manage teams</p>
-            </div>
+            </div> -->
         </div>
         <div class="call_to_action mb10 flex_row px-4 sm:px-5 lg:px-10">
             <div class="side_action flex_col mb5 m10 sm10 px-4 sm:px-5 lg:px-10">
@@ -236,6 +235,17 @@ export default {
       campaign_id: '',
       nonProfits: false,
       status: '',
+      contentIndex: 0,
+      creativeContent: [
+        {title: 'Delight customers with a seamless donations experience',
+        name: 'Crowdfunding',
+        body: 'Converts online donors with smart donation forms augnmented with the latest digital techniques. Full flexibility so you look like a pro'},
+        {title: 'Receive Donations from your Donors Securely',
+        name: 'Secure donations',
+        body: 'together with our partner, we have created a secure gateway for you to collect your donations without fear of fraud or security breach. We have chosen the best possible partners to ensure your details and that of your funds are secure from any digital breach.'},
+        {title: 'Effectively invite and manage your team members',
+        name: 'Manage Teams',
+        body: 'Our platform makes it easy for you to invite your team members for various roles as required for your non-profits to be successful'}],
       filters: ['Failed payment', 'Success payment'],
       paragragphOne: 'Payments infrastructure for fundraising and donations',
       paragragphTwo: 'Connecting a population of over 100 millions of Nigerians that has been financially excluded to the crowd of donors for their unexpected and urgent financial need'
@@ -257,6 +267,9 @@ export default {
       this.campaign = !this.campaign
       this.nonProfits = !this.nonProfits
     },
+    changeContent(value){
+      this.contentIndex = value;
+    }
   },
 }
 </script>
