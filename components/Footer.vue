@@ -15,7 +15,7 @@
               <a
                 v-for="(item_link, i) in item.links"
                 :key="i"
-                :href="item.link"
+                :href="item_link.link"
                 class="text-[#9598A3]"
                 >{{ item_link.menu }}</a
               >
@@ -35,7 +35,7 @@
               <a
                 v-for="(item_link, i) in item.links"
                 :key="i"
-                :href="item.link"
+                :href="item_link.link"
                 class="text-[#9598A3]"
                 >{{ item_link.menu }}</a
               >
