@@ -84,32 +84,26 @@
             <p>Our Team</p>
         </div>
         <div class="team_wrapper mb-tp5 mb10 flex_row">
-            <div class="team_image m-tp1 flex_col mb-p m10 sm10 mb3">
-                <img src="/banjo.jpg" alt="">
-                <p>Micheal Adebanjo</p>
-                <p>Executive Director</p>
-            </div>
-            <div class="team_image m-tp1 flex_col m10 sm10 mb-p mb3">
-                <img src="/banjo-b.jpg" alt="">
-                <p>Joshia Adebanjo</p>
-                <p>Communications Director</p>
-            </div>
-            <div class="team_image m-tp1 flex_col m10 sm10 mb-p mb3">
-                <img src="/banjo-d.jpg" alt="">
-                <p>Abideen Olamilekan</p>
-                <p>Director of Operations</p>
+            <div v-for="wef in teams" :key="wef.name" class="team_image m-tp1 flex_col mb-p m10 sm10 mb3">
+                <img :src="wef.img" alt="">
+                <p>{{wef.name}}</p>
+                <p>{{wef.role}}</p>
             </div>
         </div>
     </div>
-    </div>
+</div>
 </template>
 <script>
 export default {
   data(){
     return {
       paragragphOne: 'Platform for Donations',
-      paragragphTwo: 'Ajoo is a crowdfunding platform and a poweful tool fo social changes in Nigeria and Africa as a whole'
-
+      paragragphTwo: 'Ajoo is a crowdfunding platform and a poweful tool fo social changes in Nigeria and Africa as a whole',
+      teams: [
+        {name: 'Micheal Adebanjo', role: 'Executive Director', img: '/banjo.jpg'},
+         {name: 'Abideen Olamilekan', role: 'Director of Operations', img: '/banjo.jpg'},
+        {name: 'Joshia Adebanjo', role: 'Communications Director', img: '/banjo-d.jpg'},
+        ]
     }
   }
 }

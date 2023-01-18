@@ -1,4 +1,4 @@
-import webpack from 'webpack'
+import webpack from 'webp
 require('dotenv').config()
 export default {
   /*
@@ -13,7 +13,7 @@ export default {
   head: {
     title: 'Wefundx',
     titleTemplate: (title) => {
-      return title ? `${title} - Wefundx` : 'Wefundx'
+      return title ? `${title} - Wefundx` : 'platform for non profits to accept donations and crowdfund for indigents'
     },
     meta: [
       { charset: 'utf-8' },
