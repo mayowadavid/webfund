@@ -1,8 +1,8 @@
 <template>
   <div class="flex bg-gray-100 px-4">
     <div class="container mx-auto">
-      <div class="grid grid-cols-12 gap-10 m-gap-1 mt-10">
-        <div class="col-span-12 md:col-span-8 m10 sm10">
+      <div class="campaign_preview flex_row mb10 mt-10">
+        <div class="mb6 m10 sm10">
           <h1 class="font-bold">{{campaign.title}}</h1>
           <div class="flex flex-row divide-x divide-gray-300 my-5">
             <p class="text-gray-500 pr-4">{{campaign.created_day}}</p>
@@ -66,7 +66,7 @@
             {{campaign?.description}}
           </div>
         </div>
-        <div class="col-span-12 md:col-span-4 m10 sm10">
+        <div class="mb35 m10 sm10">
           <v-card shadow>
             <!-- Donation start screen -->
             <div v-if="stage === 'start'" class="flex flex-col">
@@ -482,40 +482,39 @@
           </v-button>
         </div>
       </div>
-
-          <div class="mt-10 mb-14">
-            <h3 class="text-2xl font-bold mb-4">Comment</h3>
-            <hr class="border-gray-300" />
-            <div
-              v-for="(com, index) in comments"
-              :key="index"
-              class="flex flex-row border-b border-gray-300 py-5 lg:pr-24"
+      <div class="mt-10 mb-14">
+        <h3 class="text-2xl font-bold mb-4">Comment</h3>
+        <hr class="border-gray-300" />
+        <div
+          v-for="(com, index) in comments"
+          :key="index"
+          class="flex flex-row border-b border-gray-300 py-5 lg:pr-24"
+        >
+          <div class="flex-inline w-10 h-10 bg-blue-200 p-2 rounded-full">
+            <svg
+              class="text-blue-500 mx-auto"
+              width="22"
+              height="22"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
             >
-              <div class="flex-inline w-10 h-10 bg-blue-200 p-2 rounded-full">
-                <svg
-                  class="text-blue-500 mx-auto"
-                  width="22"
-                  height="22"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M20.255 13.965c-.73-.64-1.613-1.194-2.628-1.645a.86.86 0 10-.698 1.57c.856.381 1.593.84 2.191 1.366a3.427 3.427 0 011.161 2.576v1.59a.86.86 0 01-.86.86H2.579a.86.86 0 01-.86-.86v-1.59c0-.989.424-1.927 1.162-2.576.868-.763 3.398-2.537 8.12-2.537a6.367 6.367 0 006.36-6.36A6.367 6.367 0 0011 0a6.367 6.367 0 00-6.36 6.36c0 2.05.976 3.875 2.486 5.04-2.764.607-4.483 1.776-5.38 2.565A5.146 5.146 0 000 17.832v1.59A2.581 2.581 0 002.578 22h16.844A2.581 2.581 0 0022 19.422v-1.59a5.146 5.146 0 00-1.745-3.867zM6.359 6.36A4.646 4.646 0 0111 1.72a4.646 4.646 0 014.64 4.64A4.646 4.646 0 0111 11a4.646 4.646 0 01-4.64-4.64z"
-                    fill="currentColor"
-                  />
-                </svg>
-              </div>
-              <div class="flex flex-col flex-grow ml-5">
-                <div class="mb-4">
-                  <p class="text-sm font-medium">{{com.donor_name}} donated ₦{{com.amount}}</p>
-                  <p class="text-xs text-gray-500 mt-1">{{com.created_day}}</p>
-                </div>
-                <p class="text-sm text-gray-600">
-                  {{com.comment}}
-                </p>
-              </div>
-            </div>
+              <path
+                d="M20.255 13.965c-.73-.64-1.613-1.194-2.628-1.645a.86.86 0 10-.698 1.57c.856.381 1.593.84 2.191 1.366a3.427 3.427 0 011.161 2.576v1.59a.86.86 0 01-.86.86H2.579a.86.86 0 01-.86-.86v-1.59c0-.989.424-1.927 1.162-2.576.868-.763 3.398-2.537 8.12-2.537a6.367 6.367 0 006.36-6.36A6.367 6.367 0 0011 0a6.367 6.367 0 00-6.36 6.36c0 2.05.976 3.875 2.486 5.04-2.764.607-4.483 1.776-5.38 2.565A5.146 5.146 0 000 17.832v1.59A2.581 2.581 0 002.578 22h16.844A2.581 2.581 0 0022 19.422v-1.59a5.146 5.146 0 00-1.745-3.867zM6.359 6.36A4.646 4.646 0 0111 1.72a4.646 4.646 0 014.64 4.64A4.646 4.646 0 0111 11a4.646 4.646 0 01-4.64-4.64z"
+                fill="currentColor"
+              />
+            </svg>
           </div>
+          <div class="flex flex-col flex-grow ml-5">
+            <div class="mb-4">
+              <p class="text-sm font-medium">{{com.donor_name}} donated ₦{{com.amount}}</p>
+              <p class="text-xs text-gray-500 mt-1">{{com.created_day}}</p>
+            </div>
+            <p class="text-sm text-gray-600">
+              {{com.comment}}
+            </p>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -715,5 +714,9 @@ export default {
 }
 .bg-message {
   background-color: #66cc70;
+}
+.campaign_preview {
+  align-items: flex-start;
+  justify-content: space-between !important;
 }
 </style>
