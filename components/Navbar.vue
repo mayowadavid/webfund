@@ -137,7 +137,7 @@
             Sign in
             </a>
             <a
-            href="#"
+            href="/crowdfunding"
             class="whitespace-nowrap btn btn-primary btn-sm flex items-center justify-center w-full"
             >
               Donate
