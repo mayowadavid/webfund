@@ -33,6 +33,44 @@ html {
 }
 
 /* managerbran10@gmail.com style */
+.mb-p-head > p {
+  font-size: clamp(15px, 5vw, 35px);
+  margin: 0;
+  color: #2B384C;
+  font-weight: bold;
+}
+
+.mb-p > p {
+  font-weight: 300;
+  font-size: clamp(8px, 5vw, 16px);
+  text-align: left;
+  color: #000;
+}
+
+.mb-item-start {
+  align-items: flex-start !important;
+}
+
+.mb-tp5 {
+  margin-top: 5% !important;
+}
+
+.mb-tp2 {
+  margin-top: 2% !important;
+}
+
+.mb-tp10 {
+  margin-top: 10% !important;
+}
+
+.mb-btm10 {
+  margin-bottom: 10% !important;
+}
+
+.mb-auto {
+  margin: 0 auto;
+}
+
 .mb10 {
   width: 100% !important;
 }
@@ -711,10 +749,6 @@ label.checkbox span.checkmark:after {
 }
 
 /* marketing */
-.donor_note {
-  margin-bottom: 80px;
-  margin-top: 120px;
-}
 
 .divider {
   padding: 20px 0;
@@ -726,7 +760,7 @@ label.checkbox span.checkmark:after {
 
 .donor_con > img {
   width: clamp(100px, 30vw, 650px);
-  height: clamp(100px, 30vw, 300px);
+  height: clamp(100px, 30vw, 400px);
   border-radius: 10px;
   object-fit: cover;
 }
@@ -776,7 +810,6 @@ label.checkbox span.checkmark:after {
   justify-content: flex-start;
   align-self: start;
   gap: 15px;
-  margin-top: 18px;
 }
 
 .donor_pay_row {
