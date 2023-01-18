@@ -99,11 +99,11 @@ export default {
         {
           title: 'Company',
           links: [
-            { menu: 'Our Stories', link: '#' },
-            { menu: 'Our Value', link: '#' },
-            { menu: 'Our Mission', link: '#' },
-            { menu: 'Our Vision', link: '#' },
-            { menu: 'Our Team', link: '#' },
+            { menu: 'Our Stories', link: '/company' },
+            { menu: 'Our Value', link: '/company' },
+            { menu: 'Our Mission', link: '/company'  },
+            { menu: 'Our Vision', link: '/company'  },
+            { menu: 'Our Team', link: '/company'  },
           ],
         },
         {
@@ -125,8 +125,8 @@ export default {
         {
           title: 'Support',
           links: [
-            { menu: 'Help desk', link: '#' },
-            { menu: 'Contact Us', link: '#' },
+            { menu: 'Help desk', link: '/support' },
+            { menu: 'Contact Us', link: '/support' },
           ],
         },
       ],
@@ -134,15 +134,15 @@ export default {
         {
           title: 'Developers',
           links: [
-            { menu: 'Overview', link: '#' },
-            { menu: 'Documentation', link: '#' },
+            { menu: 'Overview', link: '/developers' },
+            { menu: 'Documentation', link: '/documentation' },
           ],
         },
         {
           title: 'Learn',
           links: [
-            { menu: 'Tutorial Videos', link: '#' },
-            { menu: 'Sitemap', link: '#' },
+            { menu: 'Tutorial Videos', link: '/company' },
+            { menu: 'Sitemap', link: '/company' },
           ],
         },
       ],

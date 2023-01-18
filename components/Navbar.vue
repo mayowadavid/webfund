@@ -172,10 +172,10 @@ export default {
       show: false,
       menu_items: [
         { title: 'Our Solution', link: '/solution' },
-        { title: 'Support', link: '#' },
-        { title: 'Developer', link: '#' },
-        { title: 'Company', link: '#' },
-        { title: 'Pricing', link: 'pricing' },
+        { title: 'Support', link: '/support' },
+        { title: 'Developer', link: '/developers' },
+        { title: 'Company', link: '/company' },
+        { title: 'Pricing', link: '/pricing' },
         { title: 'Crowdfunding', link: '/crowdfunding' },
       ],
     }
