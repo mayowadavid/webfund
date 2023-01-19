@@ -1,6 +1,8 @@
 <template>
   <div class="w-screen lg:w-full h-full">
     <dash-navbar-mobile hide-notification />
+     <!-- Edit donation modal -->
+      <modal-image-popUp :show="edit_modal" :temporaryImage="Image" @hide="toggleEditModal" />
     <div class="px-5 md:px-8 pb-10">
       <div class="w-full">
         <div class="flex gap-6 pt-5">
@@ -236,46 +238,16 @@
               </template>
             </v-form>
           </div>
-          <div class="col-span-5 my-auto">
-            <div class="mb-6">
-              <v-alert
-                color="yellow"
-                message="1000 x 640 recommended resolution"
-                :dismissable="true"
-              />
-            </div>
-            <div class="grid grid-cols-2 gap-6">
-              <!-- <v-uploader :notice="true" :limit="upload_limit" /> -->
+          <div class="col-span-5 input-file my-auto">
+            <input type="file" id="dropFile" multiple @change="uploadImages" key="dropFile" />
+            <label for="dropFile" className='drop_label mb10 h-40 flex_column'>
               <div
-                v-for="(file, index) in Array(4).keys()"
-                :key="index"
-                class="flex border-2 rounded-lg h-40"
-                :class="{
-                  'border-blue-500': index === 0,
-                  'border-dashed border-gray-300': index !== 0,
-                }"
-              >
+                  class="flex center_item mb3 flex_row border-2 rounded-lg h-40"
+                >
                 <div
-                  class="flex-inline rounded-full bg-blue-500 w-12 h-12 m-auto"
-                  :class="{ 'pt-0.5': index !== 0 }"
+                  class="flex-inline mb-auto rounded-full bg-blue-500 w-12 h-12 m-auto"
                 >
                   <svg
-                    v-if="index !== 0"
-                    class="text-white mx-auto my-4"
-                    width="12"
-                    height="12"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      fill-rule="evenodd"
-                      clip-rule="evenodd"
-                      d="M5.5 6.5V12h1V6.5H12v-1H6.5V0h-1v5.5H0v1h5.5z"
-                      fill="currentColor"
-                    />
-                  </svg>
-                  <svg
-                    v-else
                     class="text-white mx-auto my-4"
                     width="16"
                     height="16"
@@ -288,6 +260,31 @@
                     />
                   </svg>
                 </div>
+            </div>
+            </label>
+            <div class="mb-6">
+            </div>
+            <div
+            v-if="Image.length > 0"
+            class="grid grid-cols-2 gap-6">
+              <!-- <v-uploader :notice="true" :limit="upload_limit" /> -->
+              <div
+                @click.prevent="toggleEditModal"
+                v-for="(file, index) in Image"
+                :key="index"
+                class="flex position-image border-2 rounded-lg h-40"
+                :class="{
+                  'border-blue-500': index === 0,
+                  'border-dashed border-gray-300': index !== 0,
+                }"
+              >
+              <svg @click.prevent="removeImage(index)" width="19" height="19" viewBox="0 0 19 19" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M15.3 7.5C15.3 7.5 14.9 12.8 14.6 15.1C14.5 16.2 13.8 16.8 12.7 16.8C10.6 16.8 8.6 16.8 6.5 16.8C5.5 16.8 4.8 16.1 4.7 15.1C4.4 12.8 4 7.5 4 7.5" fill="#F70606"/>
+              <path d="M16.4 4.90002H3" stroke="#FF2507" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M13.8 4.89998C13.2 4.89998 12.6 4.49998 12.5 3.89998L12.3 2.89998C12.2 2.49998 11.8 2.09998 11.3 2.09998H8C7.5 2.09998 7.1 2.39998 7 2.89998L6.8 3.89998C6.7 4.49998 6.1 4.89998 5.5 4.89998" fill="white"/>
+              <path d="M13.8 4.89998C13.2 4.89998 12.6 4.49998 12.5 3.89998L12.3 2.89998C12.2 2.49998 11.8 2.09998 11.3 2.09998H8C7.5 2.09998 7.1 2.39998 7 2.89998L6.8 3.89998C6.7 4.49998 6.1 4.89998 5.5 4.89998" stroke="#F90808" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              <img class="mb10 h-40 rounded-lg m-auto flex-inline" :src="file" alt="" >
               </div>
             </div>
           </div>
@@ -307,6 +304,9 @@ export default {
     campaign_types: ['crowdfunding'],
     intervals: ['weekly', 'monthly', 'yearly'],
     plans: [],
+    Image: [],
+    err: '',
+    edit_modal: false,
     form: {
       campaign_type: '',
       title: '',
@@ -340,6 +340,59 @@ export default {
   },
   methods: {
     updateCampaign() {},
+    toggleEditModal() {
+      this.edit_modal = !this.edit_modal;
+    },
+    uploadImages(e) {
+      e.preventDefault();
+        const {name, files} = e.target;
+        let types = ['image/jpeg', 'image/png'];
+        if(files){
+            let allFile = [...files];
+            let FileSize = "5000000";
+            let result = allFile.filter((f)=>{
+                return types.some((s)=>{
+                   return (f.type == s) && (f.size <= FileSize );
+                })
+            });
+           result.length <= 0 && (err = "unsupported image type* accepted image jpg/png or file size is greater than 5mb");
+           const temporaryUrl = result.length > 0 && result.map((f)=>{
+                let url = URL.createObjectURL(f);
+                return url;
+           });
+           result.length > 0 && (this.Image = temporaryUrl);
+           temporaryUrl.length > 0 && (this.Image = temporaryUrl);
+        }
+    },
+    removeImage(i) {
+      this.Image.splice(i, 1);
+    }
   },
 }
 </script>
+<style>
+  .center_item {
+    justify-content: center;
+  }
+
+  .input-file > input {
+    display: none;
+  }
+
+  .position-image {
+    position: relative;
+  }
+
+  .position-image > img {
+    object-fit: cover;
+  }
+
+  .position-image > svg {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 20px;
+    height: 20px;
+  }
+
+</style>

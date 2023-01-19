@@ -1051,6 +1051,43 @@ label.checkbox span.checkmark:after {
   margin: 0 auto;
 }
 
+/* Modals */
+.imagePreview {
+  width: 100%;
+  text-align: center;
+  position: relative;
+}
+
+.arrowContainer {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+.imagePreview > img {
+  width: clamp(340px, 40vw, 500px);
+  height: clamp(340px, 40vw, 500px);
+  object-fit: cover;
+}
+
+.arrows {
+  width: 50%;
+}
+
+.arrows:nth-child(2) {
+  justify-content: flex-end !important;
+}
+
+.arrows > img {
+  padding: 50% 4px;
+  background-color: var(--secondary-color);
+}
+
+.arrows > img:nth-child(2) {
+  top: 50%;
+  right: 5%;
+}
+
 @media (max-width: 340px) {
   .sm1 {
     width: 10% !important;
