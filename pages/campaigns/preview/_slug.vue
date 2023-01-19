@@ -601,8 +601,34 @@ export default {
   methods: {
     socialShare(e){
       e.preventDefault();
-       const {id} = e.path.li;
-      console.log(id)
+      const {id} = e.path[1];
+      switch(id){
+        case 'share':
+          return navigator.share({
+            title: this.campaign.title,
+            text: 'find more campaign on wefundx',
+            url: `/campaigns/preview/${this.campaign.id}`,
+          });
+        break;
+        case 'whatsapp':
+          return window.open(`whatsapp://send?text=/campaigns/preview/${this.campaign.id}`);
+          break;
+        case 'mail':
+          return window.open('mailto:');
+          break;
+        case 'telegram':
+          return window.open(`https://t.me/share/url?url=/campaigns/preview/${this.campaign.id}&text=find more campaign on wefundx`);
+          break;
+        case 'twitter':
+          return window.open(`https://twitter.com/share?text=${
+            this.campaign.title
+            }text&url=/campaigns/preview/${this.campaign.id}`);
+            break;
+        case 'facebook':
+          return window.open(`https://www.facebook.com/sharer.php?u=/campaigns/preview/${this.campaign.id}`);
+            break;
+            default:
+      }
     },
     goBackToStage(stage) {
       this.stage = stage || 'start'
