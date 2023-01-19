@@ -101,8 +101,8 @@ export default {
       paragragphTwo: 'Ajoo is a crowdfunding platform and a poweful tool fo social changes in Nigeria and Africa as a whole',
       teams: [
         {name: 'Micheal Adebanjo', role: 'Executive Director', img: '/banjo.jpg'},
-         {name: 'Abideen Olamilekan', role: 'Director of Operations', img: '/banjo.jpg'},
-        {name: 'Joshia Adebanjo', role: 'Communications Director', img: '/banjo-d.jpg'},
+         {name: 'Abideen Olamilekan', role: 'Director of Operations', img: '/banjo-d.jpg'},
+        {name: 'Joshua Adebanjo', role: 'Communications Director', img: '/banjo-b.jpg'},
         ]
     }
   }

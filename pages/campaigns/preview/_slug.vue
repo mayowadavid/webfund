@@ -153,9 +153,6 @@
                   <p class="text-xs text-gray-500">an hour ago</p>
                 </div>
               </div>
-              <v-button variant="light" block size="sm" class="mt-2 mb-5">
-                See all
-              </v-button>
               <div>
                 <div class="text-sm font-medium mb-2">Share via</div>
                 <p class="text-sm text-gray-500">
@@ -165,8 +162,9 @@
               </div>
               <div class="mt-5">
                 <ul class="flex flex-row gap-3 w-max">
-                  <li class="share-icon bg-gray-200">
+                  <li @click="socialShare" id="share" class="share-icon bg-gray-200">
                     <svg
+                      id="share"
                       class="mx-auto my-auto"
                       width="18"
                       height="18"
@@ -179,8 +177,9 @@
                       />
                     </svg>
                   </li>
-                  <li class="share-icon bg-whatsapp">
+                  <li @click="socialShare" id="whatsapp" class="share-icon bg-whatsapp">
                     <svg
+                      id="whatsapp"
                       class="mx-auto my-auto"
                       width="18"
                       height="18"
@@ -197,8 +196,9 @@
                       />
                     </svg>
                   </li>
-                  <li class="share-icon bg-gray-200">
+                  <li @click="socialShare" id="mail" class="share-icon bg-gray-200">
                     <svg
+                      id="mail"
                       class="mx-auto my-auto"
                       width="24"
                       height="18"
@@ -231,8 +231,9 @@
                       />
                     </svg>
                   </li>
-                  <li class="share-icon bg-twitter">
+                  <li @click="socialShare" id="twitter" class="share-icon bg-twitter">
                     <svg
+                      id="twitter"
                       class="mx-auto my-auto"
                       width="22"
                       height="18"
@@ -245,8 +246,9 @@
                       />
                     </svg>
                   </li>
-                  <li class="share-icon bg-telegram">
+                  <li @click="socialShare" id="telegram" class="share-icon bg-telegram">
                     <svg
+                      id="telegram"
                       class="mx-auto my-auto"
                       width="22"
                       height="18"
@@ -259,8 +261,9 @@
                       />
                     </svg>
                   </li>
-                  <li class="share-icon bg-message">
+                  <li @click="socialShare" id="message" class="share-icon bg-message">
                     <svg
+                      id="message"
                       class="mx-auto my-auto"
                       width="20"
                       height="18"
@@ -596,6 +599,11 @@ export default {
       document.head.appendChild(paystack)
   },
   methods: {
+    socialShare(e){
+      e.preventDefault();
+       const {id} = e.path.li;
+      console.log(id)
+    },
     goBackToStage(stage) {
       this.stage = stage || 'start'
     },
@@ -691,8 +699,6 @@ export default {
     },
     onSuccess() {},
     onSubmit() {
-
-
 
     },
   },

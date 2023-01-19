@@ -2,37 +2,25 @@
   <div>
     <div class="w-full bg-[#F7F7F8]">
       <div class="container px-4 sm:px-5 lg:px-10 mx-auto py-8 md:py-12">
-        <div class="flex flex-wrap justify-between items-start mb-10">
+        <div class="flex footer-position flex-wrap items-start mb-10">
           <div
             v-for="(item, index) in menu_items_1"
-            class="md:w-1/5 w-1/2 md:mb-0 mb-3"
+            class="mb2 sm5 m5"
             :key="index"
           >
           <a :href="item.link"
                 class="text-[#9598A3]"
                 >
-            <h4 class="tetx-lg font-bold text-[#575B68] mb-2">
+            <h6 class="tetx-lg font-bold text-[#575B68] mb-2">
               {{ item.title }}
-            </h4></a>
+            </h6></a>
           </div>
         </div>
         <div class="flex flex-wrap justify-start items-start mb-5">
-          <div
-            v-for="(item, index) in menu_items_2"
-            class="md:w-1/5 w-1/2 md:mb-0 mb-3"
-            :key="index">
-            <a
-            :href="item.link"
-            class="text-[#9598A3]"
-            >
-            <h4 class="tetx-lg font-bold text-[#575B68] mb-2">
-              {{ item.title }}
-            </h4></a>
-          </div>
           <div class="md:w-1/5 w-1/2 md:mb-0 mb-3">
-            <h4 class="tetx-lg font-bold text-[#575B68] mb-2">
+            <h6 class="tetx-lg font-bold text-[#575B68] mb-2">
               {{ contact_items.title }}
-            </h4>
+            </h6>
             <div class="flex flex-col space-y-3">
               <a
                 v-for="(item, i) in contact_items.items"
@@ -73,13 +61,11 @@ export default {
       menu_items_1: [
         { title: 'Our Solution', link: '/solution' },
         { title: 'Company', link: '/company' },
+        { title: 'Developers', link: '/developers' },
         { title: 'Legal', link: '/terms' },
+        { title: 'Policy', link: '/privacy' },
         { title: 'Pricing', link: '/pricing' },
         { title: 'Support', link: '/support' },
-      ],
-      menu_items_2: [
-        { title: 'Developers', link: '/developers' },
-        { title: 'Learn', link: '/company' },
       ],
       contact_items: {
         title: 'Contact',
@@ -96,3 +82,8 @@ export default {
   }
 }
 </script>
+<style>
+.footer-position {
+ justify-content: flex-start !important;
+}
+</style>
