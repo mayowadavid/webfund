@@ -391,6 +391,7 @@ export default {
                 })
             });
            result.length <= 0 && (err = "unsupported image type* accepted image jpg/png or file size is greater than 5mb", dismissable = true);
+           this.files = [...result];
            const temporaryUrl = result.length > 0 && result.map((f)=>{
                 let url = URL.createObjectURL(f);
                 return url;
