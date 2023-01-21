@@ -13,7 +13,7 @@
           </div>
           <notifications />
         </div>
-        <hr class="w-full hidden lg:flex mt-3" />
+        <hr class="w-full hidden lg:flex mb-3 mt-3" />
         <div class="sm:grid grid-cols-12 gap-x-12">
           <div class="col-span-12 md:col-span-10 lg:col-span-7">
             <v-form
@@ -22,6 +22,8 @@
               class="pt-8"
               :loading.sync="loading"
               :on-submit="updateCampaign"
+              :on-success="onSuccess"
+              success-message="Campaign updated successful"
             >
               <div class="mb-6">
                 <p class="text-sm text-gray-500 max-w-sm leading-6 font-normal">
@@ -135,6 +137,21 @@
                       </span>
                     </validation-provider>
                   </div>
+                  <div class="form-group mb-5">
+                    <validation-provider
+                      v-slot="{ errors, classes }"
+                      name="end date"
+                      rules="required"
+                    >
+                      <label for="input-end_date">End Date</label>
+                      <div class="cs-select" :class="classes">
+                        <input v-model="form.end_date" class="form-input" type="date"/>
+                      </div>
+                      <span v-show="errors.length" class="is-invalid">
+                        {{ errors[0] }}
+                      </span>
+                    </validation-provider>
+                  </div>
                 </div>
                 <div class="flex flex-col">
                   <div class="form-group mb-5">
@@ -214,21 +231,6 @@
                       </span>
                     </validation-provider>
                   </div>
-                  <div class="form-group mb-5">
-                    <validation-provider
-                      v-slot="{ errors, classes }"
-                      name="end date"
-                      rules="required"
-                    >
-                      <label for="input-end_date">End Date</label>
-                      <div class="cs-select" :class="classes">
-                        <input v-model="form.end_date" class="form-input" type="date"/>
-                      </div>
-                      <span v-show="errors.length" class="is-invalid">
-                        {{ errors[0] }}
-                      </span>
-                    </validation-provider>
-                  </div>
                 </div>
               </div>
               <template v-slot:footer>
@@ -239,6 +241,11 @@
             </v-form>
           </div>
           <div class="col-span-5 input-file my-auto">
+             <v-alert
+                color="yellow"
+                :message="err"
+                :dismissable="dismissable"
+              />
             <input type="file" id="dropFile" multiple @change="uploadImages" key="dropFile" />
             <label for="dropFile" className='drop_label mb10 h-40 flex_column'>
               <div
@@ -249,13 +256,15 @@
                 >
                   <svg
                     class="text-white mx-auto my-4"
-                    width="16"
-                    height="16"
+                    width="12"
+                    height="12"
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
                   >
                     <path
-                      d="M14.088 1.326a2.25 2.25 0 00-3.182 0l-8.92 8.92a.5.5 0 00-.128.22L.685 14.7a.5.5 0 00.615.615l4.235-1.173a.499.499 0 00.22-.128l8.92-8.92a2.252 2.252 0 000-3.182l-.587-.586zM3.076 10.57l7.3-7.3 2.354 2.354-7.3 7.3-2.354-2.354zm-.47.944l1.88 1.88-2.601.722.72-2.602zm11.361-7.127l-.53.53-2.354-2.354.53-.53a1.25 1.25 0 011.768 0l.586.586c.488.489.488 1.28 0 1.768z"
+                      fill-rule="evenodd"
+                      clip-rule="evenodd"
+                      d="M5.5 6.5V12h1V6.5H12v-1H6.5V0h-1v5.5H0v1h5.5z"
                       fill="currentColor"
                     />
                   </svg>
@@ -306,6 +315,7 @@ export default {
     plans: [],
     Image: [],
     err: '',
+    dismissable: false,
     edit_modal: false,
     form: {
       campaign_type: '',
@@ -339,7 +349,32 @@ export default {
     this.$store.dispatch('app/fetchPlan');
   },
   methods: {
-    updateCampaign() {},
+    async updateCampaign() {
+      const {
+        type,
+      title,
+      description,
+      start_date,
+      end_date,
+      campaign_target,
+      plan_id
+      } = this.form;
+
+      const formData = {
+        campaign_type: type,
+        title,
+        description,
+        campaign_target,
+        start_date,
+        end_date,
+        plan_id
+      };
+      const data = {id: this.$route.params.id, files};
+
+      await this.$store.dispatch('auth/uploadCampaignPhoto', data);
+      //update campaign
+      return this.$store.dispatch('auth/updateCampaign', formData);
+    },
     toggleEditModal() {
       this.edit_modal = !this.edit_modal;
     },
@@ -355,7 +390,7 @@ export default {
                    return (f.type == s) && (f.size <= FileSize );
                 })
             });
-           result.length <= 0 && (err = "unsupported image type* accepted image jpg/png or file size is greater than 5mb");
+           result.length <= 0 && (err = "unsupported image type* accepted image jpg/png or file size is greater than 5mb", dismissable = true);
            const temporaryUrl = result.length > 0 && result.map((f)=>{
                 let url = URL.createObjectURL(f);
                 return url;
@@ -366,33 +401,10 @@ export default {
     },
     removeImage(i) {
       this.Image.splice(i, 1);
+    },
+    onSuccess(resp){
+      console.log(resp)
     }
   },
 }
 </script>
-<style>
-  .center_item {
-    justify-content: center;
-  }
-
-  .input-file > input {
-    display: none;
-  }
-
-  .position-image {
-    position: relative;
-  }
-
-  .position-image > img {
-    object-fit: cover;
-  }
-
-  .position-image > svg {
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 20px;
-    height: 20px;
-  }
-
-</style>

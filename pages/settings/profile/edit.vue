@@ -141,7 +141,6 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
 import parseMobile from 'libphonenumber-js/mobile'
 
 export default {
@@ -183,17 +182,6 @@ export default {
     },
   },
 
-   computed: {
-      ...mapState({
-      orgData: (state) => state.auth.org,
-    })
-  },
-  watch: {
-    orgData(newValue, oldValue){
-        this.form = {...this.form, phone_number: newValue.phone};
-    }
-  },
-
   mounted() {
     // fetch roles
      this.$store.dispatch('auth/fetchOrganization');
@@ -201,15 +189,15 @@ export default {
         fullname,
         email,
         role,
-        } = this.$store.getters['auth/user'];;
+        organisation: { phone },
+        } = this.$store.getters['auth/user'];
         const splits = fullname.split(' ');
-
         this.form = {
           first_name: splits[0],
           last_name: splits[1],
           email,
           role,
-          phone: ''
+          phone_number: phone,
         }
   },
 

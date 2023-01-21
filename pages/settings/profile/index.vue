@@ -43,7 +43,7 @@
                     Phone Number
                   </p>
                   <p class="text-base text-gray-900 leading-6 font-semibold">
-                    {{ user?.phone }}
+                    {{ user?.organisation?.phone }}
                   </p>
                 </div>
 
@@ -107,24 +107,13 @@ export default {
       fullname: '',
       email: '',
       role: '',
-      phone: ''
     },
   }),
-  computed: {
-      ...mapState({
-      orgData: (state) => state.auth.org,
-    })
-  },
-  watch: {
-    orgData(newValue, oldValue){
-        this.user = {...this.user, phone: newValue.phone};
-    }
-  },
   mounted(){
-   this.user = {...this.user, ...this.$store.getters['auth/user']};
+    let userData = this.$store.getters['auth/user'];
+    this.user = userData
    // fetch org
     this.$store.dispatch('auth/fetchOrganization');
-   console.log(this.user)
   },
 }
 </script>

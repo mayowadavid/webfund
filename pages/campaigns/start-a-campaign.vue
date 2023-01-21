@@ -1,6 +1,8 @@
 <template>
   <div class="w-screen lg:w-full h-full">
     <dash-navbar-mobile hide-notification />
+     <!-- Edit donation modal -->
+      <modal-image-popUp :show="edit_modal" :temporaryImage="Image" @hide="toggleEditModal" />
     <div class="px-5 md:px-8 pb-10">
       <div class="w-full">
         <div class="flex gap-6 pt-5">
@@ -11,7 +13,7 @@
           </div>
           <notifications />
         </div>
-        <hr class="w-full hidden lg:flex mt-3" />
+        <hr class="w-full hidden lg:flex mb-3 mt-3" />
         <div class="sm:grid grid-cols-12 gap-x-12">
           <div class="col-span-12 md:col-span-10 lg:col-span-7">
             <v-form
@@ -20,6 +22,8 @@
               class="pt-8"
               :loading.sync="loading"
               :on-submit="addCampaign"
+              :on-success="onSuccess"
+              success-message="Campaign created successful"
             >
               <div class="mb-6">
                 <p class="text-sm text-gray-500 max-w-sm leading-6 font-normal">
@@ -118,7 +122,7 @@
                       </span>
                     </validation-provider>
                   </div>
-                  <div class="form-group mb-5">
+                   <div class="form-group mb-5">
                     <validation-provider
                       v-slot="{ errors, classes }"
                       name="start date"
@@ -127,6 +131,21 @@
                       <label for="input-start_date">Start Date</label>
                       <div class="cs-select" :class="classes">
                         <input v-model="form.start_date" class="form-input" type="date"/>
+                      </div>
+                      <span v-show="errors.length" class="is-invalid">
+                        {{ errors[0] }}
+                      </span>
+                    </validation-provider>
+                  </div>
+                  <div class="form-group mb-5">
+                    <validation-provider
+                      v-slot="{ errors, classes }"
+                      name="end date"
+                      rules="required"
+                    >
+                      <label for="input-end_date">End Date</label>
+                      <div class="cs-select" :class="classes">
+                          <input v-model="form.end_date" class="form-input" type="date"/>
                       </div>
                       <span v-show="errors.length" class="is-invalid">
                         {{ errors[0] }}
@@ -157,55 +176,30 @@
                       </validation-provider>
                     </div>
                   </div>
-                  <div class="form-group mb-5">
-                    <validation-provider
-                      v-slot="{ errors, classes }"
-                      name="end date"
-                      rules="required"
-                    >
-                      <label for="input-end_date">End Date</label>
-                      <div class="cs-select" :class="classes">
-                          <input v-model="form.end_date" class="form-input" type="date"/>
-                      </div>
-                      <span v-show="errors.length" class="is-invalid">
-                        {{ errors[0] }}
-                      </span>
-                    </validation-provider>
-                  </div>
                 </div>
               </div>
               <template v-slot:footer>
                 <div class="mt-6 mb-4">
-                  <button @click.prevent="addCampaign" :loading="loading" class="btn btn-primary">Save &amp; Continue</button>
+                  <v-button :loading="loading" class="btn btn-primary">Save &amp; Continue</v-button>
                 </div>
               </template>
             </v-form>
           </div>
-          <div class="col-span-5 my-auto">
-            <div class="mb-6">
-              <v-alert
+          <div class="col-span-5 input-file my-auto">
+            <v-alert
                 color="yellow"
-                message="1000 x 640 recommended resolution"
-                :dismissable="true"
+                :message="err"
+                :dismissable="dismissable"
               />
-            </div>
-            <div class="grid grid-cols-2 gap-6">
-              <!-- <v-uploader :notice="true" :limit="upload_limit" /> -->
+            <input type="file" id="dropFile" multiple @change="uploadImages" key="dropFile" />
+            <label for="dropFile" className='drop_label mb10 h-40 flex_column'>
               <div
-                v-for="(file, index) in Array(4).keys()"
-                :key="index"
-                class="flex border-2 rounded-lg h-40"
-                :class="{
-                  'border-blue-500': index === 0,
-                  'border-dashed border-gray-300': index !== 0,
-                }"
-              >
-                <div
-                  class="flex-inline rounded-full bg-blue-500 w-12 h-12 m-auto"
-                  :class="{ 'pt-0.5': index !== 0 }"
+                  class="flex center_item mb3 flex_row border-2 rounded-lg h-40"
                 >
-                  <svg
-                    v-if="index !== 0"
+                <div
+                  class="flex-inline mb-auto rounded-full bg-blue-500 w-12 h-12 m-auto"
+                >
+                   <svg
                     class="text-white mx-auto my-4"
                     width="12"
                     height="12"
@@ -219,20 +213,32 @@
                       fill="currentColor"
                     />
                   </svg>
-                  <svg
-                    v-else
-                    class="text-white mx-auto my-4"
-                    width="16"
-                    height="16"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M14.088 1.326a2.25 2.25 0 00-3.182 0l-8.92 8.92a.5.5 0 00-.128.22L.685 14.7a.5.5 0 00.615.615l4.235-1.173a.499.499 0 00.22-.128l8.92-8.92a2.252 2.252 0 000-3.182l-.587-.586zM3.076 10.57l7.3-7.3 2.354 2.354-7.3 7.3-2.354-2.354zm-.47.944l1.88 1.88-2.601.722.72-2.602zm11.361-7.127l-.53.53-2.354-2.354.53-.53a1.25 1.25 0 011.768 0l.586.586c.488.489.488 1.28 0 1.768z"
-                      fill="currentColor"
-                    />
-                  </svg>
                 </div>
+            </div>
+            </label>
+            <div class="mb-6">
+            </div>
+            <div
+            v-if="Image.length > 0"
+            class="grid grid-cols-2 gap-6">
+              <!-- <v-uploader :notice="true" :limit="upload_limit" /> -->
+              <div
+                @click.prevent="toggleEditModal"
+                v-for="(file, index) in Image"
+                :key="index"
+                class="flex position-image border-2 rounded-lg h-40"
+                :class="{
+                  'border-blue-500': index === 0,
+                  'border-dashed border-gray-300': index !== 0,
+                }"
+              >
+              <svg @click.prevent="removeImage(index)" width="19" height="19" viewBox="0 0 19 19" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M15.3 7.5C15.3 7.5 14.9 12.8 14.6 15.1C14.5 16.2 13.8 16.8 12.7 16.8C10.6 16.8 8.6 16.8 6.5 16.8C5.5 16.8 4.8 16.1 4.7 15.1C4.4 12.8 4 7.5 4 7.5" fill="#F70606"/>
+              <path d="M16.4 4.90002H3" stroke="#FF2507" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M13.8 4.89998C13.2 4.89998 12.6 4.49998 12.5 3.89998L12.3 2.89998C12.2 2.49998 11.8 2.09998 11.3 2.09998H8C7.5 2.09998 7.1 2.39998 7 2.89998L6.8 3.89998C6.7 4.49998 6.1 4.89998 5.5 4.89998" fill="white"/>
+              <path d="M13.8 4.89998C13.2 4.89998 12.6 4.49998 12.5 3.89998L12.3 2.89998C12.2 2.49998 11.8 2.09998 11.3 2.09998H8C7.5 2.09998 7.1 2.39998 7 2.89998L6.8 3.89998C6.7 4.49998 6.1 4.89998 5.5 4.89998" stroke="#F90808" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              <img class="mb10 h-40 rounded-lg m-auto flex-inline" :src="file" alt="" >
               </div>
             </div>
           </div>
@@ -251,8 +257,13 @@ export default {
     loading: false,
     upload_limit: 4,
     campaign_types: ['crowdfunding'],
+    Image: [],
+    err: '',
+    dismissable: false,
+    edit_modal: false,
     org_cat:[],
     plans: [],
+    files: [],
     form: {
       type: '',
       title: '',
@@ -290,8 +301,7 @@ export default {
       campaign_target,
       plan_id
       } = this.form;
-
-      this.$axios.post(`/campaigns`, {
+      const formData = {
         campaign_type: type,
         title,
         description,
@@ -299,10 +309,44 @@ export default {
         start_date,
         end_date,
         plan_id
-      }).then((data)=>{
-        console.log(data);
-      })
+      };
+      //create campaign
+      return this.$store.dispatch('auth/createCampaign', formData);
     },
+    toggleEditModal() {
+      this.edit_modal = !this.edit_modal;
+    },
+    uploadImages(e) {
+      e.preventDefault();
+        const {name, files} = e.target;
+        let types = ['image/jpeg', 'image/png'];
+        if(files){
+            let allFile = [...files];
+            let FileSize = "5000000";
+            let result = allFile.filter((f)=>{
+                return types.some((s)=>{
+                   return (f.type == s) && (f.size <= FileSize );
+                })
+            });
+            this.files = [...result];
+           result.length <= 0 && (err = "unsupported image type* accepted image jpg/png or file size is greater than 5mb", dismissable= true);
+           const temporaryUrl = result.length > 0 && result.map((f)=>{
+                let url = URL.createObjectURL(f);
+                return url;
+           });
+           result.length > 0 && (this.Image = temporaryUrl);
+           temporaryUrl.length > 0 && (this.Image = temporaryUrl);
+        }
+    },
+    submitCampaignImage(){
+
+    },
+    removeImage(i) {
+      this.Image.splice(i, 1);
+    },
+    onSuccess(resp){
+      console.log(resp)
+    }
   },
 }
 </script>

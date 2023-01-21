@@ -10,7 +10,7 @@
           </div>
           <notifications />
         </div>
-        <hr class="w-full hidden lg:flex mt-3" />
+        <hr class="w-full hidden lg:flex mb-3 mt-3" />
         <div class="flex flex-wrap mt-3">
           <div class="flex flex-row flex-grow gap-5 mr-8 md:mb-0 mb-4">
             <v-filter v-model="status" label="Status" :filters="filters" />

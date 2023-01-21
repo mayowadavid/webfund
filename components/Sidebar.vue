@@ -222,7 +222,6 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import { mapState } from 'vuex';
 export default {
   data: () => ({
     userMenu: false,
@@ -243,18 +242,10 @@ export default {
   }),
 
   computed: {
-      ...mapState({
-      orgData: (state) => state.auth.org,
-    }),
    ...mapGetters({
     menu: 'app/menu',
     user: 'auth/user',
   })
-  },
-  watch: {
-    orgData(newValue, oldValue){
-      this.org = newValue;
-    }
   },
   mounted() {
     // reset errors
@@ -262,6 +253,9 @@ export default {
 
     // fetch org
     this.$store.dispatch('auth/fetchOrganization');
+    let userData = this.$store.getters['auth/user'];
+    const {organisation} = userData;
+    this.org = organisation;
   },
 
   methods: {

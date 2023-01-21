@@ -3,7 +3,7 @@
     <dash-navbar-mobile />
     <div class="px-6 md:px-6 lg:px-10 xl:px-16">
       <topbar-progress
-        :title="`Hi, ${username}`"
+        :title="`Hi, ${user.fullname}`"
         sub-title="Whether you're just starting out or ready to grow your nonprofit's fundraising, we've got it covered."
         progress="4"
         class="mb-6 md:mb-12"
@@ -137,6 +137,9 @@ export default {
   layout: 'dashboard',
   data: () => ({
     activeTab: 0,
+    user: {
+      fullname: ''
+    },
     tabs: ['Donations', 'Campaigns', 'Donor', 'Payout'],
     tabsData: [
       {
@@ -169,11 +172,9 @@ export default {
   computed: {
     ...mapState({
       title: (state) => state.app.pageTitle,
-      user: (state) => state.auth.user,
+      orgData: (state) => state.auth.org,
+      reportData: (state) => state.auth.report,
     }),
-    username() {
-      return _.get(this.user, 'first_name', 'Profile name')
-    },
     chartStyles() {
       return {
         maxWidth: '100%',
@@ -311,6 +312,19 @@ export default {
         },
       }
     },
+  },
+  watch: {
+  orgData(newValue, oldValue){
+      },
+  reportData(newValue, oldValue){
+  }
+    },
+  mounted(){
+   this.user = {...this.user, ...this.$store.getters['auth/user']};
+   // fetch org
+    this.$store.dispatch('auth/fetchOrganization');
+    // fetch report
+    this.$store.dispatch('auth/fetchOrganizationReport');
   },
 }
 </script>

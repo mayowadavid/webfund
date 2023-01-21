@@ -1088,6 +1088,31 @@ label.checkbox span.checkmark:after {
   right: 5%;
 }
 
+/* POP UP */
+.center_item {
+  justify-content: center;
+}
+
+.input-file > input {
+  display: none;
+}
+
+.position-image {
+  position: relative;
+}
+
+.position-image > img {
+  object-fit: cover;
+}
+
+.position-image > svg {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 20px;
+  height: 20px;
+}
+
 @media (max-width: 340px) {
   .sm1 {
     width: 10% !important;

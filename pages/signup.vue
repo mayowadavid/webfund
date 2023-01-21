@@ -547,7 +547,24 @@ export default {
       console.log(resp)
       this.$store.dispatch('auth/onSuccess', resp.data)
       this.$store.dispatch('auth/createOrganisation', this.form)
-      this.$refs.form.reset()
+      this.form = {
+        first_name: '',
+        last_name: '',
+        email: '',
+        password: '',
+        re_password: '',
+        phone_number: '',
+        organization_name: '',
+        organization_type: '',
+        organization_category: '',
+        website: '',
+        description: '',
+        organization_phone_number: '',
+        address: '',
+        city: '',
+        state: '',
+        country: '',
+      }
     },
     onError() {},
     nextTab() {

@@ -111,7 +111,6 @@ export default {
       })
     },
     onSuccess(resp) {
-      console.log(resp);
       this.$store.dispatch('auth/onSuccess', resp.data)
     },
   },
