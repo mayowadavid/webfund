@@ -345,7 +345,9 @@ export default {
       this.Image.splice(i, 1);
     },
     onSuccess(resp){
-      console.log(resp)
+      const {id} = resp.data.data.campaign;
+      const data = {id, files};
+      return this.$store.dispatch('auth/uploadCampaignPhoto', data);
     }
   },
 }

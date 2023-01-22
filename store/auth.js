@@ -88,8 +88,15 @@ export const actions = {
       await dispatch('saveToken', {
         user,
       })
-      // Redirect home.
+
+      if(user.role == 'admin'){
+          // Redirect home.
+      this.$router.push('/admin-view')
+      }else {
+        // Redirect admin view.
       this.$router.push('/')
+      }
+
     } else {
       let user = data.data;
       await dispatch('saveToken', {
@@ -118,7 +125,7 @@ export const actions = {
     this.$axios
       .get(`/organisations`)
       .then(({ data }) => {
-        commit('SET_ALL_ORGANIZATION', data.data.organisation)
+        commit('SET_ALL_ORGANIZATION', data.data.organisations)
       })
   },
   fetchOrganizationReport({ commit, state }) {

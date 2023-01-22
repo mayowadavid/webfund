@@ -27,7 +27,42 @@
                       <th scope="col" class="px-6">Category</th>
                     </tr>
                   </thead>
-                  
+                  <tbody class="bg-white divide-y divide-gray-200">
+                    <tr
+                      v-for="(org, index) in allOrg"
+                      :key="index"
+                      class="cursor-pointer"
+                      @click.prevent="$router.push('/')"
+                    >
+                      <td class="pr-6">
+                        <span
+                          class="status capitalize"
+                        >
+                          --
+                        </span>
+                      </td>
+                      <td class="px-6">
+                        <div class="text-base text-gray-500">
+                          {{ org.createdAt }}
+                        </div>
+                      </td>
+                      <td class="px-6">
+                        <div class="text-base font-medium text-gray-900">
+                          {{ org.name }}
+                        </div>
+                      </td>
+                      <td class="px-6">
+                        <div class="text-base font-medium text-gray-900">
+                          {{ org.phone }}
+                        </div>
+                      </td>
+                      <td class="px-6">
+                        <div class="text-base font-medium text-gray-900">
+                          {{ org.category }}
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
                 </table>
               </div>
             </div>
@@ -47,8 +82,7 @@ export default {
       request_modal: false,
       search: '',
       status: '',
-      org: [],
-      payouts: require('@/static/json/payouts.json'),
+      allOrg: [],
     }
   },
   computed: {
@@ -58,7 +92,7 @@ export default {
     })},
   watch: {
   allOrgData(newValue, oldValue){
-      console.log(newValue, '100');
+      this.allOrg = [...newValue];
     },
   },
   mounted(){

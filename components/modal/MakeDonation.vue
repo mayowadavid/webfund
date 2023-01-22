@@ -223,7 +223,6 @@ export default {
 
       //make donations
       const createDonations = ()=>{
-        console.log(form, '226')
           return this.$store.dispatch('auth/createDonation', form)
       }
 

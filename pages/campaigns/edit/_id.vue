@@ -369,9 +369,6 @@ export default {
         end_date,
         plan_id
       };
-      const data = {id: this.$route.params.id, files};
-
-      await this.$store.dispatch('auth/uploadCampaignPhoto', data);
       //update campaign
       return this.$store.dispatch('auth/updateCampaign', formData);
     },
@@ -404,7 +401,8 @@ export default {
       this.Image.splice(i, 1);
     },
     onSuccess(resp){
-      console.log(resp)
+      const data = {id: this.$route.params.id, files};
+      this.$store.dispatch('auth/uploadCampaignPhoto', data);
     }
   },
 }
