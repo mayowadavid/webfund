@@ -602,7 +602,7 @@ export default {
     socialShare(e){
       e.preventDefault();
       const {id} = e.path[1];
-      const url = this.$config.appUrl;
+      const url = 'https://www.wefundx.com';
       switch(id){
         case 'share':
           return navigator.share({
