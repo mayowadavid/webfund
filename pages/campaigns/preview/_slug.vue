@@ -27,11 +27,11 @@
             </p>
           </div>
           <div class="flex flex-col">
-            <img :src="campaign.images !== undefined ? campaign?.images[indexImage] : ''" class="w-full h-auto mb-4" />
+            <img :src="campaign.images !== undefined ? campaign?.images[indexImage].url : ''" class="w-full h-auto mb-4" />
             <div class="grid grid-cols-4 gap-2 max-w-max">
               <img v-for="(img, index) in campaign.images"
               :key="index"
-                :src="img"
+                :src="img.url"
                 alt=""
                 @click="handleImageIndex(index)"
                 class="
@@ -552,6 +552,7 @@ export default {
   },
   watch: {
     campData(newValue, oldValue){
+      console.log(newValue);
      const d = new Date();
      const today = d.getDate();
      const { end_date,start_date, donations } = newValue;

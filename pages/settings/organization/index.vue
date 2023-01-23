@@ -50,7 +50,6 @@
 </template>
 
 <script>
-import parseMobile from 'libphonenumber-js/mobile'
 import { mapState } from 'vuex';
 export default {
   layout: 'dashboard',
@@ -73,11 +72,11 @@ export default {
   },
   watch: {
     orgData(newValue, oldValue){
-        if(newValue.business_phone.length > 0){
+        if(newValue.business_phone?.length > 0){
          return this.step = 3;
-        }else if(newValue.tin.length > 0){
+        }else if(newValue?.tin?.length > 0){
           return this.step = 2;
-        }else if(newValue.name.length > 0){
+        }else if(newValue?.name.length > 0){
             return this.step = 1;
         }
     }

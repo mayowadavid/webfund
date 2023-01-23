@@ -8,6 +8,8 @@ export const state = () => ({
   resetPassword: false,
   bank: null,
   allOrg: null,
+  orgDoc: null,
+  adminOrg: null,
 })
 
 // getters
@@ -16,7 +18,10 @@ export const getters = {
   check: (state) => state.token,
   token: (state) => state.token,
   org: (state) => state.org,
+  report: (state) => state.report,
+  orgDoc: (state) => state.orgDoc,
   allOrg: (state) => state.allOrg,
+  adminOrg: (state) => state.adminOrg,
 }
 
 // mutations
@@ -25,12 +30,20 @@ export const mutations = {
     state.token = token
   },
 
+  SET_ADMIN_ORG(state, adminOrg) {
+    state.adminOrg = adminOrg
+  },
+
   SET_USER_ID(state, userId) {
     state.user_id = userId
   },
 
   SET_ORG(state, org) {
     state.org = org
+  },
+
+  SET_ORG_DOC(state, orgDoc) {
+    state.orgDoc = orgDoc
   },
 
   SET_RESET_PASSWORD(state, reset) {
@@ -52,7 +65,6 @@ export const mutations = {
   SET_ALL_ORGANIZATION(state, allOrg) {
     state.allOrg = allOrg
   },
-
 
   FETCH_USER_FAILURE(state) {
     state.token = null
@@ -89,16 +101,15 @@ export const actions = {
         user,
       })
 
-      if(user.role == 'admin'){
-          // Redirect home.
-      this.$router.push('/admin-view')
-      }else {
+      if (user.role == 'admin') {
+        // Redirect home.
+        this.$router.push('/admin-view')
+      } else {
         // Redirect admin view.
-      this.$router.push('/')
+        this.$router.push('/')
       }
-
     } else {
-      let user = data.data;
+      let user = data.data
       await dispatch('saveToken', {
         user,
       })
@@ -114,6 +125,24 @@ export const actions = {
     // Cookies.set('token', token, { expires: remember })
     // Cookies.set('user_id', userId, { expires: remember })
   },
+  async setUserData({ commit }, data) {
+    console.log(data)
+    const userData = JSON.parse(localStorage.getItem('ajoong'))
+    commit('SET_TOKEN', userData.auth.token)
+    const result = await this.$axios.get(`/users/${data?.userId}`)
+    let { user } = result.data.data
+    const { org } = data
+    commit('UPDATE_ROLES', userData.role)
+    commit('FETCH_USER_SUCCESS', user)
+    //fetch org
+    const orgData = await this.$axios.get(`/organisations/${org.id}`)
+
+    const { organisation } = orgData.data.data
+    console.log(organisation)
+    //save organization
+    commit('SET_ORGANIZATION', organisation)
+    this.$router.push('/')
+  },
   fetchOrganization({ commit, state }) {
     this.$axios
       .get(`/organisations/${state.user.organisation.id}`)
@@ -122,11 +151,9 @@ export const actions = {
       })
   },
   fetchAllOrganization({ commit, state }) {
-    this.$axios
-      .get(`/organisations`)
-      .then(({ data }) => {
-        commit('SET_ALL_ORGANIZATION', data.data.organisations)
-      })
+    this.$axios.get(`/organisations`).then(({ data }) => {
+      commit('SET_ALL_ORGANIZATION', data.data.organisations)
+    })
   },
   fetchOrganizationReport({ commit, state }) {
     this.$axios
@@ -137,12 +164,12 @@ export const actions = {
   },
   createCampaign({ commit }, campData) {
     try {
-      return this.$axios.post(`/campaigns`, campData);
+      return this.$axios.post(`/campaigns`, campData)
     } catch (e) {}
   },
   updateCampaign({ commit }, campData) {
     try {
-      return this.$axios.post(`/campaigns/${campData.campId}`, campData);
+      return this.$axios.post(`/campaigns/${campData.campId}`, campData)
     } catch (e) {}
   },
   updateOrganization({ commit, state }, orgData) {
@@ -188,18 +215,20 @@ export const actions = {
 
   async checkAuth({ commit }) {
     try {
-      const userData = JSON.parse(localStorage.getItem('user'))
+      const userData = JSON.parse(localStorage.getItem('ajoong'))
       console.log(userData, '138')
-      const result = await this.$axios.get(`/users/${userData?.id}`);
-      let { user } = result.data.data;
+      const result = await this.$axios.get(`/users/${userData?.auth.user.id}`)
+      let { user } = result.data.data
 
       //fetch org
-      const orgData = this.$axios.get(`/organisations/${userData.organisation.id}`)
-      const { organisation } = orgData.data.data;
+      const orgData = this.$axios.get(
+        `/organisations/${userData.organisation.id}`
+      )
+      const { organisation } = orgData.data.data
       //save organization
-      commit('SET_ORGANIZATION', organisation);
+      commit('SET_ORGANIZATION', organisation)
       // commit user data
-      user.organisation = organisation;
+      user.organisation = organisation
       await dispatch('saveToken', {
         user,
       })
@@ -215,6 +244,23 @@ export const actions = {
       const { data } = await this.$axios.get(`/${uid}/bank-information`)
       // console.log('fetch bank success: ', data.data)
       commit('UPDATE_BANK', data.data)
+    } catch (e) {}
+  },
+
+  async fetchDocuments({ commit, state }) {
+    try {
+      const { data } = await this.$axios.get(
+        `/organisations/${state.user.organisation.id}/documents`
+      )
+      commit('SET_ORG_DOC', data.data.organisation)
+    } catch (e) {}
+  },
+
+  async acceptDocuments({ commit, state }, status) {
+    try {
+      const { data } = await this.$axios.get(
+        `/organisations/${state.user.organisation.id}/documents?status=${status}`
+      )
     } catch (e) {}
   },
 
@@ -275,6 +321,40 @@ export const actions = {
     }
   },
 
+  async addDocuments({ commit, state }, form) {
+    try {
+      const {
+        rc_number,
+        tin,
+        certificate_of_incorporation,
+        memorandum_and_articles_of_association,
+        cac_1_1,
+        means_of_identification,
+        identification,
+      } = form
+      console.log(form)
+      let formdata = new FormData()
+      formdata.append('rc_number', rc_number)
+      formdata.append('tin', tin)
+      formdata.append(
+        'certificate_of_incorporation',
+        certificate_of_incorporation
+      )
+      formdata.append(
+        'memorandum_and_articles_of_association',
+        memorandum_and_articles_of_association
+      )
+      formdata.append('cac_1_1', cac_1_1)
+      formdata.append('means_of_identification', means_of_identification)
+      formdata.append('identification', identification)
+      this.$axios.patch('/organisations/documents', formdata).then((data) => {
+        console.log(data)
+      })
+    } catch (e) {
+      console.log(e)
+    }
+  },
+
   async fetchRoles({ commit }) {
     try {
       const { data: roles } = await this.$axios.get(`/access/roles`)
@@ -284,18 +364,32 @@ export const actions = {
   },
 
   async uploadCampaignPhoto({ commit }, form) {
-    const {files, id} = form;
-    let formdata = new FormData();
+    const { files, id } = form
+    let formdata = new FormData()
 
-    for(i=0; i < files.length; i++){
-      formdata.append('photo', files[i]);
-    };
+    for (i = 0; i < files.length; i++) {
+      formdata.append('photo', files[i])
+    }
     //upload campaign images
     try {
-      this.$axios.get(`/campaigns/${id}/photos`, formdata).then((data)=>{
-        console.log(data);
-      });
+      this.$axios.get(`/campaigns/${id}/photos`, formdata).then((data) => {
+        console.log(data)
+      })
     } catch (e) {}
+  },
+
+  async uploadLogo(form) {
+    const { files, id } = form
+    //upload logo
+    var formdata = new FormData()
+    formdata.append('logo', files)
+    try {
+      this.$axios.get(`/organisations/${id}/logo`, formdata).then((data) => {
+        console.log(data)
+      })
+    } catch (e) {
+      console.log(e)
+    }
   },
 
   async verifyDonation({ commit }, ref) {
@@ -337,7 +431,10 @@ export const actions = {
 
   async logout({ commit }) {
     try {
-      await this.$axios.get('/logout')
+      commit('LOGOUT')
+      localStorage.clear()
+      sessionStorage.clear()
+      document.cookie = ''
     } catch (e) {}
 
     commit('LOGOUT')

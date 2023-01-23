@@ -36,9 +36,9 @@
             ></span>
             <div class="inline-block text-left text-xs mr-2 pt-1">
               <span class="block text-gray-700 font-bold leading-tight">
-                Oluwadamilare Adedeji
+                {{userData.fullname}}
               </span>
-              <span class="block text-gray-600">damilare@gmail.com</span>
+              <span class="block text-gray-600">{{userData.email}}</span>
             </div>
             <div
               class="user-menu-drop shadow-hover relative"
@@ -46,19 +46,19 @@
             >
               <div class="px-4 md:px-5 lg:px-6 py-3">
                 <nuxt-link
-                  to="/student/account"
+                  to="/settings/profile"
                   class="text-gray-700 block py-2"
                 >
                   <span class="text-sm">Account</span>
                 </nuxt-link>
                 <nuxt-link
-                  to="/student/settings"
+                  to="/settings/profile"
                   class="text-gray-700 block py-2"
                 >
                   <span class="text-sm">Settings</span>
                 </nuxt-link>
                 <nuxt-link to="/" class="text-gray-700 block py-2">
-                  <span class="text-sm">Sign out</span>
+                  <span @click="handleSignOut" class="text-sm">Sign out</span>
                 </nuxt-link>
               </div>
             </div>
@@ -79,6 +79,7 @@ export default {
   computed: {
     ...mapState({
       title: (state) => state.app.pageTitle,
+      userData: (state) => state.auth.user,
     }),
   },
   methods: {
@@ -94,6 +95,9 @@ export default {
       if (e) e.preventDefault()
       this.userMenu = !this.userMenu
     },
+    handleSignOut(){
+      this.$store.dispatch('auth/logout');
+    }
   },
 }
 </script>

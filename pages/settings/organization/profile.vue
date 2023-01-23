@@ -18,6 +18,7 @@
             <v-form
               id="signup-form"
               ref="form"
+              message ="profile submitted"
               :loading.sync="loading"
               :on-submit="updateProfile"
               :on-success="onSuccess"
@@ -191,6 +192,7 @@ export default {
     all_states: [],
     states: [],
     cities: [],
+    files: '',
     form: {
       name: '',
       organisation_type: '',
@@ -231,14 +233,13 @@ export default {
       if (this.activeTab < 2) return await this.gotoNext()
 
       const form = { ...this.form }
-      // parse phone numbers
-
       // Submit the form.
       return this.$store.dispatch('auth/updateOrganization', form);
     },
     onSuccess(resp) {
       // data cleanup
-      console.log(resp)
+      const data = {id: this.form.id, files};
+      this.$store.dispatch('auth/uploadLogo', data)
     },
   },
 }

@@ -103,6 +103,7 @@ export default {
   }),
   methods: {
     login() {
+      this.$store.dispatch('auth/logout');
       const {email, password} = this.form;
       // Submit the form.
       return this.$axios.post('/users/login', {

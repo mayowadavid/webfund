@@ -28,7 +28,7 @@ export default {
   },
   publicRuntimeConfig: {
     isLive: ['live', 'prod', 'production'].includes(process.env.ENV),
-    apiUrl: process.env.API_URL || process.env.APP_URL + '/api',
+    apiUrl: process.env.API_URL + '/api',
     appUrl: process.env.APP_URL,
     appName: process.env.APP_NAME || 'Wefundx',
     appLocale: process.env.APP_LOCALE || 'en',

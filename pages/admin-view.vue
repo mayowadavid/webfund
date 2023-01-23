@@ -13,9 +13,7 @@
         <hr class="w-full hidden lg:flex mb-3 mt-3" />
         <div class="flex flex-col mt-3">
           <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-            <div
-              class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8"
-            >
+            <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
               <div class="overflow-hidden">
                 <table>
                   <thead>
@@ -32,13 +30,18 @@
                       v-for="(org, index) in allOrg"
                       :key="index"
                       class="cursor-pointer"
-                      @click.prevent="$router.push('/')"
+                      @click.prevent="handlePageRedirect(org)"
                     >
                       <td class="pr-6">
                         <span
                           class="status capitalize"
+                          :class="{
+                            success: org.status === 'success',
+                            warning: org.status === 'pending',
+                            danger: org.status === 'canceled',
+                          }"
                         >
-                          --
+                          {{ org.status }}
                         </span>
                       </td>
                       <td class="px-6">
@@ -69,20 +72,20 @@
           </div>
         </div>
       </div>
-      <!-- Report an issue modal -->
-      <modal-request-payout :show="request_modal" @hide="toggleRequestModal" />
     </div>
   </div>
 </template>
 <script>
 import { mapState } from 'vuex'
 export default {
+   middleware: ['auth', 'check-auth'],
   data() {
     return {
       request_modal: false,
       search: '',
       status: '',
       allOrg: [],
+      organization_types: [],
     }
   },
   computed: {
@@ -103,6 +106,37 @@ export default {
     toggleRequestModal() {
       this.request_modal = !this.request_modal
     },
+    handlePageRedirect(d){
+      const {
+          address,
+          category,
+          description,
+          logo,
+          organisation_type,
+          phone,
+          status,
+          updatedAt,
+          website,
+          id,
+        } = d;
+        console.log(d);
+      const user = {
+        userId: d.user_id,
+        org: {
+          id,
+          address,
+          category,
+          description,
+          logo,
+          organisation_type,
+          phone,
+          status,
+          updatedAt,
+          website
+        }
+      }
+      this.$store.dispatch('auth/setUserData', user);
+    }
   },
 }
 </script>

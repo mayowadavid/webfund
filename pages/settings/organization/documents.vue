@@ -1,6 +1,8 @@
 <template>
   <div class="w-screen lg:w-full h-full">
     <dash-navbar-mobile hide-notification show-back-button />
+     <!-- Edit donation modal -->
+      <modal-image-popUp :show="edit_modal" :temporaryImage="orgDocu" @hide="toggleEditModal" />
     <div class="px-5 md:px-8 pb-10">
       <div class="w-full">
         <v-nav-title show-back-button>Documents</v-nav-title>
@@ -8,11 +10,12 @@
         <div class="grid grid-cols-12 mt-4 md:mt-12 md:gap-x-12 lg:gap-x-24">
           <div class="col-span-12 md:col-span-8 lg:col-span-7">
             <v-form
-              id="signup-form"
+              id="document"
               ref="form"
               :loading.sync="loading"
               :on-submit="onSubmit"
               :on-success="onSuccess"
+              message="document submitted"
             >
               <div class="text-left mb-4">
                 <p class="leading-5 text-gray-600">
@@ -64,11 +67,11 @@
               <div class="form-group mb-5">
                     <validation-provider
                       v-slot="{ errors, classes }"
-                      name="means_of_identification"
+                      name="certificate_of_incorporation"
                     >
                       <label for="input-role">Upload a copy of your certification of Incorporation</label>
                       <div class="cs-select" :class="classes">
-                        <input class="form-input" @input="handleChange" name="means_of_identification" type="file"/>
+                        <input class="form-input" @input="handleChange" name="certificate_of_incorporation" type="file"/>
                       </div>
                       <span v-show="errors.length" class="is-invalid">
                         {{ errors[0] }}
@@ -78,11 +81,11 @@
               <div class="form-group mb-5">
                     <validation-provider
                       v-slot="{ errors, classes }"
-                      name="means_of_identification"
+                      name="memorandum_and_articles_of_association"
                     >
                       <label for="input-role">Upload a copy of your memorandum and Articles of Association</label>
                       <div class="cs-select" :class="classes">
-                        <input class="form-input" @input="handleChange" name="means_of_identification" type="file"/>
+                        <input class="form-input" @input="handleChange" name="memorandum_and_articles_of_association" type="file"/>
                       </div>
                       <span v-show="errors.length" class="is-invalid">
                         {{ errors[0] }}
@@ -92,11 +95,11 @@
               <div class="form-group mb-5">
                     <validation-provider
                       v-slot="{ errors, classes }"
-                      name="means_of_identification"
+                      name="cac_1_1"
                     >
                       <label for="input-role">Upload a copy of your form CAC 1.1</label>
                       <div class="cs-select" :class="classes">
-                        <input class="form-input" @input="handleChange" name="means_of_identification" type="file"/>
+                        <input class="form-input" @input="handleChange" name="cac_1_1" type="file"/>
                       </div>
                       <span v-show="errors.length" class="is-invalid">
                         {{ errors[0] }}
@@ -133,7 +136,7 @@
                     >
                        <label for="input-mid">Means of identification</label>
                       <div class="cs-select" :class="classes">
-                        <input class="form-input" @input="handleChange" name="means_of_identification" type="file"/>
+                        <input class="form-input" @input="handleChange" name="identification" type="file"/>
                       </div>
                       <span v-show="errors.length" class="is-invalid">
                         {{ errors[0] }}
@@ -160,10 +163,18 @@
               </template>
             </v-form>
           </div>
-          <!-- <div class="md:col-span-4 lg:col-span-5 xl:col-span-4">
-          <business-logo-card />
-        </div> -->
         </div>
+      </div>
+
+      <div class="display_documents mb-tp5 mb10 flex_row">
+          <div @click.prevent="toggleEditModal" v-for="img in orgDocu" :key="img" class="document_cont mb-tp5 mb4">
+              <img :src="img" alt="wefundx">
+          </div>
+      </div>
+
+      <div class="doc_button mb-tp5 mb10 flex_row">
+          <v-button @click="handleDocument(stateValue[0])" class="green">Accept</v-button>
+          <v-button @click="handleDocument(stateValue[1])" outline  class="red">Reject</v-button>
       </div>
 
       <div class="w-full">
@@ -190,23 +201,30 @@
 </template>
 
 <script>
-import parseMobile from 'libphonenumber-js/mobile'
 import { mapState } from 'vuex';
 
 export default {
   layout: 'dashboard',
   scrollToTop: true,
   data: () => ({
+    stateValue: ['accepted', 'rejected'],
     loading: false,
+    edit_modal: false,
     countries: [],
     organization_categories: ['church', 'tech'],
     organization_types: ['non-profit', 'tech'],
     identifications: ['Passport', 'Drivers license', 'Voters card', 'NIN'],
+    orgDocu: [],
     form: {
       rc_number: '',
       tin: '',
       category: '',
       organisation_type: '',
+      certificate_of_incorporation: '',
+      memorandum_and_articles_of_association: '',
+      cac_1_1: '',
+      identification: '',
+      means_of_identification: '',
       website: '',
       description: '',
       business_phone: '',
@@ -215,12 +233,26 @@ export default {
   computed: {
       ...mapState({
       orgData: (state) => state.auth.org,
+      orgDoc: (state) => state.auth.orgDoc,
     })
   },
   watch: {
     orgData(newValue, oldValue){
-      console.log(newValue);
-      this.form = {...newValue};
+      this.form = {
+        ...this.form, ...newValue
+      };
+    },
+    orgDoc(newValue, oldValue){
+      const {
+      certificate_of_incorporation,
+      memorandum_and_articles_of_association,
+      cac_1_1,
+      identification} = newValue;
+      this.orgDocu = [
+        certificate_of_incorporation,
+      memorandum_and_articles_of_association,
+      cac_1_1,
+      identification];
     }
   },
   mounted() {
@@ -228,15 +260,27 @@ export default {
     this.$store.commit('app/SET_FORM_ERRORS', false)
 
     // fetch org
+    this.$store.dispatch('auth/fetchDocuments');
+
+    // fetch org
     this.$store.dispatch('auth/fetchOrganization');
   },
   methods: {
     onSubmit() {
+      const form = { ...this.form };
+      return this.$store.dispatch('auth/addDocuments', form);
+    },
+    toggleEditModal() {
+      this.edit_modal = !this.edit_modal;
+    },
+    handleChange(event){
+      event.preventDefault();
+      const {name, files} = event.target;
 
-      // navigate steps
-      if (this.activeTab < 2) return this.gotoNext()
-      const form = { ...this.form }
-      return this.$axios.patch('/organisations/documents', form);
+      this.form = {...this.form, [name]: files[0]};
+    },
+    handleDocument(id) {
+        return this.$store.dispatch('auth/acceptDocuments', id);
     },
     onSuccess(resp) {
       // data cleanup
@@ -246,3 +290,17 @@ export default {
   },
 }
 </script>
+<style>
+.document_cont > img {
+    width: clamp(250px, 30vw, 300px);
+    height: clamp(250px, 30vw, 300px);
+    border-radius: 10px;
+    object-fit: cover;
+    margin-top: 40px;
+}
+
+.doc_button {
+  gap: 25px;
+}
+
+</style>
