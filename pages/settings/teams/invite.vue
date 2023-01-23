@@ -7,10 +7,14 @@
         <hr class="w-full hidden lg:flex mt-3" />
         <div class="grid grid-cols-12 mt-2">
           <div class="col-span-12 md:col-span-6 lg:col-span-5">
-            <div
+            <v-form
               id="signup-form"
               ref="form"
               class="py-4 md:py-8"
+              :loading.sync="loading"
+              :on-submit="submitInvite"
+              :on-success="onSuccess"
+              success-message="invite successful"
             >
               <div class="grid">
                 <div class="form-group mb-5">
@@ -102,9 +106,9 @@
                 </div>
               </div>
                 <div class="mt-6 mb-4">
-                  <button @click.prevent="submitInvite" :loading="loading" class="btn btn-primary"> Send Invite </button>
+                  <v-button @click.prevent="submitInvite" :loading="loading" class="btn btn-primary"> Send Invite </v-button>
                 </div>
-              </div>
+              </v-form>
             </div>
           </div>
         </div>
@@ -138,14 +142,15 @@ export default {
       // Submit the form.
       const {first_name, last_name, email, role} = this.form;
       const name = first_name + ' ' + last_name;
-      this.$axios.post(`/organisations/${this.org_id}/teams`, {
+      const data = {
         name,
         email,
         role
-      })
-      .then((data)=> {
-        console.log(data);
-      });
+      };
+      return this.$store.dispatch('auth/inviteTeam', data);
+    },
+    onSuccess(resp){
+
     }
   },
 }

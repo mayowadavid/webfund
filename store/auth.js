@@ -264,6 +264,15 @@ export const actions = {
     } catch (e) {}
   },
 
+  async inviteTeam({ commit, state }, team) {
+    try {
+      return this.$axios.get(
+        `/organisations/${state.user.organisation.id}/teams`,
+        team
+      )
+    } catch (e) {}
+  },
+
   async createOrganisation({ commit }, form) {
     const {
       phone_number,
