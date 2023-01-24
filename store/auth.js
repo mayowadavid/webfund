@@ -92,7 +92,7 @@ export const mutations = {
 
 // actions
 export const actions = {
-  async onSuccess({ dispatch }, data) {
+  async onSuccess({ dispatch, commit }, data) {
     if (data.data?.user !== undefined) {
       // Save the token.
 
@@ -102,11 +102,16 @@ export const actions = {
       })
 
       if (user.role == 'admin') {
+        //set admin details to memory
+        commit('SET_ADMIN_ORG', user)
         // Redirect home.
         this.$router.push('/admin-view')
-      } else {
-        // Redirect admin view.
+      } else if (user.status == 'active') {
+        // check for active status.
         this.$router.push('/')
+      } else {
+        // for new user
+        this.$router.push('/get-started')
       }
     } else {
       let user = data.data
@@ -258,6 +263,7 @@ export const actions = {
 
   async acceptDocuments({ commit, state }, status) {
     try {
+      commit('SET_TOKEN', state.adminOrg.token)
       const { data } = await this.$axios.get(
         `/organisations/${state.user.organisation.id}/documents?status=${status}`
       )
@@ -443,7 +449,7 @@ export const actions = {
       commit('LOGOUT')
       localStorage.clear()
       sessionStorage.clear()
-      document.cookie = ''
+      Cookies.remove('ajoong')
     } catch (e) {}
 
     commit('LOGOUT')

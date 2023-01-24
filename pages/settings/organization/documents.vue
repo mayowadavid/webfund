@@ -166,13 +166,13 @@
         </div>
       </div>
 
-      <div class="display_documents mb-tp5 mb10 flex_row">
+      <div v-if="adminOrgData" class="display_documents mb-tp5 mb10 flex_row">
           <div @click.prevent="toggleEditModal" v-for="img in orgDocu" :key="img" class="document_cont mb-tp5 mb4">
               <img :src="img" alt="wefundx">
           </div>
       </div>
 
-      <div class="doc_button mb-tp5 mb10 flex_row">
+      <div v-if="adminOrgData" class="doc_button mb-tp5 mb10 flex_row">
           <v-button @click="handleDocument(stateValue[0])" class="green">Accept</v-button>
           <v-button @click="handleDocument(stateValue[1])" outline  class="red">Reject</v-button>
       </div>
@@ -210,6 +210,7 @@ export default {
     stateValue: ['accepted', 'rejected'],
     loading: false,
     edit_modal: false,
+    adminOrgData: null,
     countries: [],
     organization_categories: ['church', 'tech'],
     organization_types: ['non-profit', 'tech'],
@@ -238,6 +239,7 @@ export default {
   },
   watch: {
     orgData(newValue, oldValue){
+      console.log(newValue)
       this.form = {
         ...this.form, ...newValue
       };
@@ -258,7 +260,7 @@ export default {
   mounted() {
     // reset errors
     this.$store.commit('app/SET_FORM_ERRORS', false)
-
+    this.adminOrgData = this.$store.getters['auth/adminOrg'];
     // fetch org
     this.$store.dispatch('auth/fetchDocuments');
 

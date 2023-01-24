@@ -8,6 +8,7 @@ export default ({ store }) => {
       'auth.resetPassword',
       'auth.user',
       'auth.roles',
+      'auth.adminOrg',
       'app.selectables',
     ],
     //overwrite: true,
