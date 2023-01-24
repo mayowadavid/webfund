@@ -162,9 +162,9 @@
               </div>
               <div class="mt-5">
                 <ul class="flex flex-row gap-3 w-max">
-                  <li @click="socialShare" id="share" class="share-icon bg-gray-200">
+                  <li @click="socialShare('share')" id="share" class="share-icon bg-gray-200">
                     <svg
-                    @click="socialShare"
+                    @click="socialShare('share')"
                       id="share"
                       class="mx-auto my-auto"
                       width="18"
@@ -178,9 +178,9 @@
                       />
                     </svg>
                   </li>
-                  <li @click="socialShare" id="whatsapp" class="share-icon bg-whatsapp">
+                  <li @click="socialShare('whatsapp')" id="whatsapp" class="share-icon bg-whatsapp">
                     <svg
-                    @click="socialShare"
+                    @click="socialShare('whatsapp')"
                       id="whatsapp"
                       class="mx-auto my-auto"
                       width="18"
@@ -198,9 +198,9 @@
                       />
                     </svg>
                   </li>
-                  <li @click="socialShare" id="mail" class="share-icon bg-gray-200">
+                  <li @click="socialShare('mail')" id="mail" class="share-icon bg-gray-200">
                     <svg
-                    @click="socialShare"
+                    @click="socialShare('mail')"
                       id="mail"
                       class="mx-auto my-auto"
                       width="24"
@@ -234,9 +234,9 @@
                       />
                     </svg>
                   </li>
-                  <li @click="socialShare" id="twitter" class="share-icon bg-twitter">
+                  <li @click="socialShare('twitter')" id="twitter" class="share-icon bg-twitter">
                     <svg
-                    @click="socialShare"
+                    @click="socialShare('twitter')"
                       id="twitter"
                       class="mx-auto my-auto"
                       width="22"
@@ -250,9 +250,9 @@
                       />
                     </svg>
                   </li>
-                  <li @click="socialShare" id="telegram" class="share-icon bg-telegram">
+                  <li @click="socialShare('telegram')" id="telegram" class="share-icon bg-telegram">
                     <svg
-                    @click="socialShare"
+                    @click="socialShare('telegram')"
                       id="telegram"
                       class="mx-auto my-auto"
                       width="22"
@@ -266,9 +266,9 @@
                       />
                     </svg>
                   </li>
-                  <li @click="socialShare" id="message" class="share-icon bg-message">
+                  <li @click="socialShare('message')" id="message" class="share-icon bg-message">
                     <svg
-                      @click="socialShare"
+                      @click="socialShare('message')"
                       id="message"
                       class="mx-auto my-auto"
                       width="20"
@@ -606,9 +606,7 @@ export default {
       document.head.appendChild(paystack)
   },
   methods: {
-    socialShare(e){
-      e.preventDefault();
-      const {id} = e.path[1];
+    socialShare(id){
       const url = 'https://www.wefundx.com';
       switch(id){
         case 'share':
