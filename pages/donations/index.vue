@@ -58,34 +58,34 @@
               <div class="overflow-hidden">
                 <div
                   class="flex flex-col"
-                  v-if="donations && donations.data && donations.data.length"
+                  v-if="donations && donations.length"
                 >
                   <div class="flex flex-col" v-if="$device.isMobile">
                     <div
-                      v-for="(donation, index) in donations.data"
+                      v-for="(donation, index) in donations"
                       :key="index"
                       @click.prevent="
-                        $router.push('/settings/teams/' + donation.id)
+                        $router.push('/donations/' + donation.id)
                       "
                       class="flex flex-row border-t border-gray-300 pt-4 pb-3"
                     >
                       <div class="flex flex-col flex-auto gap-y-1">
                         <div class="text-sm font-medium text-gray-900">
-                          {{ donation.first_name + ' ' + donation.last_name }}
+                          {{ donation.donor_name }}
                         </div>
                         <div class="text-sm text-gray-500">
-                          {{ donation.email }}
+                          {{ donation.donor_email }}
                         </div>
                         <div class="text-sm font-medium text-gray-900">
-                          Last Seen
+                          {{donor.updatedAt}}
                         </div>
                         <div class="text-sm text-gray-500">
-                          {{ donation.last_seen || 'N/A' }}
+                          {{ donation.createdAt || 'N/A' }}
                         </div>
                       </div>
                       <div class="text-base text-gray-500">
                         <span class="tag pill mr-auto">{{
-                          donation.role
+                          'N/A'
                         }}</span>
                       </div>
                     </div>
@@ -121,17 +121,17 @@
                         </td>
                         <td class="px-6">
                           <div class="text-base text-gray-500">
-                            {{ dona.date }}
+                            {{ dona.createdAt }}
                           </div>
                         </td>
                         <td class="px-6">
                           <div class="text-base font-medium text-gray-900">
-                            {{ dona.name }}
+                            {{ dona.donor_name }}
                           </div>
                         </td>
                         <td class="px-6">
                           <div class="text-base text-gray-500">
-                            {{ dona.type }}
+                            {{ dona.donation_type || 'N/A' }}
                           </div>
                         </td>
                         <td class="px-6 text-base text-gray-500">
@@ -161,6 +161,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
 export default {
   layout: 'dashboard',
   scrollToTop: true,
@@ -169,6 +170,7 @@ export default {
       filter_no_scroll: false,
       search: '',
       status: '',
+      adminOrgData: null,
       channel: '',
       interval: '',
       data_range: '',
@@ -181,12 +183,20 @@ export default {
         'QR Code ',
         'Bitcoin',
       ],
-      donations: require('@/static/json/donations.json'),
     }
+  },
+  computed: {
+      ...mapState({
+      donations: (state) => state.auth.donations,
+    })
   },
 
   created() {
     this.$store.commit('app/SET_PAGE_TITLE', 'Donations')
+  },
+  mounted(){
+    this.adminOrgData = this.$store.getters['auth/adminOrg'];
+    this.$store.dispatch('auth/fetchDonations');
   },
 
   methods: {

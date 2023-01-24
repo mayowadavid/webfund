@@ -2,7 +2,7 @@
   <div class="w-screen lg:w-full h-full">
     <dash-navbar-mobile hide-notification />
     <div class="px-5 md:px-8 pb-10">
-      <div class="w-full">
+      <div v-if="payout" class="w-full">
         <div class="flex gap-6 pt-5">
           <div class="flex-grow">
             <v-nav-title show-back-button>
@@ -16,33 +16,33 @@
           <div class="md:col-span-6 lg:col-span-5 space-y-6">
             <div>
               <p class="text-sm text-gray-500 mb-2">Payment Status</p>
-              <span class="status success">Success</span>
+              <span class="status success">{{payout.status}}</span>
             </div>
             <div>
               <p class="text-sm text-gray-500 mb-2">Amount paid</p>
-              <p class="font-medium text-gray-800">₦500,000</p>
+              <p class="font-medium text-gray-800">₦{{payout.amount}}</p>
             </div>
             <div>
               <p class="text-sm text-gray-500 mb-2">Settlement fee</p>
-              <p class="font-medium text-gray-800">₦100,000,000</p>
+              <p class="font-medium text-gray-800">{{payout.settlement_fee}}</p>
             </div>
           </div>
           <div class="md:col-span-6 lg:col-span-5 space-y-6">
             <div>
               <p class="text-sm text-gray-500 mb-2">Receipt Full Name</p>
               <p class="font-medium text-gray-800">
-                Redeem christian church of God
+                {{payout.name || 'N/A'}}
               </p>
             </div>
             <div>
               <p class="text-sm text-gray-500 mb-2">Payout date</p>
               <p class="font-medium text-gray-800">
-                Sunday, 18th Feb 2021 1:45pm
+                {{payout.createdAt}}
               </p>
             </div>
             <div>
               <p class="text-sm text-gray-500 mb-2">Reference No</p>
-              <p class="font-medium text-gray-800">3410330889</p>
+              <p class="font-medium text-gray-800">{{payout.reference}}</p>
             </div>
           </div>
           <div class="col-span-12 space-x-3 mt-8 md:mt-12">
@@ -85,8 +85,18 @@ export default {
         assign_to: '',
       },
       report_modal: false,
+      payout: null,
       activity_log: require('@/static/json/activity-log.json'),
     }
+  },
+
+   async mounted(){
+    // fetch donation
+    const res = await this.$store.dispatch('auth/viewPayout', this.$route.params.id);
+    if(res){
+        this.payouts = res.payouts;
+    }
+
   },
 
   methods: {

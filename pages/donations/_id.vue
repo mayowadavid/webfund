@@ -10,69 +10,66 @@
         <notifications />
       </div>
       <hr class="flex flex-col flex-auto mt-3" />
-      <div class="grid grid-cols-12 mt-8 md:gap-x-12 lg:gap-x-16">
+      <div v-if="donation" class="grid grid-cols-12 mt-8 md:gap-x-12 lg:gap-x-16">
         <div class="col-span-12 md:col-span-6 lg:col-span-5 space-y-6">
           <div>
             <p class="text-sm text-gray-500 mb-2">Donation Status</p>
-            <span class="status success">Completed</span>
+            <span class="status success">{{donation.status}}</span>
           </div>
           <div>
             <p class="text-sm text-gray-500 mb-2">Amount donated</p>
-            <p class="font-medium text-gray-800">₦37,555</p>
+            <p class="font-medium text-gray-800">₦{{donation.amount}}</p>
           </div>
           <div>
             <p class="text-sm text-gray-500 mb-2">Processing fee</p>
-            <p class="font-medium text-gray-800">Paid by: Donor</p>
+            <p class="font-medium text-gray-800">{{'N/A'}}</p>
           </div>
           <div>
             <p class="text-sm text-gray-500 mb-2">Payout amount</p>
-            <p class="font-medium text-gray-800">₦37,000</p>
+            <p class="font-medium text-gray-800">{{'N/A'}}</p>
           </div>
           <div>
             <p class="text-sm text-gray-500 mb-2">Donation Description</p>
-            <p class="font-medium text-gray-800">
-              Empower your fundraisers to boost their reach and raise more money
-              for your cause, and sync Facebook fundraising activity directly to
-              Classy.,000
+            <p class="font-medium text-gray-800">{{donation.comment}}
             </p>
           </div>
           <div>
             <p class="text-sm text-gray-500 mb-2">Reference No</p>
-            <p class="font-medium text-gray-800">34103308</p>
+            <p class="font-medium text-gray-800">{{donation.reference}}</p>
           </div>
         </div>
         <div class="col-span-12 md:col-span-6 lg:col-span-5 space-y-6">
           <div>
             <p class="text-sm text-gray-500 mb-2">Donor full name</p>
-            <p class="font-medium text-gray-800">Abase Adelekan</p>
+            <p class="font-medium text-gray-800">{{donation.donor_name}}</p>
           </div>
           <div>
             <p class="text-sm text-gray-500 mb-2">Donation interval</p>
-            <p class="font-medium text-gray-800">Reccurring</p>
+            <p class="font-medium text-gray-800">{{donation.donation_type}}</p>
           </div>
           <div>
             <p class="text-sm text-gray-500 mb-2">Donation Date</p>
             <p class="font-medium text-gray-800">
-              Sunday, 18th Feb 2021 1:45pm
+              {{donation.createdAt}}
             </p>
           </div>
           <div>
             <p class="text-sm text-gray-500 mb-2">Next Payment</p>
             <p class="font-medium text-gray-800">
-              Sunday, 18th March 2021 1:45pm
+              {{'N/A'}}
             </p>
           </div>
           <div>
             <p class="text-sm text-gray-500 mb-2">Commision fee</p>
-            <p class="font-medium text-gray-800">2</p>
+            <p class="font-medium text-gray-800">{{'N/A'}}</p>
           </div>
           <div>
             <p class="text-sm text-gray-500 mb-2">Channel</p>
-            <p class="font-medium text-gray-800">Card</p>
+            <p class="font-medium text-gray-800">{{donation.channel || 'N/A'}}</p>
           </div>
           <div>
             <p class="text-sm text-gray-500 mb-2">Campaign type</p>
-            <p class="font-medium text-gray-800">Non Profit</p>
+            <p class="font-medium text-gray-800">{{'N/A'}}</p>
           </div>
         </div>
         <div class="col-span-12 space-x-3 mt-8 md:mt-12">
@@ -90,8 +87,6 @@
         </div>
       </div>
     </div>
-    <!-- Report an issue modal -->
-    <modal-report-issue :show="report_modal" @hide="toggleReportModal" />
   </div>
 </template>
 
@@ -103,7 +98,7 @@ export default {
   data() {
     return {
       report_modal: false,
-      activity_log: require('@/static/json/activity-log.json'),
+      donation: null,
     }
   },
 
@@ -115,5 +110,13 @@ export default {
       this.report_modal = !this.report_modal
     },
   },
+ async mounted(){
+    // fetch donation
+    const res = await this.$store.dispatch('auth/viewDonations', this.$route.params.id);
+    if(res){
+        this.donation = res.donation;
+    }
+
+  }
 }
 </script>

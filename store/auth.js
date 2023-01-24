@@ -6,6 +6,7 @@ export const state = () => ({
   roles: null,
   token: null,
   resetPassword: false,
+  donations: null,
   bank: null,
   allOrg: null,
   orgDoc: null,
@@ -22,6 +23,7 @@ export const getters = {
   orgDoc: (state) => state.orgDoc,
   allOrg: (state) => state.allOrg,
   adminOrg: (state) => state.adminOrg,
+  donations: (state) => state.donations,
 }
 
 // mutations
@@ -40,6 +42,10 @@ export const mutations = {
 
   SET_ORG(state, org) {
     state.org = org
+  },
+
+  SET_DONATIONS(state, don) {
+    state.donations = don
   },
 
   SET_ORG_DOC(state, orgDoc) {
@@ -267,6 +273,22 @@ export const actions = {
       const { data } = await this.$axios.get(
         `/organisations/${state.user.organisation.id}/documents?status=${status}`
       )
+    } catch (e) {}
+  },
+
+  async fetchDonations({ commit, state }, status) {
+    try {
+      commit('SET_TOKEN', state.adminOrg.token)
+      const { data } = await this.$axios.get(`/donations`)
+      commit('SET_DONATIONS', data.data.donation)
+    } catch (e) {}
+  },
+
+  async viewDonations({ commit, state }, id) {
+    try {
+      commit('SET_TOKEN', state.adminOrg.token)
+      const { data } = await this.$axios.get(`/donations/${id}`)
+      return data.data
     } catch (e) {}
   },
 

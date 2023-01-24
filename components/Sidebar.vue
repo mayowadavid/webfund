@@ -104,7 +104,7 @@
                 <span class="my-auto">Dashboard</span>
               </router-link>
             </li>
-            <li v-if="user?.role == 'admin'" class="nav-item">
+            <li v-if="adminOrgData" class="nav-item">
               <router-link
                 :to="{ name: 'donations' }"
                 class="nav-link"
@@ -115,7 +115,7 @@
                 <span class="my-auto">Donations</span>
               </router-link>
             </li>
-            <li v-if="user?.role == 'admin'" class="nav-item">
+            <li v-if="adminOrgData" class="nav-item">
               <router-link
                 :to="{ name: 'donors' }"
                 class="nav-link"
@@ -227,6 +227,7 @@ export default {
     userMenu: false,
     appName: process.env.appName,
     org: {},
+    adminOrgData: null,
     // Import menu SVGs
     dashboardIcon: require('@/static/icon/dashboard/dashboard.svg?raw'),
     donationsIcon: require('@/static/icon/dashboard/donations.svg?raw'),
@@ -250,6 +251,7 @@ export default {
   mounted() {
     // reset errors
     this.$store.commit('app/SET_FORM_ERRORS', false)
+    this.adminOrgData = this.$store.getters['auth/adminOrg'];
 
     // fetch org
     this.$store.dispatch('auth/fetchOrganization');

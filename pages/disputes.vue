@@ -57,7 +57,7 @@
                       <th scope="col" class="px-6">Assign to</th>
                     </tr>
                   </thead>
-                  <tbody class="bg-white divide-y divide-gray-200">
+                  <tbody v-if="disputes" class="bg-white divide-y divide-gray-200">
                     <tr
                       v-for="(dispute, index) in disputes"
                       :key="index"
@@ -78,17 +78,17 @@
                       </td>
                       <td class="px-6">
                         <div class="text-base text-gray-500">
-                          {{ dispute.date }}
+                          {{ dispute.createdAt }}
                         </div>
                       </td>
                       <td class="px-6">
                         <div class="text-base font-medium text-gray-900">
-                          {{ dispute.issue }}
+                          {{ dispute.description }}
                         </div>
                       </td>
                       <td class="px-6">
                         <div class="text-base font-medium text-gray-900">
-                          {{ dispute.assigned_to }}
+                          {{ dispute.assigned_to || 'N/A' }}
                         </div>
                       </td>
                     </tr>
@@ -124,8 +124,17 @@ export default {
       data_range: '',
       filters: ['Success', 'Pending', 'Failed'],
       issues_filters: ['Fraud', 'Payments not received' , 'Incomplete payment'],
-      disputes: require('@/static/json/disputes.json'),
+      disputes: null,
     }
+  },
+
+   async mounted(){
+    // fetch donation
+    const res = await this.$store.dispatch('auth/fetchDisputes');
+    if(res){
+        this.disputes = res.disputes;
+    }
+
   },
 
   methods: {

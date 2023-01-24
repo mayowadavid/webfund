@@ -90,7 +90,7 @@
                       </td>
                       <td class="px-6">
                         <div class="text-base font-medium text-gray-900">
-                          {{ dona.amount_paid }}
+                          {{ dona.amount }}
                         </div>
                       </td>
                       <td class="px-6">
@@ -126,8 +126,17 @@ export default {
       interval: '',
       data_range: '',
       filters: ['Failed payment', 'Success payment'],
-      payouts: require('@/static/json/payouts.json'),
+      payouts: null,
     }
+  },
+
+   async mounted(){
+    // fetch donation
+    const res = await this.$store.dispatch('auth/fetchPayout');
+    if(res){
+        this.payouts = res.payouts;
+    }
+
   },
 
   methods: {
