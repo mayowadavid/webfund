@@ -164,6 +164,7 @@
                 <ul class="flex flex-row gap-3 w-max">
                   <li @click="socialShare" id="share" class="share-icon bg-gray-200">
                     <svg
+                    @click="socialShare"
                       id="share"
                       class="mx-auto my-auto"
                       width="18"
@@ -179,6 +180,7 @@
                   </li>
                   <li @click="socialShare" id="whatsapp" class="share-icon bg-whatsapp">
                     <svg
+                    @click="socialShare"
                       id="whatsapp"
                       class="mx-auto my-auto"
                       width="18"
@@ -198,6 +200,7 @@
                   </li>
                   <li @click="socialShare" id="mail" class="share-icon bg-gray-200">
                     <svg
+                    @click="socialShare"
                       id="mail"
                       class="mx-auto my-auto"
                       width="24"
@@ -233,6 +236,7 @@
                   </li>
                   <li @click="socialShare" id="twitter" class="share-icon bg-twitter">
                     <svg
+                    @click="socialShare"
                       id="twitter"
                       class="mx-auto my-auto"
                       width="22"
@@ -248,6 +252,7 @@
                   </li>
                   <li @click="socialShare" id="telegram" class="share-icon bg-telegram">
                     <svg
+                    @click="socialShare"
                       id="telegram"
                       class="mx-auto my-auto"
                       width="22"
@@ -263,6 +268,7 @@
                   </li>
                   <li @click="socialShare" id="message" class="share-icon bg-message">
                     <svg
+                      @click="socialShare"
                       id="message"
                       class="mx-auto my-auto"
                       width="20"
