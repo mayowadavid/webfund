@@ -171,7 +171,9 @@
               <img :src="img" alt="wefundx">
           </div>
       </div>
-
+      <div v-if="mssg" class="mb-tp5 mssg mb10">
+        <p>{{mssg}}</p>
+      </div>
       <div v-if="adminOrgData" class="doc_button mb-tp5 mb10 flex_row">
           <v-button @click="handleDocument(stateValue[0])" class="green">Accept</v-button>
           <v-button @click="handleDocument(stateValue[1])" outline  class="red">Reject</v-button>
@@ -211,6 +213,7 @@ export default {
     loading: false,
     edit_modal: false,
     adminOrgData: null,
+    mssg: null,
     countries: [],
     organization_categories: ['church', 'tech'],
     organization_types: ['non-profit', 'tech'],
@@ -281,12 +284,14 @@ export default {
 
       this.form = {...this.form, [name]: files[0]};
     },
-    handleDocument(id) {
-        return this.$store.dispatch('auth/acceptDocuments', id);
+    async handleDocument(id) {
+        const res = await this.$store.dispatch('auth/acceptDocuments', id);
+        if(res){
+          this.mssg = `Document ${id}`
+        }
     },
     onSuccess(resp) {
       // data cleanup
-      console.log(resp);
       this.$refs.form.reset()
     },
   },
@@ -303,6 +308,11 @@ export default {
 
 .doc_button {
   gap: 25px;
+}
+
+.mssg > p {
+  font-weight: bold;
+  font-size: 24px;
 }
 
 </style>

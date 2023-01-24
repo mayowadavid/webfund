@@ -17,7 +17,7 @@
                   <img @click="increaseIndex" src='/arrow_right.png' alt="sendit"/>
             </div>
           </div>
-          <img :src="temporaryImage[imgPreviewIndex]" alt="sendit"/>
+          <img :src="temporaryImage[imgPreviewIndex]?.url" alt="sendit"/>
       </div>
      </v-form>
    </v-modal>
@@ -46,7 +46,6 @@ export default {
       }else {
         this.imgPreviewIndex = this.imgPreviewIndex + 1;
       }
-      console.log(this.imgPreviewIndex);
     },
 
     // image preview decrement
@@ -57,7 +56,6 @@ export default {
       }else {
         this.imgPreviewIndex = this.temporaryImage.length - 1;
       }
-      console.log(this.imgPreviewIndex);
     },
     onSubmit() {},
     onSuccess() {},

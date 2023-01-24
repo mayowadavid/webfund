@@ -270,7 +270,7 @@ export const actions = {
   async acceptDocuments({ commit, state }, status) {
     try {
       commit('SET_TOKEN', state.adminOrg.token)
-      const { data } = await this.$axios.get(
+      return this.$axios.get(
         `/organisations/${state.user.organisation.id}/documents?status=${status}`
       )
     } catch (e) {}
@@ -288,6 +288,27 @@ export const actions = {
     try {
       commit('SET_TOKEN', state.adminOrg.token)
       const { data } = await this.$axios.get(`/donations/${id}`)
+      return data.data
+    } catch (e) {}
+  },
+
+  async fetchPayout({ commit, state }) {
+    try {
+      const { data } = await this.$axios.get(`/payouts`)
+      return data.data
+    } catch (e) {}
+  },
+
+  async fetchDisputes({ commit, state }) {
+    try {
+      const { data } = await this.$axios.get(`/disputes`)
+      return data.data
+    } catch (e) {}
+  },
+
+  async viewPayout({ commit, state }, id) {
+    try {
+      const { data } = await this.$axios.get(`/payouts`)
       return data.data
     } catch (e) {}
   },
@@ -401,18 +422,20 @@ export const actions = {
   },
 
   async uploadCampaignPhoto({ commit }, form) {
-    const { files, id } = form
-    let formdata = new FormData()
-
-    for (i = 0; i < files.length; i++) {
-      formdata.append('photo', files[i])
-    }
     //upload campaign images
+    const { id, files } = form
     try {
-      this.$axios.get(`/campaigns/${id}/photos`, formdata).then((data) => {
+      let formdata = new FormData()
+
+      for (let i = 0; i < files.length; i++) {
+        formdata.append('photo', files[i])
+      }
+      this.$axios.post(`/campaigns/${id}/photos`, formdata).then((data) => {
         console.log(data)
       })
-    } catch (e) {}
+    } catch (e) {
+      console.log(e)
+    }
   },
 
   async uploadLogo(form) {

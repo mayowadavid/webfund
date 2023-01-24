@@ -96,7 +96,7 @@
     </client-only>
 
     <div class="flex justify-end mt-5">
-      <a href="#" class="ml-auto text-[#F79D33] font-bold text-base"
+      <a href="/crowdfunding" class="ml-auto text-[#F79D33] font-bold text-base"
         >View More</a
       >
     </div>

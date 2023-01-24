@@ -78,14 +78,14 @@
                       rules="required"
                     >
                       <div class="cs-select" :class="classes">
-                        <select v-model="processOption" class="input">
+                        <select @change="handleChange" v-model="processOption" class="input">
                           <option defaultValue hidden value="">Processing fee</option>
                           <option
-                            v-for="process in processing"
-                            :key="process"
-                            :value="process"
+                            v-for="(process, i) in processing"
+                            :key="i"
+                            :value="process.name"
                           >
-                            {{ process }}
+                            {{ process.name }}
                           </option>
                         </select>
                       </div>
@@ -103,8 +103,9 @@
                   rules="required"
                 >
                   <input
+                    @change="handleChange"
                     id="input-commission_fee"
-                    v-model="result"
+                    v-model="amount"
                     class="form-input"
                     :class="classes"
                     placeholder="amount"
@@ -119,11 +120,11 @@
             <div class="charge_result mb-space mb-tp5 flex_row">
                 <div class="charge_res_wrap mb5">
                     <p>We will settle you</p>
-                    <p>4,000</p>
+                    <p>{{result || 0}}</p>
                 </div>
                 <div class="charge_res_wrap flex_col mb5">
                     <p>Wefundx fee</p>
-                    <p>4,000</p>
+                    <p>{{fee || 0}}</p>
                 </div>
             </div>
             <div class="charge_setup mb-tp5 flex_col">
@@ -225,13 +226,15 @@ export default {
       nonProfits: false,
       status: '',
       processOption: '',
+      fee: '',
       result: '',
+      amount: '',
       donationFees: [
         {name: "Local Donations", rate: "5%", active: false, options: ['cards', 'Bank Transfer', 'USSD', "Bank", 'QR']},
       {name: "Bitcoin", rate: "7%", active: true, options: ['Donate by paying through your bitcoin wallet']},
       {name: 'International Donations', rate: '6.5%', active: false, options: ['cards', 'Bank Transfer', 'USSD', 'Bank', 'QR']}],
       chargeBenefit: ['Zero maintenance fee', 'Free, automatic settlement within 24 hours', 'Volume discounts available', 'No hidden fees or charges'],
-      processing: ['organisation', 'non-profit', 'international'],
+      processing: [{name: 'organisation', rate: '5%'}, {name: 'non-profit', rate: '5%'}, {name: 'international', rate: '6%'}],
       filters: ['Failed payment', 'Success payment'],
       paragragphOne: 'Together, we can raise more donations for your organization',
       paragragphTwo: 'we understand the importance of what you do and we are helping you make more impact. it does not matter if you are just starting outvor not'
@@ -244,6 +247,20 @@ export default {
   methods: {
     filterChangeHandler(status) {
       this.filter_no_scroll = status
+    },
+    handleChange(e){
+      if(this.processOption.length > 0){
+        this.processing.map((data)=>{
+          if(data.name == this.processOption && this.amount.length > 0){
+          let rate = data.rate;
+          const amount = this.amount;
+          rate = parseFloat(rate);
+          const balance = (rate/100) * amount;
+          this.fee = balance;
+          this.result = amount - balance;
+          }
+        });
+      }
     },
     toggleEditModal(value) {
       this.campaign_id = value;

@@ -287,13 +287,13 @@
                   'border-dashed border-gray-300': index !== 0,
                 }"
               >
-              <svg @click.prevent="removeImage(index)" width="19" height="19" viewBox="0 0 19 19" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <svg @click.prevent="removeImage(index, file)" width="19" height="19" viewBox="0 0 19 19" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M15.3 7.5C15.3 7.5 14.9 12.8 14.6 15.1C14.5 16.2 13.8 16.8 12.7 16.8C10.6 16.8 8.6 16.8 6.5 16.8C5.5 16.8 4.8 16.1 4.7 15.1C4.4 12.8 4 7.5 4 7.5" fill="#F70606"/>
               <path d="M16.4 4.90002H3" stroke="#FF2507" stroke-linecap="round" stroke-linejoin="round"/>
               <path d="M13.8 4.89998C13.2 4.89998 12.6 4.49998 12.5 3.89998L12.3 2.89998C12.2 2.49998 11.8 2.09998 11.3 2.09998H8C7.5 2.09998 7.1 2.39998 7 2.89998L6.8 3.89998C6.7 4.49998 6.1 4.89998 5.5 4.89998" fill="white"/>
               <path d="M13.8 4.89998C13.2 4.89998 12.6 4.49998 12.5 3.89998L12.3 2.89998C12.2 2.49998 11.8 2.09998 11.3 2.09998H8C7.5 2.09998 7.1 2.39998 7 2.89998L6.8 3.89998C6.7 4.49998 6.1 4.89998 5.5 4.89998" stroke="#F90808" stroke-linecap="round" stroke-linejoin="round"/>
               </svg>
-              <img class="mb10 h-40 rounded-lg m-auto flex-inline" :src="file" alt="" >
+              <img class="mb10 h-40 rounded-lg m-auto flex-inline" :src="file.url" alt="" >
               </div>
             </div>
           </div>
@@ -314,6 +314,7 @@ export default {
     intervals: ['weekly', 'monthly', 'yearly'],
     plans: [],
     Image: [],
+    files: [],
     err: '',
     dismissable: false,
     edit_modal: false,
@@ -337,6 +338,8 @@ export default {
   },
   watch: {
     campData(newValue, oldValue){
+      console.log(newValue.images);
+     this.Image = [...newValue.images];
      this.form = {...newValue};
      },
      plan(newValue, oldValue){
@@ -391,17 +394,19 @@ export default {
            this.files = [...result];
            const temporaryUrl = result.length > 0 && result.map((f)=>{
                 let url = URL.createObjectURL(f);
-                return url;
+                return {url};
            });
-           result.length > 0 && (this.Image = temporaryUrl);
-           temporaryUrl.length > 0 && (this.Image = temporaryUrl);
+           result.length > 0 && (this.Image = [...this.Image, ...temporaryUrl]);
+           temporaryUrl.length > 0 && (this.Image = [...this.Image, ...temporaryUrl]);
         }
     },
-    removeImage(i) {
+    async removeImage(i, data) {
+      const id = data?.id;
+      await id !== undefined && this.$axios.delete(`/campaigns/delete-photo/${id}`);
       this.Image.splice(i, 1);
     },
     onSuccess(resp){
-      const data = {id: this.$route.params.id, files};
+      const data = { id: this.$route.params.id, files: this.files };
       this.$store.dispatch('auth/uploadCampaignPhoto', data);
     }
   },

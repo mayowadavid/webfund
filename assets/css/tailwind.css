@@ -111,6 +111,10 @@ html {
   width: 30% !important;
 }
 
+.mb25 {
+  width: 25% !important;
+}
+
 .mb2 {
   width: 20% !important;
 }
@@ -1109,8 +1113,8 @@ label.checkbox span.checkmark:after {
   position: absolute;
   top: 0;
   right: 0;
-  width: 20px;
-  height: 20px;
+  width: 30px;
+  height: 30px;
 }
 
 @media (max-width: 340px) {

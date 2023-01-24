@@ -17,7 +17,7 @@
             <div class="flex flex-row gap-4">
               <img v-for="(img, index) in campaign.images"
               :key="index"
-              :src="img" class="w-56 h-36 bg-gray-200" />
+              :src="img.url" class="w-56 h-36 bg-gray-200" />
             </div>
           </div>
           <div class="md:col-span-6 lg:col-span-5 space-y-6">
@@ -131,6 +131,7 @@ export default {
   },
   watch: {
     campData(newValue, oldValue){
+      console.log(newValue);
      this.campaign = newValue;
      }
   },

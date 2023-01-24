@@ -122,7 +122,7 @@
             <div class="side_action sm-tp1 m-tp1 flex_col mb5 m10 sm10 px-4 sm:px-5 lg:px-10">
                 <div class="action_form_wrapper sm10 m10 right_form mb8 shadows">
                     <div class="action_outer_wrap flex_col">
-                        <div class="first_action_layer m7 sm7 mb85 shadows">
+                        <div class="first_action_layer m10 sm10 mb9 shadows">
                             <div class="donation_form_wrapper reset flex_col">
                                 <p>Redeem church offering</p>
                                 <div class="flex mb-space tag_mb items-center mb10">
@@ -149,18 +149,18 @@
                                     Donate
                                   </p>
                                 </div>
-                                <div class="org_content mb-space m8 sm8 mb10 flex_row">
+                                <div class="org_content mb-space m10 sm10 mb10 flex_row">
                                     <div class="org_avatar flex_row mb15">
                                         <img src="/rccg.png" alt="" srcset="">
                                     </div>
-                                    <div class="org_con_col mb85 reset flex_col">
+                                    <div class="org_con_col mb8 reset flex_col">
                                         <p>Redeem Christian Church of God</p>
                                         <p>Donation organizer</p>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="report_campaign name mb7 flex_row">
+                        <div class="report_campaign name mb9 flex_row">
                             <p>Report this campaign</p>
                         </div>
                     </div>
