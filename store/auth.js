@@ -429,6 +429,26 @@ export const actions = {
     } catch (e) {}
   },
 
+  async fetchTeams({ commit, state }) {
+    try {
+      const { data } = await this.$axios.get(
+        `/organisations/${state.user.organisation.id}/teams`
+      )
+      // console.log('fetch bank success: ', data.data)
+      return data.data
+    } catch (e) {}
+  },
+
+  async fetchTeam({ commit, state }, id) {
+    try {
+      const { data } = await this.$axios.get(
+        `/organisations/${state.user.organisation.id}/teams/${id}`
+      )
+      // console.log('fetch bank success: ', data.data)
+      return data.data
+    } catch (e) {}
+  },
+
   async uploadCampaignPhoto({ commit }, form) {
     //upload campaign images
     const { id, files } = form

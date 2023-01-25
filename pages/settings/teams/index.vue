@@ -129,22 +129,19 @@ export default {
       members: [],
     }
   },
-  mounted() {
-    // fetch org
-    const id = JSON.parse(localStorage.getItem('id'));
-    console.log(id);
-    this.$axios.get(`/organisations/${id}/teams`)
-    .then(({data})=> {
-      console.log(data.data.teams);
-      this.members = data.data.teams.map((memb)=> {
+  async mounted() {
+    // fetch teams
+    const res = await this.$store.dispatch('auth/fetchTeams');
+    if(res){
+        this.members = res.teams.map((memb)=> {
         const {fullname, email, role, updatedAt, id} = memb;
-        const splits = fullname.split(" ");
-        const first_name = splits[0];
-        const last_name = splits[1];
+        const splits = fullname?.split(" ");
+        const first_name = splits ? splits[0]: '';
+        const last_name = splits ? splits[1]: '';
         const last_seen = updatedAt;
         return {first_name, last_name, email, role, id, last_seen};
       });
-    });
+    }
   },
 }
 </script>

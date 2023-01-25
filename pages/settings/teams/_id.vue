@@ -21,7 +21,7 @@
                 Full Name
               </div>
               <div class="text-sm md:text-base text-gray-800 font-medium">
-                James Blunt Black
+                {{team?.fullname}}
               </div>
             </div>
             <div>
@@ -29,7 +29,7 @@
                 Email Address
               </div>
               <div class="text-sm md:text-base text-gray-800 font-medium">
-                jamesblunt@gmail.com
+                {{team?.email}}
               </div>
             </div>
             <div class="absolute md:relative my-auto ml-auto right-0">
@@ -124,15 +124,12 @@ export default {
   layout: 'dashboard',
   scrollToTop: true,
 
-  async asyncData({ $axios, params }) {
-    let team = []
-
-    try {
-      const data = await $axios.get(`/team/${params.id}`)
-      team = data.data
-    } catch (e) {}
-    // console.log(team)
-    return { team }
+  async mounted() {
+    // fetch teams
+    const res = await this.$store.dispatch('auth/fetchTeam', this.$route.params.id);
+    if(res){
+        this.team = res.team_member;
+    }
   },
 
   validate({ params }) {

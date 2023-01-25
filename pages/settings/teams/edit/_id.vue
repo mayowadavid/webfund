@@ -144,8 +144,17 @@ export default {
       role: 'user',
     },
   }),
-  mounted() {
-    this.org_id = this.$store.state.auth.user?.user?.active_organisation;
+  async mounted() {
+    // fetch teams
+    const res = await this.$store.dispatch('auth/fetchTeam', this.$route.params.id);
+    if(res){
+      const {fullname, email, role} = res.team_member;
+        const splits = fullname?.split(" ");
+        const first_name = splits ? splits[0]: '';
+        const last_name = splits ? splits[1]: '';
+        const data = {first_name, last_name, email, role}
+        this.form = {...data};
+    }
   },
   methods: {
     onSubmit() {
@@ -155,13 +164,6 @@ export default {
       role: this.form.role
     });
 
-    var requestOptions = {
-      body: raw,
-      redirect: 'follow'
-    };
-      return this.$axios.post(`/organisations/${this.org_id}/teams`, requestOptions).then((data)=> {
-        console.log(data);
-      });
     },
     onSuccess() {},
     deactivateMember() {
