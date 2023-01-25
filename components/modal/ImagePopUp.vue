@@ -17,7 +17,7 @@
                   <img @click="increaseIndex" src='/arrow_right.png' alt="sendit"/>
             </div>
           </div>
-          <img :src="temporaryImage[imgPreviewIndex]?.url" alt="sendit"/>
+          <img :src="temporaryImage[imgPreviewIndex]" alt="sendit"/>
       </div>
      </v-form>
    </v-modal>

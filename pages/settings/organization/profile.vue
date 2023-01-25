@@ -169,7 +169,7 @@
             </v-form>
           </div>
           <div class="col-span-12 md:col-span-4 lg:col-span-5 xl:col-span-4">
-            <business-logo-card />
+            <business-logo-card v-if="orgData !== null" :campId="orgData.id" :logo="orgData.logo" />
           </div>
         </div>
       </div>
@@ -186,13 +186,14 @@ export default {
   data: () => ({
     loading: false,
     success: false,
-    countries: [],
-    organization_categories: ['church', 'tech'],
-    organization_types: ['non-profit', 'tech'],
+    organization_categories: require('@/static/json/Categories.json'),
+    organization_types: require('@/static/json/organisation-type.json'),
     all_states: [],
     states: [],
     cities: [],
     files: '',
+    campId: '',
+    logoData: null,
     form: {
       name: '',
       organisation_type: '',
@@ -205,6 +206,7 @@ export default {
       city: '',
       state: '',
       country: '',
+      logo: '',
     },
   }),
   computed: {
@@ -214,7 +216,6 @@ export default {
   },
   watch: {
     orgData(newValue, oldValue){
-      console.log(newValue);
       this.form = {
         ...this.form, ...newValue
       };

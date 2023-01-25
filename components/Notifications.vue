@@ -38,7 +38,7 @@
       </h4>
       <div class="pb-3">
         <a
-          v-for="(notice, index) in [0, 1, 2, 3]"
+          v-for="(notice, index) in notifications"
           :key="index"
           href="#"
           class="
@@ -51,12 +51,11 @@
             border-b border-gray-200
           "
         >
-          <p class="text-base leading-tight">
-            <span class="status success mr-1 align-text-top">New</span> New
-            donation on your
-            <strong class="font-medium"
-              >church alter re-construction campaign</strong
-            >. Check the the donation been made to your campaign
+          <p
+          @click="markNotification(notice.id)"
+          class="text-base leading-tight">
+            <span class="status success mr-1 align-text-top">{{notice.status == "unseen" ? 'New': 'Old'}}</span>
+            {{notice.description}}
           </p>
         </a>
       </div>
@@ -69,6 +68,14 @@ export default {
   data() {
     return {
       open: false,
+      notifications: [],
+    }
+  },
+  async mounted(){
+    // fetch donation
+    const res = await this.$store.dispatch('auth/fetchNotification');
+    if(res){
+        this.notifications = res.notifications;
     }
   },
 
@@ -76,6 +83,9 @@ export default {
     toggleOpen(e) {
       if (e) e.preventDefault()
       this.open = !this.open
+    },
+    markNotification(id){
+        this.$store.dispatch('auth/markNotification', id);
     },
     closeNotification() {
       this.open = false

@@ -256,7 +256,7 @@ export default {
   data: () => ({
     loading: false,
     upload_limit: 4,
-    campaign_types: ['crowdfunding'],
+    campaign_types: require('@/static/json/Campaign-types.json'),
     Image: [],
     err: '',
     dismissable: false,

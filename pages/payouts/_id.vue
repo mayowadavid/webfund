@@ -86,7 +86,6 @@ export default {
       },
       report_modal: false,
       payout: null,
-      activity_log: require('@/static/json/activity-log.json'),
     }
   },
 

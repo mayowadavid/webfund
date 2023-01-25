@@ -310,7 +310,7 @@ export default {
   scrollToTop: true,
   data: () => ({
     loading: false,
-    campaign_types: ['crowdfunding'],
+    campaign_types: require('@/static/json/Campaign-types.json'),
     intervals: ['weekly', 'monthly', 'yearly'],
     plans: [],
     Image: [],

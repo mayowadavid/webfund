@@ -421,6 +421,14 @@ export const actions = {
     } catch (e) {}
   },
 
+  async fetchNotification({ commit }) {
+    try {
+      const { data } = await this.$axios.get(`/notifications/`)
+      // console.log('fetch bank success: ', data.data)
+      return data.data
+    } catch (e) {}
+  },
+
   async uploadCampaignPhoto({ commit }, form) {
     //upload campaign images
     const { id, files } = form
@@ -438,13 +446,13 @@ export const actions = {
     }
   },
 
-  async uploadLogo(form) {
-    const { files, id } = form
-    //upload logo
-    var formdata = new FormData()
-    formdata.append('logo', files)
+  async uploadLogo({ commit }, form) {
     try {
-      this.$axios.get(`/organisations/${id}/logo`, formdata).then((data) => {
+      const { files, id } = form
+      //upload logo
+      var formdata = new FormData()
+      formdata.append('logo', files)
+      this.$axios.post(`/organisations/${id}/logo`, formdata).then((data) => {
         console.log(data)
       })
     } catch (e) {
@@ -457,6 +465,12 @@ export const actions = {
       const { data } = await this.$axios.get(`/donations/verify/${ref}`)
       // verify payment
       console.log(data)
+    } catch (e) {}
+  },
+
+  async markNotification({ commit }, ref) {
+    try {
+      const { data } = await this.$axios.get(`/notifications/${ref}/seen`)
     } catch (e) {}
   },
 

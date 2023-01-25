@@ -482,7 +482,7 @@ export default {
     done: [],
     countries: require('@/static/json/country.json'),
     organization_categories: ['crowdfunding'],
-    organization_types: ['non-profit'],
+    organization_types: require('@/static/json/organisation-type.json'),
     states: require('@/static/json/state.json'),
     cities: [],
     steps: [
