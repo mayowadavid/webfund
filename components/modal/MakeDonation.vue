@@ -247,7 +247,6 @@ export default {
                   resetForm();
                   //verify dovation
                   verifyDonation(response.reference);
-                  console.log(response)
                 }
               });
 
@@ -261,8 +260,6 @@ export default {
         let key = this.$config.testkey;
              makePayment(donation.reference, key);
           });
-
-
     },
     onSuccess(resp) {
       console.log(resp);

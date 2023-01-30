@@ -88,7 +88,7 @@ export default {
   data() {
     return {
       loading: false,
-      interval_list:['Monthly', 'Weekly', 'Daily', 'Single Payment'],
+      interval_list:['Yearly', 'Monthly', 'Weekly', 'Daily', 'Single Payment'],
       form: {
         name: '',
         amount: '',

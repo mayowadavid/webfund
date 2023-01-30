@@ -101,130 +101,12 @@
                   <div class="form-group mb-5">
                     <validation-provider
                       v-slot="{ errors, classes }"
-                      name="interval"
-                      rules="required"
-                    >
-                      <label for="input-interval">Interval</label>
-                      <div class="cs-select" :class="classes">
-                        <select v-model="form.interval" class="input">
-                          <option defaultValue hidden value="">Select interval</option>
-                          <option
-                            v-for="int in intervals"
-                            :key="int"
-                            :value="int"
-                          >
-                            {{ int }}
-                          </option>
-                        </select>
-                      </div>
-                      <span v-show="errors.length" class="is-invalid">
-                        {{ errors[0] }}
-                      </span>
-                    </validation-provider>
-                  </div>
-                  <div class="form-group mb-5">
-                    <validation-provider
-                      v-slot="{ errors, classes }"
-                      name="start date"
-                      rules="required"
-                    >
-                      <label for="input-start_date">Start Date</label>
-                      <div class="cs-select" :class="classes">
-                        <input v-model="form.start_date" class="form-input" type="date"/>
-                      </div>
-                      <span v-show="errors.length" class="is-invalid">
-                        {{ errors[0] }}
-                      </span>
-                    </validation-provider>
-                  </div>
-                  <div class="form-group mb-5">
-                    <validation-provider
-                      v-slot="{ errors, classes }"
                       name="end date"
                       rules="required"
                     >
                       <label for="input-end_date">End Date</label>
                       <div class="cs-select" :class="classes">
                         <input v-model="form.end_date" class="form-input" type="date"/>
-                      </div>
-                      <span v-show="errors.length" class="is-invalid">
-                        {{ errors[0] }}
-                      </span>
-                    </validation-provider>
-                  </div>
-                </div>
-                <div class="flex flex-col">
-                  <div class="form-group mb-5">
-                    <validation-provider
-                      v-slot="{ errors, classes }"
-                      name="processing fee"
-                      rules="required"
-                    >
-                      <label for="input-processing_fee">Processing fee</label>
-                      <div class="cs-select" :class="classes">
-                        <validation-provider
-                        v-slot="{ errors, classes }"
-                        name="processing fee"
-                        rules="required"
-                      >
-                        <input
-                          id="input-title"
-                          v-model="form.processing_fee_by"
-                          class="form-input"
-                          :class="classes"
-                          placeholder="Enter processing fee"
-                          type="tel"
-                        />
-                        <span v-show="errors.length" class="is-invalid">
-                          {{ errors[0] }}
-                        </span>
-                      </validation-provider>
-                      </div>
-                      <span v-show="errors.length" class="is-invalid">
-                        {{ errors[0] }}
-                      </span>
-                    </validation-provider>
-                  </div>
-                  <div class="form-group mb-5">
-                    <label for="input-commission_fee">Commission fee</label>
-                    <div>
-                      <validation-provider
-                        v-slot="{ errors, classes }"
-                        name="commission_fee"
-                        rules="required"
-                      >
-                        <input
-                          id="input-commission_fee"
-                          v-model="form.commission_fee"
-                          class="form-input"
-                          :class="classes"
-                          placeholder="Commission fee"
-                          type="tel"
-                        />
-                        <span v-show="errors.length" class="is-invalid">
-                          {{ errors[0] }}
-                        </span>
-                      </validation-provider>
-                    </div>
-                  </div>
-                  <div class="form-group mb-5">
-                    <validation-provider
-                      v-slot="{ errors, classes }"
-                      name="plan"
-                      rules="required"
-                    >
-                      <label for="input-plan">Plan</label>
-                      <div class="cs-select" :class="classes">
-                        <select v-model="form.plan" class="input">
-                          <option defaultValue hidden value="">Select plan</option>
-                          <option
-                            v-for="plan in plans"
-                            :key="plan.id"
-                            :value="plan.id"
-                          >
-                            {{ plan.name }}
-                          </option>
-                        </select>
                       </div>
                       <span v-show="errors.length" class="is-invalid">
                         {{ errors[0] }}
@@ -311,8 +193,6 @@ export default {
   data: () => ({
     loading: false,
     campaign_types: require('@/static/json/Campaign-types.json'),
-    intervals: ['weekly', 'monthly', 'yearly'],
-    plans: [],
     Image: [],
     files: [],
     err: '',
@@ -322,29 +202,24 @@ export default {
       campaign_type: '',
       title: '',
       description: '',
-      processing_fee_by: '',
-      commission_fee: '',
-      interval: '',
-      plan: '',
-      start_date: '',
       end_date: '',
     },
   }),
   computed: {
       ...mapState({
       campData: (state) => state.app.campaign,
-      plan: (state) => state.app.plans
     })
   },
   watch: {
     campData(newValue, oldValue){
-      console.log(newValue.images);
+      const today = new Date(newValue.end_date);
+      const year = today.getFullYear();
+      const month = today.getMonth();
+      const day = today.getDate();
+      const end_date = year + '-' + ("0" + month + 1).slice(-2) + '-' + ("0" + day).slice(-2);
      this.Image = [...newValue.images];
-     this.form = {...newValue};
+     this.form = {...newValue, end_date};
      },
-     plan(newValue, oldValue){
-      this.plans = newValue
-     }
   },
   mounted(){
     // fetch campaign
@@ -354,26 +229,23 @@ export default {
   methods: {
     async updateCampaign() {
       const {
-        type,
+      campaign_type,
       title,
       description,
-      start_date,
       end_date,
-      campaign_target,
-      plan_id
+      campaign_target
       } = this.form;
-
       const formData = {
-        campaign_type: type,
+        cammpId: this.$route.params.id,
+        campaign_type,
         title,
         description,
         campaign_target,
-        start_date,
         end_date,
-        plan_id
       };
+      return formData;
       //update campaign
-      return this.$store.dispatch('auth/updateCampaign', formData);
+      //return this.$store.dispatch('auth/updateCampaign', formData);
     },
     toggleEditModal() {
       this.edit_modal = !this.edit_modal;
@@ -396,7 +268,6 @@ export default {
                 let url = URL.createObjectURL(f);
                 return {url};
            });
-           result.length > 0 && (this.Image = [...this.Image, ...temporaryUrl]);
            temporaryUrl.length > 0 && (this.Image = [...this.Image, ...temporaryUrl]);
         }
     },

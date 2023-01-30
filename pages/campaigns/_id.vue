@@ -15,7 +15,7 @@
         <div class="shadow-lg border border-gray-200 px-6 py-5 mt-6">
           <div class="flex flex-row gap-12">
             <div class="md:-mr-6">
-              <img :src="campaign.organisation?.logo" class="w-28 h-16 bg-gray-200" />
+              <img v-if="campaign.images" :src="campaign?.images[0]?.url" class="w-28 h-16 bg-gray-200" />
             </div>
             <div class="my-auto">
               <div class="text-base text-gray-500 md:mb-2">Campaign name</div>
@@ -74,8 +74,6 @@
                       <th scope="col" class="pr-6">Status</th>
                       <th scope="col" class="px-6">Donation date</th>
                       <th scope="col" class="px-6">Donor name</th>
-                      <th scope="col" class="px-6">Donation type</th>
-                      <th scope="col" class="px-6">Interval</th>
                       <th scope="col" class="px-6">Amount donated</th>
                     </tr>
                   </thead>
@@ -101,14 +99,6 @@
                         <div class="text-base font-medium text-gray-900">
                           {{ dono.donor_name }}
                         </div>
-                      </td>
-                      <td class="px-6">
-                        <div class="text-base text-gray-500">
-                          {{ dono.donation_type }}
-                        </div>
-                      </td>
-                      <td class="px-6 text-base text-gray-500">
-                        <span class="tag pill">{{ dono.channel }}</span>
                       </td>
                       <td class="px-6">
                         <div class="text-base font-medium text-gray-900">
@@ -146,6 +136,7 @@ export default {
   },
   watch: {
     campData(newValue, oldValue){
+      console.log(newValue);
      this.campaign = newValue;
      this.donors = [...newValue.donations];
      }

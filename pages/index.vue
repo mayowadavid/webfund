@@ -41,18 +41,18 @@
           >
             <div class="left-section w-1/2">
               <h3 class="text-gray-700 font-bold">
-                {{ tabControl[tabIndex]?.total }}
+                {{ tabControl[tabIndex]?.total || 0 }}
               </h3>
               <p class="text-sm md:text-base text-gray-500 font-medium">
-                Total {{ tabs[tabIndex] }}s
+                Total {{ tabs[tabIndex] || 0 }}s
               </p>
             </div>
             <div class="right-section w-1/2 pl-6 md:pl-32">
               <h3 class="text-gray-700 font-bold">
-                {{ tabControl[tabIndex]?.today }}
+                {{ tabControl[tabIndex]?.today || 0 }}
               </h3>
               <p class="text-sm md:text-base text-gray-500 font-medium">
-                Today's {{ tabs[tabIndex] }}s
+                Today's {{ tabs[tabIndex] || 0 }}s
               </p>
             </div>
           </div>

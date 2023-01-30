@@ -41,7 +41,7 @@
                     >
                       <label for="input-role">Campaign Type</label>
                       <div class="cs-select" :class="classes">
-                        <select v-model="form.type" class="input">
+                        <select v-model="form.campaign_type" class="input">
                           <option value="">Select campaign type</option>
                           <option
                             v-for="camp in campaign_types"
@@ -49,30 +49,6 @@
                             :value="camp"
                           >
                             {{ camp }}
-                          </option>
-                        </select>
-                      </div>
-                      <span v-show="errors.length" class="is-invalid">
-                        {{ errors[0] }}
-                      </span>
-                    </validation-provider>
-                  </div>
-                  <div class="form-group mb-5">
-                    <validation-provider
-                      v-slot="{ errors, classes }"
-                      name="campaign type"
-                      rules="required"
-                    >
-                      <label for="input-role">Campaign Plan</label>
-                      <div class="cs-select" :class="classes">
-                        <select v-model="form.plan_id" class="input">
-                          <option value="">Select plan</option>
-                          <option
-                            v-for="plan in plans"
-                            :key="plan.id"
-                            :value="plan.id"
-                          >
-                            {{ plan.name }}
                           </option>
                         </select>
                       </div>
@@ -117,21 +93,6 @@
                         placeholder="Campaign Description"
                       >
                       </textarea>
-                      <span v-show="errors.length" class="is-invalid">
-                        {{ errors[0] }}
-                      </span>
-                    </validation-provider>
-                  </div>
-                   <div class="form-group mb-5">
-                    <validation-provider
-                      v-slot="{ errors, classes }"
-                      name="start date"
-                      rules="required"
-                    >
-                      <label for="input-start_date">Start Date</label>
-                      <div class="cs-select" :class="classes">
-                        <input v-model="form.start_date" class="form-input" type="date"/>
-                      </div>
                       <span v-show="errors.length" class="is-invalid">
                         {{ errors[0] }}
                       </span>
@@ -238,7 +199,7 @@
               <path d="M13.8 4.89998C13.2 4.89998 12.6 4.49998 12.5 3.89998L12.3 2.89998C12.2 2.49998 11.8 2.09998 11.3 2.09998H8C7.5 2.09998 7.1 2.39998 7 2.89998L6.8 3.89998C6.7 4.49998 6.1 4.89998 5.5 4.89998" fill="white"/>
               <path d="M13.8 4.89998C13.2 4.89998 12.6 4.49998 12.5 3.89998L12.3 2.89998C12.2 2.49998 11.8 2.09998 11.3 2.09998H8C7.5 2.09998 7.1 2.39998 7 2.89998L6.8 3.89998C6.7 4.49998 6.1 4.89998 5.5 4.89998" stroke="#F90808" stroke-linecap="round" stroke-linejoin="round"/>
               </svg>
-              <img class="mb10 h-40 rounded-lg m-auto flex-inline" :src="file" alt="" >
+              <img class="mb10 h-40 rounded-lg m-auto flex-inline" :src="file.url" alt="" >
               </div>
             </div>
           </div>
@@ -249,7 +210,6 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
 export default {
   layout: 'dashboard',
   scrollToTop: true,
@@ -262,53 +222,39 @@ export default {
     dismissable: false,
     edit_modal: false,
     org_cat:[],
-    plans: [],
     files: [],
     form: {
-      type: '',
+      campaign_type: '',
       title: '',
       description: '',
       campaign_target: '',
-      interval: '',
-      plan_id: '',
       start_date: '',
       end_date: '',
     },
   }),
-  computed: {
-      ...mapState({
-      planData: (state) => state.app.plans,
-    })
-  },
-   watch: {
-    planData(newValue, oldValue){
-      console.log(newValue);
-     this.plans = newValue;
-     }
-  },
-  mounted(){
-    // fetch campaign
-    this.$store.dispatch('app/fetchPlan');
-  },
   methods: {
     addCampaign() {
       const {
-        type,
+      campaign_type,
       title,
       description,
-      start_date,
       end_date,
       campaign_target,
-      plan_id
       } = this.form;
+
+      const today = new Date();
+      const year = today.getFullYear();
+      const month = today.getMonth();
+      const day = today.getDate();
+      const start_date = year + '-' + ("0" + month + 1).slice(-2) + '-' + ("0" + day).slice(-2);
+
       const formData = {
-        campaign_type: type,
+        campaign_type,
         title,
         description,
         campaign_target,
         start_date,
         end_date,
-        plan_id
       };
       //create campaign
       return this.$store.dispatch('auth/createCampaign', formData);
@@ -334,8 +280,7 @@ export default {
                 let url = URL.createObjectURL(f);
                 return {url};
            });
-           result.length > 0 && (this.Image = temporaryUrl);
-           temporaryUrl.length > 0 && (this.Image = temporaryUrl);
+           temporaryUrl.length > 0 && (this.Image = [...this.Image, ...temporaryUrl]);
         }
     },
     submitCampaignImage(){
@@ -347,7 +292,7 @@ export default {
     onSuccess(resp){
       const {id} = resp.data.data.campaign;
       const data = {id, files};
-      return this.$store.dispatch('auth/uploadCampaignPhoto', data);
+      this.$store.dispatch('auth/uploadCampaignPhoto', data);
     }
   },
 }
