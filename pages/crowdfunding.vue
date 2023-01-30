@@ -88,7 +88,7 @@
                   <div class="my-4 w-full">
                     <progress-bar
                       bar-color="#26B872"
-                      val="20"
+                      :val="item.percentage"
                       size="12"
                     ></progress-bar>
                     <p class="text-sm font-normal text-[#575B68] mt-1">
