@@ -168,7 +168,7 @@ export default {
     onSuccess() {},
     deactivateMember() {
       // this.deactivating = true
-      // this.$axios.get(`/team/${this.$route.params.id}`)
+      return this.$store.dispatch('auth/deleteTeam', this.$route.params.id)
     },
   },
 }

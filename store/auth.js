@@ -322,6 +322,15 @@ export const actions = {
     } catch (e) {}
   },
 
+  async deleteTeam({ commit, state }, id) {
+    try {
+      return this.$axios.delete(
+        `/organisations/${state.user.organisation.id}/teams/${id}`,
+        team
+      )
+    } catch (e) {}
+  },
+
   async createOrganisation({ commit }, form) {
     const {
       phone_number,

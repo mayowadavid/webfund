@@ -219,6 +219,7 @@ export default {
       const end_date = year + '-' + ("0" + month + 1).slice(-2) + '-' + ("0" + day).slice(-2);
      this.Image = [...newValue.images];
      this.form = {...newValue, end_date};
+     console.log(this.form);
      },
   },
   mounted(){

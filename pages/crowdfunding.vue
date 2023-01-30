@@ -209,17 +209,29 @@ export default {
       console.log(newValue);
       const d = new Date();
       const today = d.getDate();
+      const daysLeft = (startDate, endDate) => {
+          startDate = new Date(startDate);
+          endDate =  new Date(endDate);
+          const millisecondsPerDay = 1000 * 60 * 60 * 24;
+          const startDateUTC = Date.UTC(startDate.getFullYear(), startDate.getMonth(), startDate.getDate());
+          const endDateUTC = Date.UTC(endDate.getFullYear(), endDate.getMonth(), endDate.getDate());
+          return Math.floor((endDateUTC - startDateUTC) / millisecondsPerDay);
+          };
       const reformat = newValue.map((n)=>{
-        const {
+        let {
           end_date,
           start_date,
+          campaign_target,
+          total_donated,
           } = n;
-          const newStartDate = start_date.split("-");
-          const newEndDate = end_date.split("-");
-          const created_day = parseInt(newStartDate[2]) == today ? "Today": parseInt(newStartDate[2]) + ' days ago';
-          let lapsed = parseInt(newEndDate[2]) - parseInt(today) + ' days left';
-          lapsed = (parseInt(lapsed) < 0) ? 'expired': lapsed;
-          return {created_day, lapsed, ...n};
+          let number = Number(campaign_target.replace(/[^0-9.-]+/g,""));
+          const percentage = (total_donated/number) * 100;
+          // calculate to see expired date
+          const dayCheck = daysLeft(start_date, end_date);
+          const created_day = parseInt(dayCheck) == today ? "Today": parseInt(dayCheck) + ' days ago';
+          let lapsed = dayCheck + ' days left';
+          lapsed = (parseInt(dayCheck) < 0) ? 'expired': lapsed;
+          return {created_day, lapsed, percentage, ...n};
       })
      this.campaigns = reformat;
      }
