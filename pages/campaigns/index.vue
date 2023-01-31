@@ -134,20 +134,12 @@ export default {
       campaigns: [],
     }
   },
-  computed: {
-      ...mapState({
-      campData: (state) => state.app.allCampaign,
-    })
-  },
-   watch: {
-    campData(newValue, oldValue){
-      console.log(newValue)
-     this.campaigns = newValue;
-     }
-  },
-  mounted(){
+  async mounted(){
     // fetch campaign
-    this.$store.dispatch('app/fetchAllCampaign');
+    const res = this.$store.dispatch('auth/fetchOrganizationCamp');
+    if(res){
+        this.campaigns = [...res.campaigns];
+    }
   }
 }
 </script>

@@ -161,6 +161,12 @@ export const actions = {
         commit('SET_ORGANIZATION', data.data.organisation)
       })
   },
+  async fetchOrganizationCamp({ commit, state }) {
+    const { data } = await this.$axios.get(
+      `/organisations/${state.user.organisation.id}/campaigns`
+    )
+    return data.data
+  },
   fetchAllOrganization({ commit, state }) {
     this.$axios.get(`/organisations`).then(({ data }) => {
       commit('SET_ALL_ORGANIZATION', data.data.organisations)
