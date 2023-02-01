@@ -182,6 +182,7 @@ export default {
   scrollToTop: true,
   data() {
     return {
+      show: false,
       items: 10,
        loading: false,
       campaigns: [],
@@ -248,6 +249,10 @@ export default {
     handlePopUp(ev) {
       const id = ev.target.id;
       this.campaign_id = id;
+      this.edit_modal = !this.edit_modal;
+    },
+    toggleEditModal(value) {
+      this.campaign_id = value;
       this.edit_modal = !this.edit_modal;
     },
     toggleTab() {

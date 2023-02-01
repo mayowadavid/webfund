@@ -147,7 +147,6 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
 export default {
   layout: 'dashboard',
   scrollToTop: true,
@@ -164,23 +163,15 @@ export default {
       plans: [],
     }
   },
-  computed: {
-      ...mapState({
-      orgPlans: (state) => state.app.plans,
-    })
-  },
-  watch: {
-    orgPlans(newValue, oldValue){
-      console.log(newValue)
-      this.plans = newValue;
-    }
-  },
-  mounted() {
+  async mounted() {
     // reset errors
     this.$store.commit('app/SET_FORM_ERRORS', false)
 
-    // fetch org
-    this.$store.dispatch('app/fetchPlan');
+    const res = await this.$store.dispatch('auth/fetchOrganizationplan')
+    if (res) {
+      console.log(res);
+      this.plans = [...res.plans]
+    }
   },
   methods: {
     toggleAddModal() {

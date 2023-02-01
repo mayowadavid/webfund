@@ -5,22 +5,20 @@
       <div class="container mx-auto px-4 sm:px-5 lg:px-10">
         <div class="mt-16 mb-10 flex flex-wrap items-start justify-center">
           <div class="mb-6 flex flex-col items-center justify-center">
-            <img class="h-60 w-60 mx-auto" src="/rccg-lg.png" alt />
+            <img class="h-60 w-60 mx-auto" :src="organisation.logo" alt />
           </div>
           <div class="lg:ml-16 md:ml-10 ml-5 max-w-[776px]">
             <h4 class="text-lg font-bold text-[#1E202A] mb-4">
-              Redeem Christian Church of God
+              {{organisation.name}}
             </h4>
             <p class="text-[20px] font-normal text-[#1E202A] mb-5">
-              Religious Organization
+              {{organisation.category}}
             </p>
             <p class="text-[20px] font-normal text-[#1E202A] mb-10">
-              6/5 Mobolaji Bank Anthony Way, Ikeja, Lagos
+              {{organisation.address}}
             </p>
             <p class="text-[20px] font-normal text-[#1E202A] mb-5">
-              Redeem Christian Church of God is a religious organization with
-              millions of parishes scattered over the country. Our GO is Pastor
-              E. A. Adeboye.
+              {{organisation.description}}
             </p>
             <div class="flex justify-end mt-5">
               <nuxt-link class="text-[#F79D33] font-bold" to="#"
@@ -31,7 +29,7 @@
         </div>
       </div>
     </div>
-    <div class="bg-white w-full py-14">
+    <div v-if="plans.length > 0" class="bg-white w-full py-14">
       <div class="container mx-auto px-4 sm:px-5 lg:px-10">
         <h3 class="text-[#1E202A] font-bold text-lg text-center mb-8">
           Recurring Giving
@@ -63,7 +61,10 @@
               </tr>
             </thead>
             <tbody class="font-medium">
-              <tr class="border-b-2">
+              <tr
+               v-for="plan in plans"
+                :key="plan.id"
+              class="border-b-2">
                 <td align="center">
                   <p
                     class="
@@ -76,100 +77,16 @@
                       font-bold
                     "
                   >
-                    Active
+                    {{plan.status}}
                   </p>
                 </td>
-                <td align="center">Tithing</td>
-                <td align="center">Weekly Tithing</td>
+                <td align="center">{{plan.name}}</td>
+                <td align="center">{{plan.interval}}</td>
                 <td align="center">
                   <v-button
                     class="h-12"
                    :loading="loading"
-                    @click.prevent="gotoStage('info')"
-                  >
-                    Join Plan
-                  </v-button>
-                </td>
-              </tr>
-              <tr class="border-b-2">
-                <td align="center">
-                  <p
-                    class="
-                      p-1
-                      px-2
-                      max-w-max
-                      bg-[#D0FFE6]
-                      rounded-xl
-                      text-[#086936] text-sm
-                      font-bold
-                    "
-                  >
-                    Active
-                  </p>
-                </td>
-                <td align="center">Tithing</td>
-                <td align="center">Monthly Tithing</td>
-                <td align="center">
-                  <v-button
-                    class="h-12"
-                   :loading="loading"
-                    @click.prevent="gotoStage('info')"
-                  >
-                    Join Plan
-                  </v-button>
-                </td>
-              </tr>
-              <tr class="border-b-2">
-                <td align="center">
-                  <p
-                    class="
-                      p-1
-                      px-2
-                      max-w-max
-                      bg-[#D0FFE6]
-                      rounded-xl
-                      text-[#086936] text-sm
-                      font-bold
-                    "
-                  >
-                    Active
-                  </p>
-                </td>
-                <td align="center">Offering</td>
-                <td align="center">Sunday Offering</td>
-                <td align="center">
-                  <v-button
-                    class="h-12"
-                   :loading="loading"
-                    @click.prevent="gotoStage('info')"
-                  >
-                    Join Plan
-                  </v-button>
-                </td>
-              </tr>
-              <tr class="border-b-2">
-                <td align="center">
-                  <p
-                    class="
-                      p-1
-                      px-2
-                      max-w-max
-                      bg-[#D0FFE6]
-                      rounded-xl
-                      text-[#086936] text-sm
-                      font-bold
-                    "
-                  >
-                    Active
-                  </p>
-                </td>
-                <td align="center">Food Bank</td>
-                <td align="center">Children Food Bank</td>
-                <td align="center">
-                  <v-button
-                    class="h-12"
-                   :loading="loading"
-                    @click.prevent="gotoStage('info')"
+                    @click.prevent="gotoStage('info' + ',', plan.id)"
                   >
                     Join Plan
                   </v-button>
@@ -428,11 +345,26 @@ export default {
       stage: 'start',
       loading: false,
       form: {},
+      organisation: {},
+      plans: [],
+      planId: ''
+    }
+  },
+  async mounted() {
+    // fetch campaign
+    const res = await this.$store.dispatch('auth/fetchOrganizationBasic', this.$route.params.id)
+    const resPlan = await this.$store.dispatch('auth/fetchOrganizationplan', this.$route.params.id)
+    if (res) {
+      this.organisation = {...res.organisation};
+    }
+    if(resPlan){
+        this.plans =[...resPlan.plans]
     }
   },
   methods: {
-    goBackToStage(stage) {
-      this.stage = stage || 'start'
+    goBackToStage(stage, id) {
+      this.stage = stage || 'start';
+      this.planId = id;
     },
     gotoStage(stage) {
       this.loading = true

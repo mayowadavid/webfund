@@ -1,9 +1,10 @@
 <template>
   <div>
+    <div
+    v-for="item in organisations"
+        :key="item">
     <div class="flex flex-wrap justify-between item-center">
       <div
-        v-for="item in donations"
-        :key="item"
         class="
           bg-white
           max-w-[380px]
@@ -26,10 +27,10 @@
             justify-center
           "
         >
-          <img class="h-48 w-48 mx-auto" src="/rccg-lg.png" alt />
+          <img class="h-48 w-48 mx-auto" :src="item?.logo" alt />
         </div>
         <p class="font-bold text-base text-[#1E202A] mb-8">
-          Redeem Christian Church of God
+          {{item.name}}
         </p>
         <nuxt-link
           class="
@@ -43,16 +44,17 @@
             bg-[#006696]
             text-white text-sm
           "
-          to="/organizations/122iucbss"
+          :to="/organizations/ + item.id"
         >
           Expand
         </nuxt-link>
       </div>
     </div>
     <div class="flex justify-center">
-      <a href="#" class="text-[#F79D33] font-bold text-base"
+      <a :href="/organizations/ + item.id" class="text-[#F79D33] font-bold text-base"
         >View More</a
       >
+    </div>
     </div>
   </div>
 </template>
@@ -62,6 +64,14 @@ export default {
   data() {
     return {
       donations: 9,
+      organisations: [],
+    }
+  },
+  async mounted() {
+    // fetch campaign
+    const res = await this.$store.dispatch('auth/fetchAllOrganization')
+    if (res) {
+      this.organisations = [...res.organisations]
     }
   },
 }

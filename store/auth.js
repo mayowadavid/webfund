@@ -167,10 +167,27 @@ export const actions = {
     )
     return data.data
   },
-  fetchAllOrganization({ commit, state }) {
-    this.$axios.get(`/organisations`).then(({ data }) => {
+  async fetchOrganizationplan({ commit, state }, id) {
+    if (id !== undefined) {
+      const { data } = await this.$axios.get(`/organisations/${id}/plans`)
+      return data.data
+    } else {
+      const { data } = await this.$axios.get(
+        `/organisations/${state.user.organisation.id}/plans`
+      )
+      return data.data
+    }
+  },
+  async fetchOrganizationBasic({ commit }, id) {
+    const { data } = await this.$axios.get(`/organisations/${id}/basic`)
+    return data.data
+  },
+  async fetchAllOrganization({ commit, state }) {
+    const { data } = await this.$axios.get(`/organisations`)
+    console.log(data)
+    data !== undefined &&
       commit('SET_ALL_ORGANIZATION', data.data.organisations)
-    })
+    return data.data
   },
   fetchOrganizationReport({ commit, state }) {
     this.$axios
