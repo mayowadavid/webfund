@@ -119,7 +119,7 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
+import { mapState } from 'vuex'
 export default {
   layout: 'dashboard',
   scrollToTop: true,
@@ -134,12 +134,12 @@ export default {
       campaigns: [],
     }
   },
-  async mounted(){
+  async mounted() {
     // fetch campaign
-    const res = this.$store.dispatch('auth/fetchOrganizationCamp');
-    if(res){
-        this.campaigns = [...res.campaigns];
+    const res = await this.$store.dispatch('auth/fetchOrganizationCamp')
+    if (res) {
+      this.campaigns = [...res.campaigns]
     }
-  }
+  },
 }
 </script>
