@@ -51,7 +51,7 @@
           />
         </div>
 
-        <div class="campaign_row mb10 flex_row">
+        <div v-if="campaign" class="campaign_row mb10 flex_row">
           <div class="mb3 m10 sm10" v-for="(item, i) in campaigns" :key="i">
               <div class="bg-white h-[596px] w-full 2xl:max-w-[400px] xl:max-w-[385px] ">
                 <a :href="'/campaigns/preview/'+ item.id">
