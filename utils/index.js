@@ -76,3 +76,11 @@ export const hasClass = (classname, element) => {
 export const clickedOutside = (elem, event) => {
   return event && elem && !elem.contains(event.target)
 }
+
+export const filterArray = (arr, parameters) => {
+  return arr.filter((obj) => {
+    return parameters.some((param) => {
+      return obj[param.key] === param.value
+    })
+  })
+}

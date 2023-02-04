@@ -17,7 +17,7 @@
       </div>
     </div>
 
-    <client-only>
+    <client-only v-if="campaigns">
       <swiper :options="swiperOption" ref="swiper">
         <swiper-slide v-for="(item, i) in campaigns" :key="i">
           <div class="bg-white h-[596px] w-full 2xl:max-w-[400px] xl:max-w-[385px] ">
@@ -107,7 +107,6 @@
 import Swiper from 'swiper/swiper-bundle.min'
 import 'swiper/swiper-bundle.min.css'
 import ProgressBar from 'vue-simple-progress';
-import { mapState } from 'vuex';
 
 export default {
   components: {
@@ -115,9 +114,10 @@ export default {
   },
   props: {
     title: { type: String, default: '' },
+    campaigns: { type: Array, default: [] },
   },
-  async mounted() {
-    await this.$nextTick()
+  mounted() {
+    this.$nextTick()
     new Swiper(this.$refs.swiper, {
       navigation: {
         nextEl: '.swiper-button-next',
@@ -129,7 +129,6 @@ export default {
   data() {
     return {
       items: 12,
-      campaigns: [],
       swiperOption: {
         slidesPerView: 3,
         spaceBetween: -10,
@@ -169,48 +168,6 @@ export default {
       },
     }
   },
-  computed: {
-      ...mapState({
-      campData: (state) => state.app.allCampaign,
-    })
-  },
-   watch: {
-    campData(newValue, oldValue){
-      console.log(newValue);
-      const d = new Date();
-      const today = d.getDate();
-      const daysLeft = (startDate, endDate) => {
-          startDate = new Date(startDate);
-          endDate =  new Date(endDate);
-          const millisecondsPerDay = 1000 * 60 * 60 * 24;
-          const startDateUTC = Date.UTC(startDate.getFullYear(), startDate.getMonth(), startDate.getDate());
-          const endDateUTC = Date.UTC(endDate.getFullYear(), endDate.getMonth(), endDate.getDate());
-          return Math.floor((endDateUTC - startDateUTC) / millisecondsPerDay);
-          };
-      const reformat = newValue.map((n)=>{
-        let {
-          end_date,
-          start_date,
-          campaign_target,
-          total_donated,
-          } = n;
-          let number = Number(campaign_target.replace(/[^0-9.-]+/g,""));
-          const percentage = (total_donated/number) * 100;
-          // calculate to see expired date
-          const dayCheck = daysLeft(start_date, end_date);
-          const created_day = parseInt(dayCheck) == today ? "Today": parseInt(dayCheck) + ' days ago';
-          let lapsed = dayCheck + ' days left';
-          lapsed = (parseInt(dayCheck) < 0) ? 'expired': lapsed;
-          return {created_day, lapsed, percentage, ...n};
-      })
-     this.campaigns = reformat;
-     }
-  },
-  mounted(){
-    // fetch campaign
-    this.$store.dispatch('app/fetchAllCampaign');
-  },
-
   methods:{
     prev() {
 			this.$refs.swiper.$swiper.slidePrev();

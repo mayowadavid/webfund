@@ -132,9 +132,9 @@ export const actions = {
   },
   async fetchAllCampaign({ commit }) {
     try {
-      this.$axios.get(`/campaigns`).then(({ data }) => {
-        commit('SET_ALL_CAMPAIGN', data.data.campaigns)
-      })
+      const { data } = await this.$axios.get(`/campaigns`)
+      commit('SET_ALL_CAMPAIGN', data.data.campaigns)
+      return data.data.campaigns
     } catch (e) {}
   },
   async fetchPlan({ commit }) {

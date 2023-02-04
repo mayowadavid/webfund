@@ -105,6 +105,7 @@ export default {
   data() {
     return {
       loading: false,
+      organization_types: require('@/static/json/organisation-type.json'),
       form: {
         dispute_type: '',
         description: '',

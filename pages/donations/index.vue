@@ -27,26 +27,28 @@
                 v-model="status"
                 label="Status"
                 :filters="filters"
+                @input="setInput"
+                :callback="filterFunction"
                 @toggle="filterChangeHandler"
               />
-              <v-filter
+              <!-- <v-filter
                 v-model="channel"
                 label="Channel"
                 :filters="channel_filters"
                 @toggle="filterChangeHandler"
-              />
+              /> -->
               <!-- <v-filter
                 v-model="interval"
                 label="Interval"
                 :filters="filters"
                 @toggle="filterChangeHandler"
               /> -->
-              <v-filter
+              <!-- <v-filter
                 v-model="data_range"
                 label="Date Range"
                 :filters="filters"
                 @toggle="filterChangeHandler"
-              />
+              /> -->
             </div>
           </div>
         </div>
@@ -162,6 +164,7 @@
 
 <script>
 import { mapState } from 'vuex';
+import { filterArray } from '~/utils'
 export default {
   layout: 'dashboard',
   scrollToTop: true,
@@ -202,6 +205,21 @@ export default {
   methods: {
     filterChangeHandler(status) {
       this.filter_no_scroll = status
+    },
+    filterFunction () {
+      //  this.donations = filterArray(this.payouts, this.filterOption)
+    },
+    setInput(data) {
+      // this.payoutsCopy = [...this.payouts];
+      // if(data == "Failed payment"){
+      //   this.filterOption = [{key: 'status', value: 'failed'}];
+      // }else if(data == "Success payment") {
+      //   this.filterOption = [{key: 'status', value: 'success'}];
+      // } else if(data == "pending") {
+      //   this.filterOption = [{key: 'status', value: 'pending'}];
+      // }else {
+      //   this.payouts = [...this.payoutsCopy];
+      // }
     },
   },
 }

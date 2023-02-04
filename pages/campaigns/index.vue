@@ -18,14 +18,14 @@
         <hr class="w-full hidden lg:flex mb-3 mt-3" />
         <div class="flex flex-wrap mt-3">
           <div class="flex flex-ro flex-wrap flex-grow gap-5 mr-8 md:mb-0 mb-4">
-            <v-filter v-model="status" label="Status" :filters="filters" />
+            <v-filter v-model="status" label="Status" @input="setInput" :callback="filterFunction" :filters="filters" />
             <!-- <v-filter v-model="channel" label="Channel" :filters="filters" /> -->
             <!-- <v-filter v-model="interval" label="Interval" :filters="filters" /> -->
-            <v-filter
+            <!-- <v-filter
               v-model="data_range"
               label="Date Range"
               :filters="filters"
-            />
+            /> -->
           </div>
           <v-button
             class="flex"
@@ -119,7 +119,7 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { filterArray } from '~/utils'
 export default {
   layout: 'dashboard',
   scrollToTop: true,
@@ -141,5 +141,22 @@ export default {
       this.campaigns = [...res.campaigns]
     }
   },
+  methods: {
+    filterFunction () {
+       this.campaigns = filterArray(this.payouts, this.filterOption)
+    },
+    setInput(data) {
+      // this.payoutsCopy = [...this.payouts];
+      // if(data == "Failed payment"){
+      //   this.filterOption = [{key: 'status', value: 'failed'}];
+      // }else if(data == "Success payment") {
+      //   this.filterOption = [{key: 'status', value: 'success'}];
+      // } else if(data == "pending") {
+      //   this.filterOption = [{key: 'status', value: 'pending'}];
+      // }else {
+      //   this.payouts = [...this.payoutsCopy];
+      // }
+    },
+  }
 }
 </script>

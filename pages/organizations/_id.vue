@@ -270,7 +270,7 @@
         Campaigns
       </h3>
       <div class="container mx-auto px-4 sm:px-5 lg:px-10">
-        <slider title=""> </slider>
+        <slider v-if="campaigns.length > 0" :campaigns="campaigns" title=""> </slider>
       </div>
     </div>
 
@@ -346,6 +346,7 @@ export default {
       loading: false,
       form: {},
       organisation: {},
+      campaigns: [],
       plans: [],
       planId: ''
     }
@@ -354,11 +355,15 @@ export default {
     // fetch campaign
     const res = await this.$store.dispatch('auth/fetchOrganizationBasic', this.$route.params.id)
     const resPlan = await this.$store.dispatch('auth/fetchOrganizationplan', this.$route.params.id)
+    const resCamp = await this.$store.dispatch('auth/fetchOrganizationCamp', this.$route.params.id)
     if (res) {
       this.organisation = {...res.organisation};
     }
     if(resPlan){
         this.plans =[...resPlan.plans]
+    }
+    if(resCamp){
+      this.campaigns = [...resCamp.campaigns]
     }
   },
   methods: {

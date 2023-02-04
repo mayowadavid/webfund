@@ -42,13 +42,13 @@
           </div>
         </div>
       <div class="container mx-auto px-4 sm:px-5 lg:px-10">
-        <slider v-if="campaign" @donation="toggleEditModal" title="Top Fundraising"> </slider>
+        <slider v-if="campaigns.length > 0" :campaigns="campaigns" @donation="toggleEditModal" title="Top Fundraising"> </slider>
         <organization-grid v-if="nonProfits"></organization-grid>
       </div>
     </div>
-    <div v-if="campaign" class="w-full bg-gradient-to-b from-[#fff] to-[#E1F7FE] py-10">
+    <div v-if="campaigns.length > 0" class="w-full bg-gradient-to-b from-[#fff] to-[#E1F7FE] py-10">
       <div class="container mx-auto px-4 sm:px-5 lg:px-10">
-        <slider @donation="toggleEditModal" title="Closing Campaign"> </slider>
+        <slider @donation="toggleEditModal" :campaigns="campaigns" title="Closing Campaign"> </slider>
       </div>
     </div>
     <div class="middle_content space px-4 sm:px-5 lg:px-10">
@@ -231,7 +231,7 @@ export default {
       items: 10,
       edit_modal: false,
       filter_no_scroll: false,
-      campaign: true,
+      campaigns: [],
       campaign_id: '',
       nonProfits: false,
       status: '',
@@ -254,7 +254,39 @@ export default {
   created() {
     this.$store.commit('app/SET_PAGE_TITLE', 'Home')
   },
-
+  async mounted(){
+    // fetch campaign
+    const res = await this.$store.dispatch('app/fetchAllCampaign');
+    if(res){
+        const d = new Date();
+      const today = d.getDate();
+      const daysLeft = (startDate, endDate) => {
+          startDate = new Date(startDate);
+          endDate =  new Date(endDate);
+          const millisecondsPerDay = 1000 * 60 * 60 * 24;
+          const startDateUTC = Date.UTC(startDate.getFullYear(), startDate.getMonth(), startDate.getDate());
+          const endDateUTC = Date.UTC(endDate.getFullYear(), endDate.getMonth(), endDate.getDate());
+          return Math.floor((endDateUTC - startDateUTC) / millisecondsPerDay);
+          };
+     const reformat = res.map((n)=>{
+        let {
+          end_date,
+          start_date,
+          campaign_target,
+          total_donated,
+          } = n;
+          let number = Number(campaign_target.replace(/[^0-9.-]+/g,""));
+          const percentage = (total_donated/number) * 100;
+          // calculate to see expired date
+          const dayCheck = daysLeft(start_date, end_date);
+          const created_day = parseInt(dayCheck) == today ? "Today": parseInt(dayCheck) + ' days ago';
+          let lapsed = dayCheck + ' days left';
+          lapsed = (parseInt(dayCheck) < 0) ? 'expired': lapsed;
+          return {created_day, lapsed, percentage, ...n};
+      })
+     this.campaigns = reformat;
+    }
+  },
   methods: {
     filterChangeHandler(status) {
       this.filter_no_scroll = status
