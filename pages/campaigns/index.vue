@@ -130,32 +130,30 @@ export default {
       channel: '',
       interval: '',
       data_range: '',
-      filters: ['Failed ', 'Success'],
+      filters: ['active', 'complete', 'draft', 'success'],
+      filterOption: [],
       campaigns: [],
+      campaignsCopy: [],
     }
   },
   async mounted() {
     // fetch campaign
     const res = await this.$store.dispatch('auth/fetchOrganizationCamp')
     if (res) {
-      this.campaigns = [...res.campaigns]
+      this.campaigns = [...res.campaigns];
+      this.campaignsCopy = [...res.campaigns]
     }
   },
   methods: {
     filterFunction () {
-       this.campaigns = filterArray(this.payouts, this.filterOption)
+      this.campaigns = filterArray(this.campaigns, this.filterOption);
     },
     setInput(data) {
-      // this.payoutsCopy = [...this.payouts];
-      // if(data == "Failed payment"){
-      //   this.filterOption = [{key: 'status', value: 'failed'}];
-      // }else if(data == "Success payment") {
-      //   this.filterOption = [{key: 'status', value: 'success'}];
-      // } else if(data == "pending") {
-      //   this.filterOption = [{key: 'status', value: 'pending'}];
-      // }else {
-      //   this.payouts = [...this.payoutsCopy];
-      // }
+      if(this.filters.includes(data)){
+        this.filterOption = [{key: 'status', value: data}];
+      } else {
+        this.campaigns = [...this.campaignsCopy];
+      }
     },
   }
 }

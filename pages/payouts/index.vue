@@ -127,7 +127,7 @@ export default {
       interval: '',
       data_range: '',
       filterOption: [],
-      filters: ['Failed payment', 'Success payment', 'Pending'],
+      filters: ['failed', 'success', 'pending'],
       payouts: null,
       payoutsCopy: [],
     }
@@ -137,7 +137,8 @@ export default {
     // fetch donation
     const res = await this.$store.dispatch('auth/fetchPayout');
     if(res){
-        this.payouts = res.payouts;
+        this.payouts = [...res.payouts];
+         this.payoutsCopy = [...res.payouts];
     }
 
   },
@@ -147,13 +148,12 @@ export default {
       this.request_modal = !this.request_modal
     },
     filterFunction () {
-       this.payout = filterArray(this.payouts, this.filterOptionr)
+       this.payout = filterArray(this.payouts, this.filterOption)
     },
     setInput(data) {
-      this.payoutsCopy = [...this.payouts];
-      if(data == "Failed payment"){
+      if(data == "failed"){
         this.filterOption = [{key: 'status', value: 'failed'}];
-      }else if(data == "Success payment") {
+      }else if(data == "success") {
         this.filterOption = [{key: 'status', value: 'success'}];
       } else if(data == "pending") {
         this.filterOption = [{key: 'status', value: 'pending'}];

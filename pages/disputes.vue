@@ -13,13 +13,8 @@
         <hr class="w-full hidden lg:flex mt-3" />
         <div class="flex flex-wrap mt-3">
           <div class="flex flex-row flex-grow gap-5 mr-8 md:mb-0 mb-4">
-            <v-filter v-model="status" label="Status" :filters="filters" />
-            <v-filter v-model="issue" label="Issues" :filters="issues_filters" />
-            <v-filter
-              v-model="data_range"
-              label="Date Range"
-              :filters="filters"
-            />
+            <v-filter v-model="status" label="Status" @input="setInput" :callback="filterFunction" :filters="filters" />
+            <v-filter v-model="issue" label="Issues" @input="setInputIssue" :callback="filterIssue" :filters="issues_filters"/>
           </div>
           <v-button
             class="flex"
@@ -108,10 +103,10 @@
 </template>
 
 <script>
+import { filterArray } from '~/utils'
 export default {
   layout: 'dashboard',
   scrollToTop: true,
-
   data() {
     return {
       assign_modal: false,
@@ -122,17 +117,19 @@ export default {
       channel: '',
       interval: '',
       data_range: '',
-      filters: ['Success', 'Pending', 'Failed'],
-      issues_filters: ['Fraud', 'Payments not received' , 'Incomplete payment'],
+      filters: ['resolved', 'resolving', 'pending', 'failed', 'success'],
+      issues_filters: ['Fraud', 'Chargeback'],
       disputes: null,
+      disputesCopy: [],
     }
   },
 
-   async mounted(){
+   async mounted() {
     // fetch donation
     const res = await this.$store.dispatch('auth/fetchDisputes');
     if(res){
-        this.disputes = res.disputes;
+        this.disputes = [...res.disputes];
+        this.disputesCopy = [...res.disputes];
     }
 
   },
@@ -144,6 +141,26 @@ export default {
     toggleResolveModal() {
       this.resolve_modal = !this.resolve_modal
     },
-  },
+    filterFunction () {
+      this.disputes = filterArray(this.disputes, this.filterOption);
+    },
+    filterIssue () {
+      this.disputes = filterArray(this.disputes, this.filterOption);
+    },
+    setInput(data) {
+      if(this.filters.includes(data)){
+        this.filterOption = [{key: 'status', value: data}];
+      } else {
+        this.disputes = [...this.disputesCopy];
+      }
+    },
+    setInputIssue(data) {
+      if(this.issues_filters.includes(data)){
+        this.filterOption = [{key: 'dispute_type', value: data}];
+      } else {
+        this.disputes = [...this.disputesCopy];
+      }
+    }
+  }
 }
 </script>

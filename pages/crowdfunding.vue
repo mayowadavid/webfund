@@ -180,6 +180,9 @@ import { mapState } from 'vuex';
 export default {
   layout: 'landing',
   scrollToTop: true,
+   components: {
+    ProgressBar,
+  },
   data() {
     return {
       show: false,
@@ -209,7 +212,10 @@ export default {
     campData(newValue, oldValue){
       console.log(newValue);
       const d = new Date();
-      const today = d.getDate();
+      const year = today.getFullYear();
+      const month = today.getMonth();
+      const day = today.getDate();
+      const today_date = year + '-' + ("0" + (month + 1)).slice(-2) + '-' + ("0" + day).slice(-2);
       const daysLeft = (startDate, endDate) => {
           startDate = new Date(startDate);
           endDate =  new Date(endDate);
@@ -218,21 +224,21 @@ export default {
           const endDateUTC = Date.UTC(endDate.getFullYear(), endDate.getMonth(), endDate.getDate());
           return Math.floor((endDateUTC - startDateUTC) / millisecondsPerDay);
           };
-      const reformat = newValue.map((n)=>{
-        let {
-          end_date,
-          start_date,
-          campaign_target,
-          total_donated,
-          } = n;
-          let number = Number(campaign_target.replace(/[^0-9.-]+/g,""));
-          const percentage = (total_donated/number) * 100;
-          // calculate to see expired date
-          const dayCheck = daysLeft(start_date, end_date);
-          const created_day = parseInt(dayCheck) == today ? "Today": parseInt(dayCheck) + ' days ago';
-          let lapsed = dayCheck + ' days left';
-          lapsed = (parseInt(dayCheck) < 0) ? 'expired': lapsed;
-          return {created_day, lapsed, percentage, ...n};
+       const reformat = res.map((n, i) => {
+        let { end_date, start_date, campaign_target, total_donated } = n
+        let number = Number(campaign_target.replace(/[^0-9.-]+/g, ''))
+        const percentage = (total_donated / number) * 100
+        // calculate to see expired date
+        const dayCheck = daysLeft(start_date, end_date)
+        console.log(start_date, today_date, [i])
+        const current = daysLeft(start_date, today_date)
+        const created_day =
+          start_date == today_date
+            ? 'Today'
+            : parseInt(current) + ' days ago'
+        let lapsed = dayCheck + ' days left'
+        lapsed = parseInt(dayCheck) < 0 ? 'expired' : lapsed
+        return { created_day, lapsed, percentage, ...n }
       })
      this.campaigns = reformat;
      }

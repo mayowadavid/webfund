@@ -13,12 +13,7 @@
         <hr class="w-full hidden lg:flex mt-3" />
         <div class="flex mt-3">
           <div class="flex flex-row flex-grow gap-5 mr-10">
-            <v-filter v-model="status" label="Status" :filters="filters" />
-            <v-filter
-              v-model="data_range"
-              label="Date Range"
-              :filters="filters"
-            />
+            <v-filter v-model="status" label="Status" @input="setInput" :callback="filterFunction" :filters="filters" />
           </div>
           <v-button
             class="flex"
@@ -160,7 +155,9 @@ export default {
       interval: '',
       data_range: '',
       filters: ['Active', 'Canceled'],
+      filterOption: ['active', 'inactive', 'canceled'],
       plans: [],
+      planCopy: [],
     }
   },
   async mounted() {
@@ -170,12 +167,23 @@ export default {
     const res = await this.$store.dispatch('auth/fetchOrganizationplan')
     if (res) {
       console.log(res);
-      this.plans = [...res.plans]
+      this.plans = [...res.plans];
+      this.planCopy = [...res.plans];
     }
   },
   methods: {
     toggleAddModal() {
       this.plan_modal = !this.plan_modal;
+    },
+    filterFunction () {
+      this.plans = filterArray(this.plans, this.filterOption);
+    },
+    setInput(data) {
+      if(this.filters.includes(data)){
+        this.filterOption = [{key: 'status', value: data}];
+      } else {
+        this.plans = [...this.planCopy];
+      }
     },
   },
 }

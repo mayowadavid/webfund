@@ -15,12 +15,6 @@
         <hr class="w-full hidden lg:flex mt-3" />
         <div class="flex mt-3">
           <div class="flex flex-row flex-grow gap-5">
-            <v-filter v-model="status" label="Status" :filters="filters" />
-            <v-filter
-              v-model="data_range"
-              label="Date Range"
-              :filters="filters"
-            />
           </div>
         </div>
         <div class="flex flex-col mt-3">

@@ -246,7 +246,7 @@ export default {
       const year = today.getFullYear();
       const month = today.getMonth();
       const day = today.getDate();
-      const start_date = year + '-' + ("0" + month + 1).slice(-2) + '-' + ("0" + day).slice(-2);
+      const start_date = year + '-' + ("0" + (month + 1)).slice(-2) + '-' + ("0" + day).slice(-2);
 
       const formData = {
         campaign_type,

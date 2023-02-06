@@ -92,8 +92,12 @@
                   <span class="flex my-auto">{{campaign.lapsed}}</span>
                 </p>
               </div>
-              <div class="flex flex-auto bg-gray-100">
-                <div class="flex bg-green-500 h-2 w-1/2"></div>
+              <div class="my-4 w-full">
+                 <progress-bar
+                      bar-color="#26B872"
+                      :val="campaign.percentage"
+                      size="12"
+                    ></progress-bar>
               </div>
               <p class="text-gray-600 my-4">{{campaign.campaign_target}} target goal</p>
               <v-button :loading="loading" @click.prevent="gotoStage('info')">
@@ -530,8 +534,12 @@
 
 
 <script>
+import ProgressBar from 'vue-simple-progress';
 import { mapState } from 'vuex';
 export default {
+  components: {
+    ProgressBar,
+  },
   data() {
     return {
       stage: 'start',
@@ -558,16 +566,43 @@ export default {
   },
   watch: {
     campData(newValue, oldValue){
-      console.log(newValue);
-     const d = new Date();
-     const today = d.getDate();
-     const { end_date,start_date, donations } = newValue;
-     const newStartDate = start_date.split("-");
-     const newEndDate = end_date.split("-");
-     const created_day = parseInt(newStartDate[2]) == today ? "Today": parseInt(newStartDate[2]) + ' days ago';
-     let lapsed = parseInt(newEndDate[2]) - parseInt(today) + ' days left';
-     lapsed = (parseInt(lapsed) < 0) ? 'expired': lapsed;
-     this.campaign = {...newValue, created_day, lapsed};
+     const daysLeft = (startDate, endDate) => {
+        startDate = new Date(startDate)
+        endDate = new Date(endDate)
+        const millisecondsPerDay = 1000 * 60 * 60 * 24
+        const startDateUTC = Date.UTC(
+          startDate.getFullYear(),
+          startDate.getMonth(),
+          startDate.getDate()
+        )
+        const endDateUTC = Date.UTC(
+          endDate.getFullYear(),
+          endDate.getMonth(),
+          endDate.getDate()
+        )
+        return Math.floor((endDateUTC - startDateUTC) / millisecondsPerDay)
+      }
+     const today = new Date();
+      const year = today.getFullYear();
+      const month = today.getMonth();
+      const day = today.getDate();
+      const today_date = year + '-' + ("0" + (month + 1)).slice(-2) + '-' + ("0" + day).slice(-2);
+     const { end_date, start_date, donations, campaign_target, total_donated } = newValue;
+
+      let number = Number(campaign_target.replace(/[^0-9.-]+/g, ''))
+      const percentage = (total_donated / number) * 100;
+
+    // calculate to see expired date
+      const dayCheck = daysLeft(start_date, end_date)
+      const current = daysLeft(start_date, today_date)
+     const created_day =
+          start_date == today_date
+            ? 'Today'
+            : parseInt(current) + ' days ago';
+
+     let lapsed = dayCheck + ' days left'
+        lapsed = parseInt(dayCheck) < 0 ? 'expired' : lapsed;
+     this.campaign = {...newValue, created_day, lapsed, percentage};
 
      //donations comments
      const donorComments = donations.map((d)=>{

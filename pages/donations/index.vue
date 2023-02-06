@@ -29,7 +29,6 @@
                 :filters="filters"
                 @input="setInput"
                 :callback="filterFunction"
-                @toggle="filterChangeHandler"
               />
               <!-- <v-filter
                 v-model="channel"
@@ -177,7 +176,8 @@ export default {
       channel: '',
       interval: '',
       data_range: '',
-      filters: ['Failed', 'Success'],
+      filters: ['canceled', 'pending', 'success'],
+      filterOption: [],
       channel_filters: [
         'Card',
         'Bank',
@@ -191,6 +191,7 @@ export default {
   computed: {
       ...mapState({
       donations: (state) => state.auth.donations,
+      donationsCopy: (state) => state.auth.donations,
     })
   },
 
@@ -207,19 +208,14 @@ export default {
       this.filter_no_scroll = status
     },
     filterFunction () {
-      //  this.donations = filterArray(this.payouts, this.filterOption)
+       this.donations = filterArray(this.donations, this.filterOption)
     },
     setInput(data) {
-      // this.payoutsCopy = [...this.payouts];
-      // if(data == "Failed payment"){
-      //   this.filterOption = [{key: 'status', value: 'failed'}];
-      // }else if(data == "Success payment") {
-      //   this.filterOption = [{key: 'status', value: 'success'}];
-      // } else if(data == "pending") {
-      //   this.filterOption = [{key: 'status', value: 'pending'}];
-      // }else {
-      //   this.payouts = [...this.payoutsCopy];
-      // }
+      if(this.filters.includes(data)){
+        this.filterOption = [{key: 'status', value: data}];
+      } else {
+        this.donations = [...this.donationsCopy];
+      }
     },
   },
 }
