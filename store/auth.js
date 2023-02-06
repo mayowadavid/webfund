@@ -161,11 +161,16 @@ export const actions = {
         commit('SET_ORGANIZATION', data.data.organisation)
       })
   },
-  async fetchOrganizationCamp({ commit, state }) {
-    const { data } = await this.$axios.get(
-      `/organisations/${state.user.organisation.id}/campaigns`
-    )
-    return data.data
+  async fetchOrganizationCamp({ commit, state }, id) {
+    if (id) {
+      const { data } = await this.$axios.get(`/organisations/${id}/campaigns`)
+      return data.data
+    } else {
+      const { data } = await this.$axios.get(
+        `/organisations/${state.user.organisation.id}/campaigns`
+      )
+      return data.data
+    }
   },
   async fetchOrganizationplan({ commit, state }, id) {
     if (id !== undefined) {
@@ -199,6 +204,11 @@ export const actions = {
   createCampaign({ commit }, campData) {
     try {
       return this.$axios.post(`/campaigns`, campData)
+    } catch (e) {}
+  },
+  createDispute({ commit }, disputeData) {
+    try {
+      return this.$axios.post(`/disputes`, disputeData)
     } catch (e) {}
   },
   updateCampaign({ commit }, campData) {

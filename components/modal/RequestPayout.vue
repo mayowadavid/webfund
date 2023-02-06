@@ -13,7 +13,7 @@
       :on-success="onSuccess"
       success-message="Payout request created successfullly"
     >
-      <div class="form-group mb-5">
+      <!-- <div class="form-group mb-5">
         <label for="input-dispute_type">Recipient name</label>
         <validation-provider
           v-slot="{ errors, classes }"
@@ -36,7 +36,7 @@
             {{ errors[0] }}
           </span>
         </validation-provider>
-      </div>
+      </div> -->
       <div class="form-group mb-5">
         <label for="input-amount">Amount</label>
         <div>
