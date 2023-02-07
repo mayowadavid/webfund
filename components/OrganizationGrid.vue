@@ -1,10 +1,9 @@
 <template>
-  <div>
-    <div
-    v-for="item in organisations"
-        :key="item">
-    <div class="flex flex-wrap justify-between item-center">
+    <div>
+    <div class="flex flex-wrap flex_row mb-btw">
       <div
+        v-for="item in organisations"
+        :key="item"
         class="
           bg-white
           max-w-[380px]
@@ -12,7 +11,6 @@
           w-full
           h-[430px]
           flex flex-col
-          items-center
           p-5
           mb-16
         "
@@ -29,7 +27,7 @@
         >
           <img class="h-48 w-48 mx-auto" :src="item?.logo" alt />
         </div>
-        <p class="font-bold text-base text-[#1E202A] mb-8">
+        <p class="font-bold text-base mb-tp5 text-[#1E202A] mb-8">
           {{item.name}}
         </p>
         <nuxt-link
@@ -50,28 +48,17 @@
         </nuxt-link>
       </div>
     </div>
-    <div class="flex justify-center">
-      <a :href="/organizations/ + item.id" class="text-[#F79D33] font-bold text-base"
-        >View More</a
-      >
     </div>
-    </div>
-  </div>
 </template>
 
 <script>
 export default {
+  props: {
+    organisations: { type: Array, default: [] }
+  },
   data() {
     return {
       donations: 9,
-      organisations: [],
-    }
-  },
-  async mounted() {
-    // fetch campaign
-    const res = await this.$store.dispatch('auth/fetchAllOrganization')
-    if (res) {
-      this.organisations = [...res.organisations]
     }
   },
 }

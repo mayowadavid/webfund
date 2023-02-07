@@ -90,6 +90,7 @@
 </template>
 
 <script>
+import { filterArray } from '~/utils'
 export default {
   layout: 'dashboard',
   scrollToTop: true,
@@ -103,6 +104,7 @@ export default {
       data_range: '',
       filters: ['Failed payment', 'Success payment'],
       donations: require('@/static/json/donors.json'),
+      donationsCopy: require('@/static/json/donors.json'),
       channel_filters: [
         'Card',
         'Bank',
@@ -112,6 +114,21 @@ export default {
         'Bitcoin',
       ],
     }
+  },
+   methods: {
+    filterChangeHandler(status) {
+      this.filter_no_scroll = status
+    },
+    filterFunction () {
+       this.donations = filterArray(this.donations, this.filterOption)
+    },
+    setInput(data) {
+      if(this.filters.includes(data)){
+        this.filterOption = [{key: 'status', value: data}];
+      } else {
+        this.donations = [...this.donationsCopy];
+      }
+    },
   },
 }
 </script>

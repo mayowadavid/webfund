@@ -44,15 +44,25 @@
             </button>
           </div>
           <v-filter
+            v-if="campaign"
             v-model="status"
             label="Filter"
-            :filters="filters"
-            @toggle="filterChangeHandler"
+            :filters="filterCampaign"
+            @input="setInput"
+            :callback="filterFunction"
+          />
+          <v-filter
+           v-if="nonProfits"
+            v-model="status"
+            label="Filter"
+            :filters="filterOrgData"
+            @input="setInputOrg"
+            :callback="filterOrg"
           />
         </div>
 
         <div v-if="campaign" class="campaign_row mb10 flex_row">
-          <div class="mb3 m10 sm10" v-for="(item, i) in campaigns" :key="i">
+          <div class="mb3 m10 mb-tp5 sm10" v-for="(item, i) in campaigns" :key="i">
               <div class="bg-white h-[596px] w-full 2xl:max-w-[400px] xl:max-w-[385px] ">
                 <a :href="'/campaigns/preview/'+ item.id">
                 <img class="w-full h-[265px]" :src="item.image" alt="" />
@@ -126,7 +136,7 @@
               </div>
             </div>
         </div>
-        <organization-grid v-if="nonProfits"></organization-grid>
+        <organization-grid v-if="nonProfits" :organisations="organisations" ></organization-grid>
       </div>
     </div>
 
@@ -177,6 +187,7 @@
 <script>
 import ProgressBar from 'vue-simple-progress';
 import { mapState } from 'vuex';
+import { filterArray } from '~/utils'
 export default {
   layout: 'landing',
   scrollToTop: true,
@@ -189,13 +200,18 @@ export default {
       items: 10,
        loading: false,
       campaigns: [],
+      campaignsCopy: [],
+      organisations: [],
+      organisationsCopy: [],
       edit_modal: false,
       filter_no_scroll: false,
       campaign: true,
       campaign_id: '',
       nonProfits: false,
       status: '',
-      filters: ['Failed payment', 'Success payment'],
+      filterOptions: [],
+      filterCampaign: require('@/static/json/Campaign-types.json'),
+      filterOrgData: require('@/static/json/organisation-type.json'),
     }
   },
 
@@ -210,8 +226,7 @@ export default {
   },
   watch: {
     campData(newValue, oldValue){
-      console.log(newValue);
-      const d = new Date();
+      const today = new Date();
       const year = today.getFullYear();
       const month = today.getMonth();
       const day = today.getDate();
@@ -224,7 +239,7 @@ export default {
           const endDateUTC = Date.UTC(endDate.getFullYear(), endDate.getMonth(), endDate.getDate());
           return Math.floor((endDateUTC - startDateUTC) / millisecondsPerDay);
           };
-       const reformat = res.map((n, i) => {
+       const reformat = newValue.map((n, i) => {
         let { end_date, start_date, campaign_target, total_donated } = n
         let number = Number(campaign_target.replace(/[^0-9.-]+/g, ''))
         const percentage = (total_donated / number) * 100
@@ -241,16 +256,44 @@ export default {
         return { created_day, lapsed, percentage, ...n }
       })
      this.campaigns = reformat;
+     this.campaignsCopy = reformat;
      }
   },
-  mounted(){
+  async mounted(){
     // fetch campaign
     this.$store.dispatch('app/fetchAllCampaign');
+
+    // fetch campaign
+    const res = await this.$store.dispatch('auth/fetchAllOrganization')
+    if (res) {
+      this.organisations = [...res.organisations];
+      this.organisationsCopy = [...res.organisations];
+    }
   },
 
   methods: {
     filterChangeHandler(status) {
       this.filter_no_scroll = status
+    },
+    filterFunction () {
+      this.campaigns = filterArray(this.campaigns, this.filterOption);
+    },
+    filterOrg () {
+      this.organisations = filterArray(this.organisations, this.filterOption);
+    },
+    setInput(data) {
+      if(this.filterCampaign.includes(data)){
+        this.filterOption = [{key: 'status', value: data}];
+      } else {
+        this.campaigns = [...this.campaignsCopy];
+      }
+    },
+    setInputOrg(data) {
+      if(this.filterOrgData.includes(data)){
+        this.filterOption = [{key: 'status', value: data}];
+      } else {
+        this.organisations = [...this.organisationsCopy];
+      }
     },
     handlePopUp(ev) {
       const id = ev.target.id;

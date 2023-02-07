@@ -142,6 +142,7 @@
 </template>
 
 <script>
+import { filterArray } from '~/utils'
 export default {
   layout: 'dashboard',
   scrollToTop: true,
