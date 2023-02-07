@@ -283,14 +283,14 @@ export default {
     },
     setInput(data) {
       if(this.filterCampaign.includes(data)){
-        this.filterOption = [{key: 'status', value: data}];
+        this.filterOption = [{key: 'campaign_type', value: data}];
       } else {
         this.campaigns = [...this.campaignsCopy];
       }
     },
     setInputOrg(data) {
       if(this.filterOrgData.includes(data)){
-        this.filterOption = [{key: 'status', value: data}];
+        this.filterOption = [{key: 'organization_type', value: data}];
       } else {
         this.organisations = [...this.organisationsCopy];
       }
