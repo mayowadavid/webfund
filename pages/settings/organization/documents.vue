@@ -168,7 +168,7 @@
 
       <div v-if="adminOrgData" class="display_documents mb-tp5 mb10 flex_row">
           <div @click.prevent="toggleEditModal" v-for="img in orgDocu" :key="img" class="document_cont mb-tp5 mb4">
-              <img :src="img" alt="wefundx">
+              <img :src="img.url" alt="wefundx">
           </div>
       </div>
       <div v-if="mssg" class="mb-tp5 mssg mb10">
@@ -254,10 +254,10 @@ export default {
       cac_1_1,
       identification} = newValue;
       this.orgDocu = [
-        certificate_of_incorporation,
-      memorandum_and_articles_of_association,
-      cac_1_1,
-      identification];
+        {url: certificate_of_incorporation},
+      {url: memorandum_and_articles_of_association},
+      {url: cac_1_1},
+      {url: identification}];
     }
   },
   mounted() {

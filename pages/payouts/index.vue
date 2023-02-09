@@ -138,7 +138,7 @@ export default {
     const res = await this.$store.dispatch('auth/fetchPayout');
     if(res){
         this.payouts = [...res.payouts];
-         this.payoutsCopy = [...res.payouts];
+        this.payoutsCopy = [...res.payouts];
     }
 
   },
@@ -151,12 +151,8 @@ export default {
        this.payout = filterArray(this.payouts, this.filterOption)
     },
     setInput(data) {
-      if(data == "failed"){
-        this.filterOption = [{key: 'status', value: 'failed'}];
-      }else if(data == "success") {
-        this.filterOption = [{key: 'status', value: 'success'}];
-      } else if(data == "pending") {
-        this.filterOption = [{key: 'status', value: 'pending'}];
+      if(this.filters.includes(data)){
+        this.filterOption = [{key: 'status', value: data}];
       }else {
         this.payouts = [...this.payoutsCopy];
       }
