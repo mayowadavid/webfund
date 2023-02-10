@@ -166,7 +166,7 @@
         </div>
       </div>
 
-      <div class="display_documents mb-tp5 mb10 flex_row">
+      <div v-if="(orgDocu.length > 0) && adminOrgData" class="display_documents mb-tp5 mb10 flex_row">
           <div @click.prevent="toggleEditModal" v-for="img in orgDocu" :key="img" class="document_cont mb-tp5 mb4">
               <img :src="img.url" alt="wefundx">
           </div>
