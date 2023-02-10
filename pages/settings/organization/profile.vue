@@ -98,11 +98,6 @@
               </div>
               <div class="form-group mb-5">
                 <div>
-                  <validation-provider
-                    v-slot="{ errors, classes }"
-                    name="website"
-                    rules="required"
-                  >
                     <input
                       id="input-website"
                       v-model="form.website"
@@ -110,10 +105,6 @@
                       :class="classes"
                       placeholder="Website (Optional)"
                     />
-                    <span v-show="errors.length" class="is-invalid">
-                      {{ errors[0] }}
-                    </span>
-                  </validation-provider>
                 </div>
               </div>
               <div class="form-group mb-4">
