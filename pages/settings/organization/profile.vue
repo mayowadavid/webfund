@@ -102,7 +102,6 @@
                       id="input-website"
                       v-model="form.website"
                       class="form-input"
-                      :class="classes"
                       placeholder="Website (Optional)"
                     />
                 </div>

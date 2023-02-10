@@ -174,15 +174,6 @@
         </div>
       </div>
     </div>
-    <div
-      class="support_showcase space sm-off m-off mb8 px-4 sm:px-5 lg:px-10 flex_row"
-    >
-      <img src="/business day.png" alt="" srcset="" />
-      <img src="/guardian.png" alt="" srcset="" />
-      <img src="/press-release.png" alt="" srcset="" />
-      <img src="/punch.jpg" alt="" srcset="" />
-      <img src="/this day.png" alt="" srcset="" />
-    </div>
     <!-- Edit donation modal -->
     <modal-make-donation
       :show="edit_modal"

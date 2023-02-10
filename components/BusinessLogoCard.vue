@@ -1,13 +1,13 @@
 <template>
   <div class="border input-file border-gray-300 text-center p-8">
-    <img v-if="logo" class="icon-round mb-8" :src="logo" alt="" srcset="">
-    <span v-if="logo.length < 0" class="icon-round mb-8"></span>
-    <div v-if="logo.length < 0" class="leading-tight">
+    <img v-if="logo !== null" class="icon-round mb-8" :src="logo" alt="" srcset="">
+    <span v-if="logo == null" class="icon-round mb-8"></span>
+    <div v-if="logo == null" class="leading-tight">
       <p class="title text-lg font-bold mb-5">Add Business Logo</p>
     </div>
     <input type="file" id="dropFile" @change="uploadImages" key="dropFile" />
     <label for="dropFile" class='drop_label mb10 flex_column'>
-    <p>{{logo.length > 0 ? 'Change Logo' :'Upload Logo'}}</p>
+    <p>{{logo ? 'Change Logo' :'Upload Logo'}}</p>
     </label>
   </div>
 </template>
