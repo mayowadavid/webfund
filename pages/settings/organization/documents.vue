@@ -166,7 +166,7 @@
         </div>
       </div>
 
-      <div v-if="adminOrgData" class="display_documents mb-tp5 mb10 flex_row">
+      <div class="display_documents mb-tp5 mb10 flex_row">
           <div @click.prevent="toggleEditModal" v-for="img in orgDocu" :key="img" class="document_cont mb-tp5 mb4">
               <img :src="img.url" alt="wefundx">
           </div>
@@ -242,7 +242,6 @@ export default {
   },
   watch: {
     orgData(newValue, oldValue){
-      console.log(newValue)
       this.form = {
         ...this.form, ...newValue
       };
@@ -253,11 +252,25 @@ export default {
       memorandum_and_articles_of_association,
       cac_1_1,
       identification} = newValue;
-      this.orgDocu = [
-        {url: certificate_of_incorporation},
-      {url: memorandum_and_articles_of_association},
-      {url: cac_1_1},
-      {url: identification}];
+      const imageCheck = {
+          certificate_of_incorporation,
+          memorandum_and_articles_of_association,
+          cac_1_1,
+          identification
+      };
+      const clean = (obj) => {
+        const imageArray = [];
+      for (const prop in obj) {
+        if (obj[prop] === null || obj[prop] === undefined) {
+          delete obj[prop];
+        }else {
+            imageArray.push({url: obj[prop]});
+        }
+      }
+      return imageArray;
+    };
+    const value = clean(imageCheck);
+      this.orgDocu = value !== undefined && [...value];
     }
   },
   mounted() {
