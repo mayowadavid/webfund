@@ -328,22 +328,15 @@
           </div>
           <div class="form-group mb-4">
             <div>
-              <validation-provider
-                v-slot="{ errors, classes }"
-                name="website"
-                rules="required"
-              >
                 <textarea
                   id="input-description"
                   v-model="form.description"
                   class="form-input"
-                  :class="classes"
                   placeholder="Description about your organization"
                 ></textarea>
                 <span v-show="errors.length" class="is-invalid">
                   {{ errors[0] }}
                 </span>
-              </validation-provider>
             </div>
           </div>
           <div class="form-group mb-5">
