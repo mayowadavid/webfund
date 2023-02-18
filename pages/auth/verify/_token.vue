@@ -71,17 +71,17 @@ export default {
   methods: {
     resolveToken() {
       this.loading = true;
-      console.log({
-          email_hash: this.email_hash,
-          hash_string: this.hash_string
-        })
+      //console.log({
+        //   email_hash: this.email_hash,
+        //   hash_string: this.hash_string
+        // })
       this.$axios
         .put(`/users/activate`, {
           email_hash: this.email_hash,
           hash_string: this.hash_string
         })
         .then((response) => {
-          console.log(response);
+          //console.log(response);
           this.success = true
           this.loading = false
           this.message = "Activation Successful"
@@ -93,7 +93,7 @@ export default {
             'response.data.message',
             'Invalid activication token'
           )
-          // console.log(error.response)
+          // //console.log(error.response)
           this.message = "Email verification failed"
           this.loading = false
         })

@@ -1,7 +1,7 @@
 export default ({ store, redirect, query, route }) => {
   // set redirect route
   if (query.rt) {
-    console.log(query.rt, 'mid')
+    //console.log(query.rt, 'mid')
     store.commit('app/SET_REDIRECT', query.rt)
   }
   // no session

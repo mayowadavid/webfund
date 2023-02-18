@@ -177,7 +177,7 @@ export default {
       }
     },
     files(newFiles, oldFiles) {
-      // console.log('Files changed', newFiles)
+      // //console.log('Files changed', newFiles)
       this.$store.commit('upload/UPDATE_FILES', newFiles)
     },
     storedFiles(newFiles, oldFiles) {
@@ -242,15 +242,15 @@ export default {
         }
         if (newFile.progress !== oldFile.progress) {
           // progress
-          // console.log('Upload progress', newFile)
+          // //console.log('Upload progress', newFile)
         }
         if (newFile.error && !oldFile.error) {
           // error
-          // console.log('Upload error', newFile)
+          // //console.log('Upload error', newFile)
         }
         if (newFile.success && !oldFile.success) {
           // success
-          // console.log('Upload success', newFile)
+          // //console.log('Upload success', newFile)
         }
       }
       if (!newFile && oldFile) {
@@ -259,7 +259,7 @@ export default {
           await this.$axios.delete(
             '/photos/upload/delete?id=' + oldFile.response.data.id
           )
-          // console.log('Delete uploaded file', deleted)
+          // //console.log('Delete uploaded file', deleted)
         }
       }
       // Automatically activate upload

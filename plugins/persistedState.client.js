@@ -25,15 +25,15 @@ export default ({ store }) => {
     },
     // getState: async (key) => {
     //   const values = await localStorage.getItem(key)
-    //   console.log('Client getState:', JSON.parse(values), store.state)
+    //   //console.log('Client getState:', JSON.parse(values), store.state)
     //   return JSON.parse(values)
     // },
     // arrayMerger: (store, saved) => {
-    //   console.log('Client array merger:', store, saved)
+    //   //console.log('Client array merger:', store, saved)
     //   return saved
     // },
     // rehydrated: (store) => {
-    //   console.log('Client rehydrated:', store)
+    //   //console.log('Client rehydrated:', store)
     // },
   })(store)
 }

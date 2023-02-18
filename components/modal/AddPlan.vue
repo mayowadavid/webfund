@@ -110,7 +110,7 @@ export default {
           interval
       })
       .then((data)=> {
-        console.log(data);
+        //console.log(data);
         this.$emit('hide');
       });
     }

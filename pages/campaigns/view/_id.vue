@@ -131,7 +131,7 @@ export default {
   },
   watch: {
     campData(newValue, oldValue){
-      console.log(newValue);
+      //console.log(newValue);
      this.campaign = newValue;
      }
   },

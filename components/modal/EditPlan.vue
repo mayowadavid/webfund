@@ -137,7 +137,7 @@ export default {
   watch: {
     planData(newValue, oldValue){
      this.form = newValue[this.$route.params.id];
-     console.log(this.form);
+     //console.log(this.form);
      }
   },
   mounted(){

@@ -134,7 +134,7 @@ export default {
       const tabsContent = this.$refs.tabsContent?.childNodes
       if (typeof tabsContent === 'object') {
         tabsContent.forEach((tab, i) => {
-          // console.log(i, tab)
+          // //console.log(i, tab)
           addClass('active', tab)
           if (i === Number(index)) addClass('active', tab)
           else removeClass('active', tab)

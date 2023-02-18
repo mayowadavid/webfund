@@ -167,7 +167,7 @@ export default {
 
     const res = await this.$store.dispatch('auth/fetchOrganizationplan')
     if (res) {
-      console.log(res);
+      //console.log(res);
       this.plans = [...res.plans];
       this.planCopy = [...res.plans];
     }

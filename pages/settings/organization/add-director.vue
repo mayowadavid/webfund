@@ -184,7 +184,7 @@ export default {
       return this.$store.dispatch('auth/addDirector', this.form);
     },
     onSuccess(resp) {
-      console.log(resp);
+      //console.log(resp);
     },
   },
 }

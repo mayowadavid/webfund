@@ -625,7 +625,7 @@ export default {
             }
     const reduceData = sliceIntoChunks(donorComments, 4);
      this.reduceComment = reduceData[0];
-     console.log(this.reduceComment, '572');
+     //console.log(this.reduceComment, '572');
      },
      userData(newValue, oldValue){
       this.user = {...newValue};
@@ -741,7 +741,7 @@ export default {
                   resetForm();
                   //verify dovation
                   verifyDonation(response.reference);
-                  console.log(response)
+                  //console.log(response)
                 }
               });
 

@@ -71,7 +71,7 @@ export const mutations = {
     const newQuery = Object.assign(data, query)
     // update rates
     state.workflow.data = newQuery
-    // console.log('Commit SET_DATA', state.workflow)
+    // //console.log('Commit SET_DATA', state.workflow)
     // store data
     localStorage.setItem('upload_flow', state.workflow, { expires: 365 })
   },

@@ -81,7 +81,7 @@ export default {
   },
   watch: {
     log(newValue, oldValue){
-      console.log(newValue)
+      //console.log(newValue)
       this.logs = newValue;
     }
   },

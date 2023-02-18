@@ -61,7 +61,7 @@ export default {
   watch: {
     logs(newValue, oldValue){
       this.log = newValue[this.$route.params.id];
-      console.log(this.log);
+      //console.log(this.log);
     }
   },
   mounted() {

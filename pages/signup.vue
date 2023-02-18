@@ -220,7 +220,7 @@
               <button
                 type="button"
                 class="btn btn-primary-outline w-full"
-                @click.prevent="goBack"
+                @click.prevent="backTab"
               >
                 Back
               </button>
@@ -334,9 +334,6 @@
                   class="form-input"
                   placeholder="Description about your organization"
                 ></textarea>
-                <span v-show="errors.length" class="is-invalid">
-                  {{ errors[0] }}
-                </span>
             </div>
           </div>
           <div class="form-group mb-5">
@@ -537,7 +534,6 @@ export default {
     },
     onSuccess(resp) {
       // data cleanup
-      console.log(resp)
       this.$store.dispatch('auth/onSuccess', resp.data)
       this.$store.dispatch('auth/createOrganisation', this.form)
       this.form = {

@@ -58,9 +58,9 @@ export default {
     data: {
       handler(value, oldVal) {
         Object.keys(value).forEach((val) => {
-          console.log('email watch 1', this.$refs.form.fields)
+          //console.log('email watch 1', this.$refs.form.fields)
           if (!value[val]) {
-            console.log('email watch 2', value[val], oldVal[val])
+            //console.log('email watch 2', value[val], oldVal[val])
             this.$refs.form.setErrors({ email: ['Nothing to show'] })
           }
         })

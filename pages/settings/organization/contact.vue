@@ -233,7 +233,7 @@ export default {
       return this.$store.dispatch('auth/updateOrganization', form);
     },
     onSuccess(resp) {
-      console.log(resp)
+      //console.log(resp)
     },
   },
 }

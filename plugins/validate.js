@@ -41,7 +41,7 @@ extend('phone', {
   message: 'This {_field_} is invalid.',
   validate: (value) => {
     const phoneNumber = parseMobile(value, 'NG')
-    // console.log(phoneNumber)
+    // //console.log(phoneNumber)
     if (phoneNumber.isValid()) return true
     else return 'Invalid phone number format'
   },
@@ -58,7 +58,8 @@ extend('password', {
 extend('url', {
   message: 'Invalid {_field_} url address',
   validate: (value) => {
-    const regex = /^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/gm
+    const regex =
+      /^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/gm
     if (regex.test(value)) return true
     else return 'Invalid url format'
   },

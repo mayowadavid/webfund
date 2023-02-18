@@ -10,17 +10,17 @@ export default ({ $axios, app, store, redirect, $config }) => {
     request.baseURL = $config.apiUrl
 
     const token = store.getters['auth/token']
-    // console.log('Axios token:', token)
+    // //console.log('Axios token:', token)
     if (token) {
       request.headers.common.Authorization = `Bearer ${token}`
     } else {
       delete request.headers.common.Authorization
     }
 
-    // console.log('route url: ', route.fullPath)
-    // console.log('request.url: ', request.url)
-    // console.log('is Local: ', local)
-    // console.log('Current token: ', request.headers.common.Authorization)
+    // //console.log('route url: ', route.fullPath)
+    // //console.log('request.url: ', request.url)
+    // //console.log('is Local: ', local)
+    // //console.log('Current token: ', request.headers.common.Authorization)
 
     // const locale = store.getters['lang/locale']
     // if (locale) {

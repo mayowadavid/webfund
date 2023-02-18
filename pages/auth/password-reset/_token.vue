@@ -91,7 +91,7 @@ export default {
         })
         .then((response) => {
           this.success = true
-          console.log(response)
+          //console.log(response)
         })
         .catch((error) => {
           const message = _.get(
@@ -99,13 +99,13 @@ export default {
             'response.data.message',
             'Invalid authentication token'
           )
-          // console.log(error.response)
+          // //console.log(error.response)
           this.message = message
           this.loading = false
         })
     },
     onSuccess(resp) {
-      console.log(resp)
+      //console.log(resp)
     }
   },
 

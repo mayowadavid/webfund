@@ -114,7 +114,7 @@ export default {
       const yposDir = bottomAlign ? 'bottom' : 'top'
       // const xpos = rightAlign ? document.body.offsetWidth - pos.right : pos.left
       // const ypos = bottomAlign ? pos.top + pos.height : pos.top
-      // console.log(document.body.offsetWidth, elem.offsetWidth, pos)
+      // //console.log(document.body.offsetWidth, elem.offsetWidth, pos)
       elem.style[xposDir] = `${0}px`
       elem.style[yposDir] = `${0}px`
       // patch position

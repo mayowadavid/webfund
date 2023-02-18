@@ -123,7 +123,7 @@ export const actions = {
     } catch (e) {}
   },
   async fetchCampaign({ commit }, id) {
-    console.log(id, '131')
+    //console.log(id, '131')
     try {
       this.$axios.get(`/campaigns/${id}`).then(({ data }) => {
         commit('SET_CAMPAIGN', data.data.campaign)

@@ -245,7 +245,7 @@ export default {
         const percentage = (total_donated / number) * 100
         // calculate to see expired date
         const dayCheck = daysLeft(start_date, end_date)
-        console.log(start_date, today_date, [i])
+        //console.log(start_date, today_date, [i])
         const current = daysLeft(start_date, today_date)
         const created_day =
           start_date == today_date
