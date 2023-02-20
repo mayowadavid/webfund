@@ -471,7 +471,7 @@ export default {
     activeTab: 0,
     done: [],
     countries: require('@/static/json/country.json'),
-    organization_categories: ['crowdfunding'],
+    organization_categories: require('@/static/json/Categories.json'),
     organization_types: require('@/static/json/organisation-type.json'),
     states: require('@/static/json/state.json'),
     cities: [],
