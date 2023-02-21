@@ -45,7 +45,7 @@
         </div>
         <div class="donor_con m10 sm10 flex_col px-4 sm:px-5 lg:px-10 mb5">
             <p class="mb8 m10 sm10">Build custom Fundraising experiences with well-documented APIs</p>
-            <p class="mb6 m10s">Developers love our thorough, well-documented APIs that let you to build everything from simple weekend projects, to complex organization fundraising serving hundreds of thousands of Donors. If you can imagine it, you can build it with Ajoo. </p>
+            <p class="mb6 m10s">Developers love our thorough, well-documented APIs that let you to build everything from simple weekend projects, to complex organization fundraising serving hundreds of thousands of Donors. If you can imagine it, you can build it with Wefundx. </p>
             <div class="donor_pay sm10 m10 mb10 flex_row">
                 <div v-for="pay in buildOptions" :key="pay.title" class="donor_pay mb-tp2 sm10 m10_row sm10 m10 flex_row mb10">
                     <img class="mb1" src="/check.png" alt="">

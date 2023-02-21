@@ -28,8 +28,8 @@ export default {
   scrollToTop: true,
   data() {
     return {
-      paragragphOne: 'Ajoo Documentation',
-      paragragphTwo: 'Welcome to the Ajoo Developer Documentation where you’ll learn how to build amazing fundraising experiences with the Ajoo API.',
+      paragragphOne: 'Wefundx Documentation',
+      paragragphTwo: 'Welcome to the Wefundx Developer Documentation where you’ll learn how to build amazing fundraising experiences with the Wefundx API.',
       documentationRow: [
         {name: 'Accept Donation', description: 'Accept donations from cards, banks, bitcoin wallet, mobile money account'},
          {name: 'Monitor Donation', description: 'Accept donations from cards, banks, bitcoin wallet, mobile money account'},
