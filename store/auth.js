@@ -293,7 +293,7 @@ export const actions = {
 
   async fetchDocuments({ commit, state }) {
     try {
-      const { data } = await this.$axios.patch(
+      const { data } = await this.$axios.get(
         `/organisations/${state.user.organisation.id}/documents`
       )
       commit('SET_ORG_DOC', data.data.organisation)
@@ -303,7 +303,7 @@ export const actions = {
   async acceptDocuments({ commit, state }, status) {
     try {
       commit('SET_TOKEN', state.adminOrg.token)
-      return this.$axios.get(
+      return this.$axios.patch(
         `/organisations/${state.user.organisation.id}/documents?status=${status}`
       )
     } catch (e) {}
