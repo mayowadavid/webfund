@@ -293,7 +293,7 @@ export const actions = {
 
   async fetchDocuments({ commit, state }) {
     try {
-      const { data } = await this.$axios.get(
+      const { data } = await this.$axios.patch(
         `/organisations/${state.user.organisation.id}/documents`
       )
       commit('SET_ORG_DOC', data.data.organisation)
