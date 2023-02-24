@@ -36,9 +36,9 @@
                         <span
                           class="status capitalize"
                           :class="{
-                            success: org.status === 'success',
+                            success: org.status === 'accepted',
                             warning: org.status === 'pending',
-                            danger: org.status === 'canceled',
+                            danger: org.status === 'rejected',
                           }"
                         >
                           {{ org.status }}
