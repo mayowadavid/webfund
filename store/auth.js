@@ -309,6 +309,15 @@ export const actions = {
     } catch (e) {}
   },
 
+  async downloadDocuments({ commit, state }, status) {
+    try {
+      commit('SET_TOKEN', state.adminOrg.token)
+      return this.$axios.get(
+        `/organisations/${state.user.organisation.id}/download-files`
+      )
+    } catch (e) {}
+  },
+
   async fetchDonations({ commit, state }, status) {
     try {
       commit('SET_TOKEN', state.adminOrg.token)
