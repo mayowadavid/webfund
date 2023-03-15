@@ -646,7 +646,7 @@ export default {
     socialShare(id){
       const url = 'https://www.wefundx.com';
       let campaignName = this.campaign.organisation?.name;
-      campaignName = campaignName.replace(/\s/g, "%20")
+      campaignName = encodeURIComponent(campaignName);
       const campaignTitle = this.campaign.title;
       const campId = this.campaign.id;
       switch(id){
@@ -654,7 +654,7 @@ export default {
           return navigator.share({
             title: this.campaign.title,
             text: 'find more campaign on wefundx',
-            url: `${url}/campaigns/${campaignName}/${this.campaign.id}`,
+            url: `${url}/campaigns/${campaignName}/${campaignTitle + '-' + campId}`,
           });
         break;
         case 'whatsapp':
