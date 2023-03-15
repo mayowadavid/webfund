@@ -646,7 +646,7 @@ export default {
     socialShare(id){
       const url = 'https://www.wefundx.com';
       let campaignName = this.campaign.organisation?.name;
-      campaignName = campaignName.replace(/\s/g, "%")
+      campaignName = campaignName.replace(/\s/g, "%20")
       const campaignTitle = this.campaign.title;
       const campId = this.campaign.id;
       switch(id){
