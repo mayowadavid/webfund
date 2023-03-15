@@ -644,7 +644,7 @@ export default {
   },
   methods: {
     socialShare(id){
-      const url = 'https://www.wefundx.com';
+      const url = 'https://wefundx.com';
       let campaignName = this.campaign.organisation?.name;
       campaignName = encodeURIComponent(campaignName);
       const campaignTitle = this.campaign.title;
