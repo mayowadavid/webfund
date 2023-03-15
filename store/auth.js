@@ -531,6 +531,15 @@ export const actions = {
     }
   },
 
+  async uploadAccount({ commit }, form) {
+    try {
+      return this.$axios.post(`/accounts`, form)
+      // create donations
+    } catch (e) {
+      //console.log(e)
+    }
+  },
+
   async verifyDonation({ commit }, ref) {
     try {
       const { data } = await this.$axios.get(`/donations/verify/${ref}`)

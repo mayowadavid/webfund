@@ -633,7 +633,9 @@ export default {
   },
   mounted(){
     // fetch campaign
-    this.$store.dispatch('app/fetchCampaign', this.$route.params.slug);
+    let campaignId = this.$route.params.slug.split('-');
+    campaignId = campaignId[1];
+    this.$store.dispatch('app/fetchCampaign', campaignId);
 
     //load
      let paystack = document.createElement('script')
@@ -643,30 +645,34 @@ export default {
   methods: {
     socialShare(id){
       const url = 'https://www.wefundx.com';
+      let campaignName = this.campaign.organisation?.name;
+      campaignName = campaignName.replace(/\s/g, "%")
+      const campaignTitle = this.campaign.title;
+      const campId = this.campaign.id;
       switch(id){
         case 'share':
           return navigator.share({
             title: this.campaign.title,
             text: 'find more campaign on wefundx',
-            url: `${url}/campaigns/${this.campaign.organisation?.name}/${this.campaign.id}`,
+            url: `${url}/campaigns/${campaignName}/${this.campaign.id}`,
           });
         break;
         case 'whatsapp':
-          return window.open(`whatsapp://send?text=${url}/campaigns/${this.campaign.organisation?.name}/${this.campaign.id}`);
+          return window.open(`whatsapp://send?text=${url}/campaigns/${campaignName}/${campaignTitle + '-' + campId}`);
           break;
         case 'mail':
           return window.open('mailto:');
           break;
         case 'telegram':
-          return window.open(`https://t.me/share/url?url=${url}/campaigns/${this.campaign.organisation?.name}/${this.campaign.id}&text=find more campaign on wefundx`);
+          return window.open(`https://t.me/share/url?url=${url}/campaigns/${campaignName}/${campaignTitle + '-' + campId}&text=find more campaign on wefundx`);
           break;
         case 'twitter':
           return window.open(`https://twitter.com/share?text=${
             this.campaign.title
-            }text&url=${url}/campaigns/${this.campaign.organisation?.name}/${this.campaign.id}`);
+            }text&url=${url}/campaigns/${campaignName}/${campaignTitle + '-' + campId}`);
             break;
         case 'facebook':
-          return window.open(`https://www.facebook.com/sharer.php?u=${url}/campaigns/${this.campaign.organisation?.name}/${this.campaign.id}`);
+          return window.open(`https://www.facebook.com/sharer.php?u=${url}/campaigns/${campaignName}/${campaignTitle + '-' + campId}`);
             break;
             default:
       }

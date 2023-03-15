@@ -42,7 +42,7 @@
                 size="sm"
                 type="button"
                 :outline="true"
-                @click.prevent="$router.push(`/campaigns/preview/${campaign.id}`)"
+                @click.prevent="$router.push(`/campaigns/${campaign.organisation.name}/${campaign.title + '-' +campaign.id}`)"
               >
                 Visit Link
               </v-button>

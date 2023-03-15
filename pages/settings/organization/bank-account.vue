@@ -22,27 +22,24 @@
               </div>
 
               <div class="form-group mb-5">
-                <validation-provider
-                  v-slot="{ errors, classes }"
-                  name="bank name"
-                  rules="required"
-                >
-                  <div class="cs-select" :class="classes">
-                    <select v-model="form.bank_name" class="input">
-                      <option value="">Bank Name</option>
-                      <option
-                        v-for="org_type in organization_types"
-                        :key="org_type.id"
-                        :value="org_type.id"
-                      >
-                        {{ org_type.name }}
-                      </option>
-                    </select>
-                  </div>
-                  <span v-show="errors.length" class="is-invalid">
-                    {{ errors[0] }}
-                  </span>
-                </validation-provider>
+                <div>
+                  <validation-provider
+                    v-slot="{ errors, classes }"
+                    name="org name"
+                    rules="required"
+                  >
+                    <input
+                      id="input-account_name"
+                      v-model="form.account_name"
+                      class="form-input"
+                      :class="classes"
+                      placeholder="Bank Name"
+                    />
+                    <span v-show="errors.length" class="is-invalid">
+                      {{ errors[0] }}
+                    </span>
+                  </validation-provider>
+                </div>
               </div>
               <div class="form-group mb-5">
                 <div>
@@ -65,37 +62,8 @@
                   </validation-provider>
                 </div>
               </div>
-              <div class="form-group mb-5">
-                <div>
-                  <validation-provider
-                    v-slot="{ errors, classes }"
-                    name="org name"
-                    rules="required"
-                  >
-                    <input
-                      id="input-org_name"
-                      v-model="form.org_name"
-                      class="form-input"
-                      :class="classes"
-                      placeholder="Organization’s Name (Autofilled)"
-                    />
-                    <span v-show="errors.length" class="is-invalid">
-                      {{ errors[0] }}
-                    </span>
-                  </validation-provider>
-                </div>
-              </div>
               <template v-slot:footer>
                 <div class="flex flex-auto gap-6 mt-8">
-                  <!-- <div class="col-span-1">
-                  <button
-                    type="button"
-                    class="btn btn-primary-outline w-full"
-                    @click.prevent="goBack"
-                  >
-                    Back
-                  </button>
-                </div> -->
                   <div class="w-full md:w-1/2 lg:w-1/3">
                     <v-button :loading="loading" class="w-full">
                       Save &amp; Continue
@@ -112,7 +80,6 @@
 </template>
 
 <script>
-import parseMobile from 'libphonenumber-js/mobile'
 
 export default {
   layout: 'dashboard',
@@ -121,13 +88,14 @@ export default {
     loading: false,
     success: false,
     form: {
-      bank_name: '',
+      account_name: '',
       account_number: '',
-      org_name: '',
     },
   }),
   methods: {
-    onSubmit() {},
+    onSubmit() {
+      return this.$store.dispatch('auth/uploadAccount', this.form);
+    },
     onSuccess() {},
   },
 }
