@@ -97,7 +97,7 @@
               type="button"
               outline
               size="sm"
-              @click.prevent="$router.push(`/campaigns/preview/${campaign.id}`)"
+              @click.prevent="$router.push(`/campaigns/${campaign?.organisation?.name}/${campaign.id}`)"
             >
               Preview
             </v-button>

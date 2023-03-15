@@ -648,25 +648,25 @@ export default {
           return navigator.share({
             title: this.campaign.title,
             text: 'find more campaign on wefundx',
-            url: `${url}/campaigns/preview/${this.campaign.id}`,
+            url: `${url}/campaigns/${this.campaign.organisation?.name}/${this.campaign.id}`,
           });
         break;
         case 'whatsapp':
-          return window.open(`whatsapp://send?text=${url}/campaigns/preview/${this.campaign.id}`);
+          return window.open(`whatsapp://send?text=${url}/campaigns/${this.campaign.organisation?.name}/${this.campaign.id}`);
           break;
         case 'mail':
           return window.open('mailto:');
           break;
         case 'telegram':
-          return window.open(`https://t.me/share/url?url=${url}/campaigns/preview/${this.campaign.id}&text=find more campaign on wefundx`);
+          return window.open(`https://t.me/share/url?url=${url}/campaigns/${this.campaign.organisation?.name}/${this.campaign.id}&text=find more campaign on wefundx`);
           break;
         case 'twitter':
           return window.open(`https://twitter.com/share?text=${
             this.campaign.title
-            }text&url=${url}/campaigns/preview/${this.campaign.id}`);
+            }text&url=${url}/campaigns/${this.campaign.organisation?.name}/${this.campaign.id}`);
             break;
         case 'facebook':
-          return window.open(`https://www.facebook.com/sharer.php?u=${url}/campaigns/preview/${this.campaign.id}`);
+          return window.open(`https://www.facebook.com/sharer.php?u=${url}/campaigns/${this.campaign.organisation?.name}/${this.campaign.id}`);
             break;
             default:
       }

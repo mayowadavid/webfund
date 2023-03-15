@@ -17,7 +17,7 @@
             <div class="story_header mb-p-head">
                 <p>Our Story</p>
             </div>
-            <p >Ajoo was founded in 2019 as a crowdfunding platform. It had one key purpose, to connect a population of over 100 millions of Nigerians that has been financially excluded to the crowd of donors for their unexpected and urgent financial need. We recorded some success but with challenges of its own.
+            <p >Wefundx was founded in 2019 as a crowdfunding platform. It had one key purpose, to connect a population of over 100 millions of Nigerians that has been financially excluded to the crowd of donors for their unexpected and urgent financial need. We recorded some success but with challenges of its own.
             </p>
             <br>
             <p >We understand how complex it is to take donations,
@@ -98,7 +98,7 @@ export default {
   data(){
     return {
       paragragphOne: 'Platform for Donations',
-      paragragphTwo: 'Ajoo is a crowdfunding platform and a poweful tool fo social changes in Nigeria and Africa as a whole',
+      paragragphTwo: 'Wefundx is a crowdfunding platform and a poweful tool fo social changes in Nigeria and Africa as a whole',
       teams: [
         {name: 'Micheal Adebanjo', role: 'Executive Director', img: '/banjo.jpg'},
          {name: 'Abideen Olamilekan', role: 'Director of Operations', img: '/banjo-d.jpg'},
