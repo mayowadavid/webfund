@@ -128,6 +128,7 @@
                   </div>
                 </div>
               </div>
+              <div v-if="reduceComment.length > 0">
               <div
                 v-for="(com, index) in reduceComment"
                 :key="index"
@@ -149,14 +150,16 @@
                 </div>
                 <div class="flex flex-col flex-grow ml-5">
                   <div class="mb-0">
-                    <p class="text-sm font-medium">₦{{com.amount}}</p>
-                    <p class="text-xs text-gray-600 mt-1">{{com.donor_name}}</p>
+                    <p class="text-sm font-medium">₦{{com?.amount}}</p>
+                    <p class="text-xs text-gray-600 mt-1">{{com?.donor_name}}</p>
                   </div>
                 </div>
                 <div class="text-right">
-                  <p class="text-xs text-gray-500">an hour ago</p>
+                  <p class="text-xs text-gray-500">{{com?.created_day}}</p>
                 </div>
               </div>
+              </div>
+
               <div>
                 <div class="text-sm font-medium mb-2">Share via</div>
                 <p class="text-sm text-gray-500">
@@ -495,7 +498,7 @@
           </v-button>
         </div>
       </div>
-      <div class="mt-10 mb-14">
+      <div v-if="comments.length > 0" class="mt-10 mb-14">
         <h3 class="text-2xl font-bold mb-4">Comment</h3>
         <hr class="border-gray-300" />
         <div
@@ -519,11 +522,11 @@
           </div>
           <div class="flex flex-col flex-grow ml-5">
             <div class="mb-4">
-              <p class="text-sm font-medium">{{com.donor_name}} donated ₦{{com.amount}}</p>
-              <p class="text-xs text-gray-500 mt-1">{{com.created_day}}</p>
+              <p class="text-sm font-medium">{{com?.donor_name}} donated ₦{{com.amount}}</p>
+              <p class="text-xs text-gray-500 mt-1">{{com?.created_day}}</p>
             </div>
             <p class="text-sm text-gray-600">
-              {{com.comment}}
+              {{com?.comment}}
             </p>
           </div>
         </div>
@@ -603,17 +606,17 @@ export default {
      let lapsed = dayCheck + ' days left'
         lapsed = parseInt(dayCheck) < 0 ? 'expired' : lapsed;
      this.campaign = {...newValue, created_day, lapsed, percentage};
-
      //donations comments
      const donorComments = donations.map((d)=>{
-        const {comment, donor_name, createdAt, amount} = d;
+        const {comment, donor_name, createdAt, status, amount} = d;
         const newStartDate = createdAt.split("-");
         const created_day = parseInt(newStartDate[2]) == today ? "Today": parseInt(newStartDate[2]) + ' days ago';
-        return {comment, donor_name, created_day, amount};
-     });
+          return {comment, donor_name, status, created_day, amount};
+     }).filter((d)=> d.status !== 'pending') || [];
+
+
 
      this.comments = donorComments;
-
     // reduce comment
     const sliceIntoChunks = (arr, chunkSize) => {
                 const res = [];
@@ -623,9 +626,8 @@ export default {
                 }
                 return res;
             }
-    const reduceData = sliceIntoChunks(donorComments, 4);
-     this.reduceComment = reduceData[0];
-     //console.log(this.reduceComment, '572');
+    const reduceData = donorComments.length > 0 ? sliceIntoChunks(donorComments, 4) : [];
+     this.reduceComment = reduceData[0] || [];
      },
      userData(newValue, oldValue){
       this.user = {...newValue};
