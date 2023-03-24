@@ -351,8 +351,7 @@
                   <span class="text-blue-600">Platform fee:</span>
                   <span class="form-input text-blue-600">{{
                     form.donation && !isNaN(form.donation)
-                      ? (5 / 100) * Number(form.donation)
-                      : 0
+                      ? (5 / 100) * parseFloat(form.donation.toString().replace(/[^\d.-]/g, '')) : 0
                   }}</span>
                 </div>
                 <div class="form-group mb-5">
@@ -696,14 +695,15 @@ export default {
         comment
       } = this.form;
 
+      //donation rounded figure
+      donation = parseFloat(donation.toString().replace(/[^\d.-]/g, '')) * 100;
+
       // fee calculation
-      let fees = donation && !isNaN(donation) ? (5 / 100) * Number(donation) * 100 : 0;
+      let fees = donation && !isNaN(donation) ? (5 / 100) * donation : 0;
 
       //fetch campaign id
       const campaign_id = this.campaign.id;
-
-      //donation rounded figure
-      donation *= 100;
+      console.log(fees + donation);
       //check for signed in user
       const donor_anonymous = this?.user?.first_name !== undefined ? false : true;
       //donation details
@@ -720,8 +720,6 @@ export default {
         this.stage = 'start'
         this.loading = false
       }
-        // fee calculation
-      let fee = donation && !isNaN(donation) ? (5 / 100) * Number(donation) * 100 : 0;
 
       //make donations
       const createDonations = async()=>{
@@ -738,7 +736,7 @@ export default {
               let handler = PaystackPop.setup({
                 key, // Replace with your public key
                 email,
-                amount: donation + fee,
+                amount: donation + fees,
                 ref,
                 // generates a pseudo-unique reference. Please replace with a reference you generated. Or remove the line entirely so our API will generate one for you
                 // label: "Optional string that replaces customer email"

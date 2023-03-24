@@ -43,23 +43,13 @@
               </div>
               <div class="form-group mb-5">
                 <div>
-                  <validation-provider
-                    v-slot="{ errors, classes }"
-                    name="account number"
-                    rules="required|phone"
-                  >
                     <input
                       id="input-account_number"
                       v-model="form.account_number"
                       class="form-input"
-                      :class="classes"
                       placeholder="Account Number"
                       type="tel"
                     />
-                    <span v-show="errors.length" class="is-invalid">
-                      {{ errors[0] }}
-                    </span>
-                  </validation-provider>
                 </div>
               </div>
               <template v-slot:footer>

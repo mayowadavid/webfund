@@ -37,8 +37,7 @@
                     <span class="text-blue-600">Platform fee:</span>
                     <span class="form-input text-blue-600">{{
                       form.donation && !isNaN(form.donation)
-                        ? (5 / 100) * Number(form.donation)
-                        : 0
+                        ? (5 / 100) * parseFloat(form.donation.toString().replace(/[^\d.-]/g, '')) : 0
                     }}</span>
                   </div>
                   <div class="form-group mb-5">
@@ -103,11 +102,6 @@
                   </div>
                   <div class="form-group mb-5">
                       <label for="input-description">Comments</label>
-                      <validation-provider
-                        v-slot="{ errors, classes }"
-                        name="comment"
-                        rules="required"
-                      >
                         <textarea
                           id="input-description"
                           v-model="form.comment"
@@ -116,30 +110,16 @@
                           placeholder="Comment"
                         >
                         </textarea>
-                        <span v-show="errors.length" class="is-invalid">
-                          {{ errors[0] }}
-                        </span>
-                      </validation-provider>
                   </div>
                   <div class="form-group mb-5">
                     <div>
-                      <validation-provider
-                        v-slot="{ errors, classes }"
-                        name="address"
-                        rules="required"
-                      >
                         <v-checkbox
                           v-model="form.hide_public"
                           name="ussd"
                           value="ussd"
-                          :class="classes"
                         >
                           Hide my information from the public
                         </v-checkbox>
-                        <span v-show="errors.length" class="is-invalid">
-                          {{ errors[0] }}
-                        </span>
-                      </validation-provider>
                     </div>
                   </div>
                   <template v-slot:footer>
@@ -194,14 +174,14 @@ export default {
         comment
       } = this.form;
 
+      //donation rounded figure
+      donation = parseFloat(donation.toString().replace(/[^\d.-]/g, '')) * 100 || 0;
+      console.log(donation);
       // fee calculation
-      let fees = donation && !isNaN(donation) ? (5 / 100) * Number(donation) * 100 : 0;
-
+      let fees = donation && !isNaN(donation) ? (5 / 100) * donation : 0;
+      console.log(fees)
       //fetch campaign id
       const campaign_id = this.campaign_id;
-
-      //donation rounded figure
-      donation *= 100;
       //check for signed in user
       const donor_anonymous = this?.user?.first_name !== undefined ? false : true;
       //donation details
@@ -218,8 +198,6 @@ export default {
         this.$emit('hide')
         this.loading = false
       }
-        // fee calculation
-      let fee = !isNaN(donation) ? (5 / 100) * Number(donation) : 0;
 
       //make donations
       const createDonations = ()=>{
@@ -236,7 +214,7 @@ export default {
               let handler = PaystackPop.setup({
                 key, // Replace with your public key
                 email,
-                amount: donation + fee,
+                amount: donation + fees,
                 ref,
                 // generates a pseudo-unique reference. Please replace with a reference you generated. Or remove the line entirely so our API will generate one for you
                 // label: "Optional string that replaces customer email"
