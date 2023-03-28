@@ -606,6 +606,7 @@ export default {
         lapsed = parseInt(dayCheck) < 0 ? 'expired' : lapsed;
      this.campaign = {...newValue, created_day, lapsed, percentage};
      //donations comments
+     
      const donorComments = donations.map((d)=>{
         const {comment, donor_name, createdAt, status, amount} = d;
         const newStartDate = createdAt.split("-");
@@ -703,7 +704,6 @@ export default {
 
       //fetch campaign id
       const campaign_id = this.campaign.id;
-      console.log(fees + donation);
       //check for signed in user
       const donor_anonymous = this?.user?.first_name !== undefined ? false : true;
       //donation details

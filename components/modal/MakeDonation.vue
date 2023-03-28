@@ -106,7 +106,6 @@
                           id="input-description"
                           v-model="form.comment"
                           class="form-input"
-                          :class="classes"
                           placeholder="Comment"
                         >
                         </textarea>
