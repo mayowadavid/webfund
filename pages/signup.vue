@@ -41,42 +41,22 @@
         <fieldset v-if="activeTab === 0">
           <div class="form-group mb-5">
             <div>
-              <validation-provider
-                v-slot="{ errors, classes }"
-                name="first name"
-                rules="required"
-              >
                 <input
                   id="input-first_name"
                   v-model="form.first_name"
                   class="form-input"
-                  :class="classes"
                   placeholder="First name"
                 />
-                <span v-show="errors.length" class="is-invalid">
-                  {{ errors[0] }}
-                </span>
-              </validation-provider>
             </div>
           </div>
           <div class="form-group mb-5">
             <div>
-              <validation-provider
-                v-slot="{ errors, classes }"
-                name="last name"
-                rules="required"
-              >
                 <input
                   id="input-last_name"
                   v-model="form.last_name"
                   class="form-input"
-                  :class="classes"
                   placeholder="Last name"
                 />
-                <span v-show="errors.length" class="is-invalid">
-                  {{ errors[0] }}
-                </span>
-              </validation-provider>
             </div>
           </div>
           <div class="form-group mb-5">
@@ -102,23 +82,13 @@
           </div>
           <div class="form-group mb-5">
             <div>
-              <validation-provider
-                v-slot="{ errors, classes }"
-                name="phone number"
-                rules="required|phone"
-              >
                 <input
                   id="input-phone_number"
                   v-model="form.phone_number"
                   class="form-input"
-                  :class="classes"
                   placeholder="Phone number"
                   type="tel"
                 />
-                <span v-show="errors.length" class="is-invalid">
-                  {{ errors[0] }}
-                </span>
-              </validation-provider>
             </div>
           </div>
           <div class="form-group mb-5">
@@ -338,23 +308,13 @@
           </div>
           <div class="form-group mb-5">
             <div>
-              <validation-provider
-                v-slot="{ errors, classes }"
-                name="organization phone number"
-                rules="required|phone"
-              >
                 <input
                   id="input-organization_phone_number"
                   v-model="form.organization_phone_number"
                   class="form-input"
-                  :class="classes"
                   placeholder="Organization phone number"
                   type="tel"
                 />
-                <span v-show="errors.length" class="is-invalid">
-                  {{ errors[0] }}
-                </span>
-              </validation-provider>
             </div>
           </div>
         </fieldset>
@@ -364,31 +324,16 @@
         <fieldset v-if="activeTab === 2">
           <div class="form-group mb-5">
             <div>
-              <validation-provider
-                v-slot="{ errors, classes }"
-                name="address"
-                rules="required|min:5"
-              >
                 <input
                   id="input-address"
                   v-model="form.address"
                   class="form-input"
-                  :class="classes"
                   placeholder="Address"
                 />
-                <span v-show="errors.length" class="is-invalid">
-                  {{ errors[0] }}
-                </span>
-              </validation-provider>
             </div>
           </div>
           <div class="form-group mb-5">
-            <validation-provider
-              v-slot="{ errors, classes }"
-              name="country"
-              rules="required"
-            >
-              <div class="cs-select" :class="classes">
+              <div class="cs-select">
                 <select v-model="form.country" class="input">
                   <option defaultValue hidden value="">Country</option>
                   <option
@@ -400,18 +345,9 @@
                   </option>
                 </select>
               </div>
-              <span v-show="errors.length" class="is-invalid">
-                {{ errors[0] }}
-              </span>
-            </validation-provider>
           </div>
           <div class="form-group mb-5">
-            <validation-provider
-              v-slot="{ errors, classes }"
-              name="state"
-              rules="required"
-            >
-              <div class="cs-select" :class="classes">
+              <div class="cs-select">
                 <select
                   v-model="form.state"
                   class="input"
@@ -427,18 +363,9 @@
                   </option>
                 </select>
               </div>
-              <span v-show="errors.length" class="is-invalid">
-                {{ errors[0] }}
-              </span>
-            </validation-provider>
           </div>
           <div class="form-group mb-5">
-            <validation-provider
-              v-slot="{ errors, classes }"
-              name="city"
-              rules="required"
-            >
-              <div class="cs-select" :class="classes">
+              <div class="cs-select">
                 <select
                   v-model="form.city"
                   class="input"
@@ -450,10 +377,6 @@
                   </option>
                 </select>
               </div>
-              <span v-show="errors.length" class="is-invalid">
-                {{ errors[0] }}
-              </span>
-            </validation-provider>
           </div>
         </fieldset>
       </v-form>
@@ -518,7 +441,7 @@ export default {
 
       const form = { ...this.form }
       // create new user and organization.
-      return this.$store.dispatch('auth/createUser', this.form)
+      return this.$store.dispatch('auth/createUser', form)
     },
     changeCities() {
       const { state } = this.form
@@ -532,10 +455,10 @@ export default {
     proceed() {
       this.nextTab()
     },
-    onSuccess(resp) {
+    async onSuccess(resp) {
       // data cleanup
-      this.$store.dispatch('auth/onSuccess', resp.data)
-      this.$store.dispatch('auth/createOrganisation', this.form)
+      await this.$store.dispatch('auth/onSuccess', resp.data);
+      await this.$store.dispatch('auth/createOrganisation', this.form);
       this.form = {
         first_name: '',
         last_name: '',
@@ -553,9 +476,12 @@ export default {
         city: '',
         state: '',
         country: '',
-      }
+      };
+      return resp.data;
     },
-    onError() {},
+    onError(e) {
+      return e.message
+    },
     nextTab() {
       this.activeTab += 1
       window.scrollTo(0, 0)
