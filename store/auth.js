@@ -201,9 +201,10 @@ export const actions = {
         commit('SET_REPORT', data.data)
       })
   },
-  createCampaign({ commit }, campData) {
+  async createCampaign({ commit }, campData) {
     try {
-      return this.$axios.post(`/campaigns`, campData)
+      const { data } = await this.$axios.post(`/campaigns`, campData)
+      return data.data
     } catch (e) {}
   },
   createDispute({ commit }, disputeData) {
@@ -211,9 +212,14 @@ export const actions = {
       return this.$axios.post(`/disputes`, disputeData)
     } catch (e) {}
   },
-  updateCampaign({ commit }, campData) {
+  async updateCampaign({ commit }, campData) {
     try {
-      return this.$axios.post(`/campaigns/${campData.campId}`, campData)
+      return this.$axios.put(`/campaigns/${campData.campId}`, campData)
+    } catch (e) {}
+  },
+  async deleteCampaign({ commit }, id) {
+    try {
+      return this.$axios.delete(`/campaigns/${id}`)
     } catch (e) {}
   },
   updateOrganization({ commit, state }, orgData) {
@@ -509,9 +515,11 @@ export const actions = {
       for (let i = 0; i < files.length; i++) {
         formdata.append('photo', files[i])
       }
-      this.$axios.post(`/campaigns/${id}/photos`, formdata).then((data) => {
-        //console.log(data)
-      })
+      return this.$axios
+        .post(`/campaigns/${id}/photos`, formdata)
+        .then((data) => {
+          //console.log(data)
+        })
     } catch (e) {
       //console.log(e)
     }

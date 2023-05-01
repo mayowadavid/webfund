@@ -111,10 +111,11 @@
                       rules="required"
                     >
                       <label for="input-end_date">End Date</label>
-                      <div class="cs-select" :class="classes">
+                      <div :class="classes">
                         <input
                           v-model="form.end_date"
                           class="form-input"
+                          value="form.end_date"
                           type="date"
                         />
                       </div>
@@ -251,12 +252,10 @@ export default {
       const today = new Date(newValue.end_date)
       const year = today.getFullYear()
       const month = today.getMonth()
-      const day = today.getDate()
-      const end_date =
-        year + '-' + ('0' + month + 1).slice(-2) + '-' + ('0' + day).slice(-2)
-      this.Image = [...newValue.images]
+      const day = today.getDate();
+      const end_date = year + '-' + ('0' + (month + 1)).slice(-2) + '-' + ('0' + day).slice(-2)
+      this.Image = [...newValue.images];
       this.form = { ...newValue, end_date }
-      //console.log(this.form);
     },
   },
   mounted() {
@@ -309,14 +308,14 @@ export default {
       }
     },
     async removeImage(i, data) {
-      const id = data?.id
-      ;(await id) !== undefined &&
-        this.$axios.delete(`/campaigns/delete-photo/${id}`)
+      const id = data?.id;
+      if(id) this.$axios.delete(`/campaigns/delete-photo/${id}`);
       this.Image.splice(i, 1)
     },
-    onSuccess(resp) {
+    async onSuccess(resp) {
       const data = { id: this.$route.params.id, files: this.files }
-      this.$store.dispatch('auth/uploadCampaignPhoto', data)
+      return this.$store.dispatch('auth/uploadCampaignPhoto', data);
+
     },
   },
 }

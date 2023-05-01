@@ -105,7 +105,7 @@
                       rules="required"
                     >
                       <label for="input-end_date">End Date</label>
-                      <div class="cs-select" :class="classes">
+                      <div :class="classes">
                           <input v-model="form.end_date" class="form-input" type="date"/>
                       </div>
                       <span v-show="errors.length" class="is-invalid">
@@ -128,7 +128,7 @@
                           v-model="form.campaign_target"
                           class="form-input"
                           :class="classes"
-                          placeholder="campaign Target"
+                          placeholder="e.g 100000"
                           type="tel"
                         />
                         <span v-show="errors.length" class="is-invalid">
@@ -233,7 +233,7 @@ export default {
     },
   }),
   methods: {
-    addCampaign() {
+    async addCampaign() {
       const {
       campaign_type,
       title,
@@ -241,7 +241,6 @@ export default {
       end_date,
       campaign_target,
       } = this.form;
-
       const today = new Date();
       const year = today.getFullYear();
       const month = today.getMonth();
@@ -286,10 +285,10 @@ export default {
     removeImage(i) {
       this.Image.splice(i, 1);
     },
-    onSuccess(resp){
-      const {id} = resp.data.data.campaign;
-      const data = {id, files};
-      this.$store.dispatch('auth/uploadCampaignPhoto', data);
+    onSuccess({campaign}){
+        const {id} = campaign;
+        const data = {id, files: this.files};
+        return this.$store.dispatch('auth/uploadCampaignPhoto', data);
     }
   },
 }

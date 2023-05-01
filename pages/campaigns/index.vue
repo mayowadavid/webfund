@@ -69,9 +69,10 @@
                       v-for="(dona, index) in campaigns"
                       :key="index"
                       class="cursor-pointer"
-                      @click.prevent="$router.push('/campaigns/' + dona.id)"
                     >
-                      <td class="pr-6">
+                      <td class="pr-6"
+                      @click.prevent="$router.push('/campaigns/' + dona.id)"
+                      >
                         <span
                           class="status capitalize"
                           :class="{
@@ -83,23 +84,41 @@
                           {{ dona.status }}
                         </span>
                       </td>
-                      <td class="px-6">
+                      <td class="px-6"
+                      @click.prevent="$router.push('/campaigns/' + dona.id)"
+                      >
                         <div class="text-base font-medium text-gray-900">
                           {{ dona.title }}
                         </div>
                       </td>
-                      <td class="px-6">
+                      <td class="px-6"
+                      @click.prevent="$router.push('/campaigns/' + dona.id)"
+                      >
                         <div class="text-base text-gray-500">
                           {{ dona.campaign_type }}
                         </div>
                       </td>
-                      <td class="px-6 text-base text-gray-500">
+                      <td class="px-6 text-base text-gray-500"
+                      @click.prevent="$router.push('/campaigns/' + dona.id)"
+                      >
                         {{ dona.donor_count }}
                       </td>
-                      <td class="px-6">
+                      <td class="px-6"
+                      @click.prevent="$router.push('/campaigns/' + dona.id)"
+                      >
                         <div class="text-base font-medium text-gray-900">
                           {{ dona.total_donated }}
                         </div>
+                      </td>
+                      <td>
+                        <v-button
+                          class="flex"
+                          size="sm"
+                          type="button"
+                          @click.prevent="deleteCampaign(dona.id)"
+                        >
+                          <span class="flex-inline my-auto">Delete campaign</span>
+                        </v-button>
                       </td>
                     </tr>
                     <no-table-data
@@ -147,6 +166,10 @@ export default {
   methods: {
     filterFunction () {
       this.campaigns = filterArray(this.campaigns, this.filterOption);
+    },
+    deleteCampaign (id) {
+        this.campaigns.splice(id, 1);
+        return this.$store.dispatch('auth/deleteCampaign', id);
     },
     setInput(data) {
       if(this.filters.includes(data)){
