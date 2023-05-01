@@ -22,6 +22,7 @@
               :loading.sync="loading"
               :on-submit="updateProfile"
               :on-success="onSuccess"
+              success-message="Profile updated"
             >
               <div class="text-left mb-4">
                 <p class="leading-5 text-gray-600">
@@ -221,16 +222,16 @@ export default {
   methods: {
     async updateProfile() {
       // navigate steps
-      if (this.activeTab < 2) return await this.gotoNext()
+     // if (this.activeTab < 2) return await this.gotoNext()
 
       const form = { ...this.form }
+      console.log(this.form);
       // Submit the form.
       return this.$store.dispatch('auth/updateOrganization', form);
     },
     onSuccess(resp) {
       // data cleanup
-      const data = {id: this.form.id, files};
-      this.$store.dispatch('auth/uploadLogo', data)
+
     },
   },
 }

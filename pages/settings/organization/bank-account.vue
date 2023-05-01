@@ -13,6 +13,7 @@
               :loading.sync="loading"
               :on-submit="onSubmit"
               :on-success="onSuccess"
+              success-message="Account Successfully added"
             >
               <div class="text-left mb-4">
                 <p class="leading-5 text-gray-600">

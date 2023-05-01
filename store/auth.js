@@ -223,14 +223,12 @@ export const actions = {
     } catch (e) {}
   },
   updateOrganization({ commit, state }, orgData) {
-    this.$axios
-      .put(`/organisations/${state.user.organisation.id}`, orgData)
-      .then((data) => {
-        //console.log(data)
-      })
-      .catch((e) => {
-        //console.log(e)
-      })
+    try {
+      return this.$axios.put(
+        `/organisations/${state.user.organisation.id}`,
+        orgData
+      )
+    } catch (e) {}
   },
   async fetchUser({ commit, state }) {
     try {
@@ -240,6 +238,7 @@ export const actions = {
       //if (state.resetPassword) data.data.has_changed_password = false
       // commit user data
       commit('FETCH_USER_SUCCESS', data.data)
+      return data.data
     } catch (e) {
       // //console.log('fetch user failed: ', e)
       // dispatch('app/handleError', e, { root: true })
@@ -251,11 +250,12 @@ export const actions = {
     try {
       const id = parseInt(value.user_id)
       const { data } = await this.$axios.get(`/users/${id}`)
+      commit('FETCH_USER_SUCCESS', data.data)
+      return data.data
       // implement reset password redirect
       // //console.log('fetch user success: ', data.data)
       //if (state.resetPassword) data.data.has_changed_password = false
       // commit user data
-      commit('FETCH_USER_SUCCESS', data.data)
     } catch (e) {
       // //console.log('fetch user failed: ', e)
       // dispatch('app/handleError', e, { root: true })
@@ -363,10 +363,11 @@ export const actions = {
 
   async inviteTeam({ commit, state }, team) {
     try {
-      return this.$axios.get(
+      const res = await this.$axios.post(
         `/organisations/${state.user.organisation.id}/teams`,
         team
       )
+      console.log(res)
     } catch (e) {}
   },
 
@@ -541,7 +542,20 @@ export const actions = {
 
   async uploadAccount({ commit }, form) {
     try {
-      return this.$axios.post(`/accounts`, form)
+      const res = await this.$axios.post(`/accounts`, form)
+      console.log(res)
+      return res
+      // create donations
+    } catch (e) {
+      //console.log(e)
+    }
+  },
+
+  async getAccount({ commit }, form) {
+    try {
+      const res = await this.$axios.get(`/accounts`)
+      console.log(res)
+      return res
       // create donations
     } catch (e) {
       //console.log(e)
@@ -585,9 +599,10 @@ export const actions = {
 
   async updateUser({ commit }, userData) {
     try {
-      this.$axios.get(`/users`, userData)
+      const res = await this.$axios.put(`/users`, userData)
+      console.log(res)
       // fetch user
-      await dispatch('fetchUser')
+      return dispatch('fetchUser')
     } catch (e) {}
   },
 

@@ -14,6 +14,7 @@
               :loading.sync="loading"
               :on-submit="updateProfile"
               :on-success="onSuccess"
+              success-message="profile updated successful"
             >
               <div class="md:grid grid-cols-2 gap-x-6">
                 <div class="form-group mb-5">
@@ -159,6 +160,7 @@ export default {
     },
   }),
 
+
   watch: {
     roles: {
       handler(value, oldValue) {
@@ -182,23 +184,25 @@ export default {
     },
   },
 
-  mounted() {
+  async mounted() {
     // fetch roles
-     this.$store.dispatch('auth/fetchOrganization');
+     const res = this.$store.getters['auth/user'];;
+
         let {
         fullname,
         email,
         role,
-        organisation: { phone },
-        } = this.$store.getters['auth/user'];
-        const splits = fullname.split(' ');
+        organisation
+        } = res;
+        const splits = fullname ? fullname.split(' ') : [];
         this.form = {
-          first_name: splits[0],
-          last_name: splits[1],
+          first_name: splits.length > 0 ? splits[0] : '',
+          last_name: splits.length > 0 ? splits[1] :  '',
           email,
           role,
-          phone_number: phone,
+          phone_number: organisation?.phone || '',
         }
+
   },
 
   methods: {
@@ -218,13 +222,21 @@ export default {
         role: '',
       }
     },
-    updateProfile() {
-      const form = { ...this.form }
+    async updateProfile() {
+      const { first_name, last_name, email, role, phone_number } = this.form;
+      const fullname = first_name + ' ' + last_name;
+      const data = {
+        fullname,
+        email,
+        role
+      };
+      const orgData = {phone: phone_number};
       // // parse phone numbers
       // form.phone_number = parseMobile(form.phone_number, 'NG').number
 
       // Submit the form.
-      return this.$store.dispatch('auth/updateOrganization', form);
+      await this.$store.dispatch('auth/updateUser', data);
+      return this.$store.dispatch('auth/updateOrganization', orgData);
     },
     onSuccess(resp) {
         resp

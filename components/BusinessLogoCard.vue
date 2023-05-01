@@ -49,8 +49,10 @@ export default {
                 let url = URL.createObjectURL(f);
                 return url;
            });
-           result.length > 0 && (this.logo = temporaryUrl[0]);
+          //  result.length > 0 && (this.logo = temporaryUrl[0]);
            temporaryUrl.length > 0 && (this.logo = temporaryUrl[0]);
+           // fetch org
+          this.$store.dispatch('auth/fetchOrganization');
         }
     },
   },

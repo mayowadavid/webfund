@@ -111,6 +111,7 @@ export default {
   }),
   mounted(){
     let userData = this.$store.getters['auth/user'];
+
     this.user = userData
    // fetch org
     this.$store.dispatch('auth/fetchOrganization');
