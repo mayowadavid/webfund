@@ -266,8 +266,7 @@ export default {
   },
   methods: {
     async updateCampaign() {
-      const { campaign_type, title, description, end_date, campaign_target } =
-        this.form
+      const { campaign_type, title, description, end_date, campaign_target } = this.form
       const formData = {
         cammpId: this.$route.params.id,
         campaign_type,
@@ -276,7 +275,6 @@ export default {
         campaign_target,
         end_date,
       }
-      return formData
       //update campaign
       return this.$store.dispatch('auth/updateCampaign', formData)
     },

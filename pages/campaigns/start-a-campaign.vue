@@ -283,9 +283,6 @@ export default {
            temporaryUrl.length > 0 && (this.Image = [...this.Image, ...temporaryUrl]);
         }
     },
-    submitCampaignImage(){
-
-    },
     removeImage(i) {
       this.Image.splice(i, 1);
     },
